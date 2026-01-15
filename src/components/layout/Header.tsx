@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, Heart, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '@/contexts/FavoritesContext';
+import SearchDialog from '@/components/search/SearchDialog';
 
 const navLinks = [
   { name: 'Каталог', href: '/catalog' },
@@ -19,6 +20,7 @@ const rightLinks = [
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const { favoritesCount } = useFavorites();
 
@@ -44,6 +46,18 @@ export const Header = () => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
+  // Keyboard shortcut for search (Cmd/Ctrl + K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -151,6 +165,7 @@ export const Header = () => {
                   </svg>
                 </a>
                 <button 
+                  onClick={() => setIsSearchOpen(true)}
                   className={`p-1.5 transition-colors duration-300 ${
                     isScrolled ? 'text-foreground hover:text-foreground/70' : 'text-white hover:text-white/70'
                   }`}
@@ -175,8 +190,15 @@ export const Header = () => {
               ))}
             </nav>
 
-            {/* Tablet/Mobile Right Section */}
             <div className="flex xl:hidden items-center gap-1">
+              <button
+                onClick={() => setIsSearchOpen(true)}
+                className={`p-2 transition-colors duration-300 ${
+                  isScrolled ? 'text-foreground' : 'text-white'
+                }`}
+              >
+                <Search className="w-4 h-4" strokeWidth={1.5} />
+              </button>
               <a
                 href="tel:88002225043"
                 className={`hidden sm:flex p-2 transition-colors duration-300 ${
@@ -273,6 +295,9 @@ export const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Search Dialog */}
+      <SearchDialog open={isSearchOpen} onOpenChange={setIsSearchOpen} />
     </>
   );
 };
