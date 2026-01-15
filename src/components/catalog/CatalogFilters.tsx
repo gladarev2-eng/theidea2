@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { ChevronDown, X } from 'lucide-react';
+import { ChevronDown, SlidersHorizontal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface FiltersState {
   category: string | null;
+  subcategory: string | null;
   collection: string | null;
   priceRange: [number, number];
 }
@@ -11,7 +12,7 @@ interface FiltersState {
 interface CatalogFiltersProps {
   filters: FiltersState;
   onFiltersChange: (filters: FiltersState) => void;
-  categories: string[];
+  categories: { name: string; subcategories: string[] }[];
   collections: string[];
   priceRange: [number, number];
 }
@@ -23,20 +24,22 @@ const CatalogFilters = ({
   collections,
   priceRange,
 }: CatalogFiltersProps) => {
-  const [openFilter, setOpenFilter] = useState<string | null>(null);
-
-  const toggleFilter = (filter: string) => {
-    setOpenFilter(openFilter === filter ? null : filter);
-  };
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleCategorySelect = (category: string | null) => {
-    onFiltersChange({ ...filters, category });
-    setOpenFilter(null);
+    onFiltersChange({ 
+      ...filters, 
+      category, 
+      subcategory: null // Reset subcategory when category changes
+    });
+  };
+
+  const handleSubcategorySelect = (subcategory: string | null) => {
+    onFiltersChange({ ...filters, subcategory });
   };
 
   const handleCollectionSelect = (collection: string | null) => {
     onFiltersChange({ ...filters, collection });
-    setOpenFilter(null);
   };
 
   const handlePriceChange = (min: number, max: number) => {
@@ -46,13 +49,16 @@ const CatalogFilters = ({
   const clearAllFilters = () => {
     onFiltersChange({
       category: null,
+      subcategory: null,
       collection: null,
       priceRange: priceRange,
     });
+    setShowAdvanced(false);
   };
 
   const hasActiveFilters =
     filters.category ||
+    filters.subcategory ||
     filters.collection ||
     filters.priceRange[0] !== priceRange[0] ||
     filters.priceRange[1] !== priceRange[1];
@@ -61,174 +67,192 @@ const CatalogFilters = ({
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
   };
 
-  const FilterDropdown = ({
-    label,
-    value,
-    filterId,
-    children,
-  }: {
-    label: string;
-    value: string | null;
-    filterId: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="relative">
-      <button
-        onClick={() => toggleFilter(filterId)}
-        className={`flex items-center gap-2 px-4 py-2.5 text-xs uppercase tracking-[0.15em] border transition-all duration-300 ${
-          openFilter === filterId || value
-            ? 'border-foreground bg-foreground text-background'
-            : 'border-border hover:border-foreground'
-        }`}
-      >
-        <span>{value || label}</span>
-        <ChevronDown
-          className={`w-3.5 h-3.5 transition-transform duration-300 ${
-            openFilter === filterId ? 'rotate-180' : ''
-          }`}
-        />
-      </button>
+  // Get subcategories for selected category
+  const currentSubcategories = filters.category 
+    ? categories.find(c => c.name === filters.category)?.subcategories || []
+    : [];
 
+  return (
+    <div className="pt-28 pb-6">
+      {/* Level 1: Categories (main tabs) */}
+      <div className="border-b border-border">
+        <div className="container-wide">
+          <nav className="flex items-center gap-8 -mb-px">
+            <button
+              onClick={() => handleCategorySelect(null)}
+              className={`py-4 text-xs uppercase tracking-[0.2em] border-b-2 transition-all duration-300 ${
+                !filters.category
+                  ? 'border-foreground text-foreground'
+                  : 'border-transparent text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              Все
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => handleCategorySelect(cat.name)}
+                className={`py-4 text-xs uppercase tracking-[0.2em] border-b-2 transition-all duration-300 whitespace-nowrap ${
+                  filters.category === cat.name
+                    ? 'border-foreground text-foreground'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Level 2: Subcategories (if category selected) */}
       <AnimatePresence>
-        {openFilter === filterId && (
+        {filters.category && currentSubcategories.length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 mt-2 min-w-[200px] bg-background border border-border z-50"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="border-b border-border bg-muted/30"
           >
-            {children}
+            <div className="container-wide">
+              <nav className="flex items-center gap-6 py-3">
+                <button
+                  onClick={() => handleSubcategorySelect(null)}
+                  className={`px-4 py-2 text-xs uppercase tracking-[0.15em] transition-all duration-300 ${
+                    !filters.subcategory
+                      ? 'bg-foreground text-background'
+                      : 'bg-transparent text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  Все
+                </button>
+                {currentSubcategories.map((sub) => (
+                  <button
+                    key={sub}
+                    onClick={() => handleSubcategorySelect(sub)}
+                    className={`px-4 py-2 text-xs uppercase tracking-[0.15em] transition-all duration-300 ${
+                      filters.subcategory === sub
+                        ? 'bg-foreground text-background'
+                        : 'bg-transparent text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {sub}
+                  </button>
+                ))}
+              </nav>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
-  );
 
-  return (
-    <div className="border-b border-border pb-6 mb-8">
-      <div className="flex flex-wrap items-center gap-3">
-        {/* Category filter */}
-        <FilterDropdown
-          label="Категория"
-          value={filters.category}
-          filterId="category"
-        >
-          <div className="py-2">
-            <button
-              onClick={() => handleCategorySelect(null)}
-              className={`w-full text-left px-4 py-2.5 text-sm hover:bg-muted transition-colors ${
-                !filters.category ? 'font-medium' : 'font-light'
-              }`}
-            >
-              Все категории
-            </button>
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => handleCategorySelect(category)}
-                className={`w-full text-left px-4 py-2.5 text-sm hover:bg-muted transition-colors ${
-                  filters.category === category ? 'font-medium' : 'font-light'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </FilterDropdown>
-
-        {/* Collection filter */}
-        <FilterDropdown
-          label="Коллекция"
-          value={filters.collection}
-          filterId="collection"
-        >
-          <div className="py-2">
+      {/* Level 3: Collections + Advanced filters */}
+      <div className="container-wide">
+        <div className="flex items-center justify-between py-4 border-b border-border">
+          {/* Collections */}
+          <div className="flex items-center gap-3">
             <button
               onClick={() => handleCollectionSelect(null)}
-              className={`w-full text-left px-4 py-2.5 text-sm hover:bg-muted transition-colors ${
-                !filters.collection ? 'font-medium' : 'font-light'
+              className={`px-4 py-2 text-xs uppercase tracking-[0.15em] border transition-all duration-300 ${
+                !filters.collection
+                  ? 'border-foreground bg-foreground text-background'
+                  : 'border-border hover:border-foreground'
               }`}
             >
-              Все коллекции
+              Все
             </button>
             {collections.map((collection) => (
               <button
                 key={collection}
                 onClick={() => handleCollectionSelect(collection)}
-                className={`w-full text-left px-4 py-2.5 text-sm hover:bg-muted transition-colors ${
-                  filters.collection === collection ? 'font-medium' : 'font-light'
+                className={`px-4 py-2 text-xs uppercase tracking-[0.15em] border transition-all duration-300 ${
+                  filters.collection === collection
+                    ? 'border-foreground bg-foreground text-background'
+                    : 'border-border hover:border-foreground'
                 }`}
               >
                 {collection}
               </button>
             ))}
           </div>
-        </FilterDropdown>
 
-        {/* Price filter */}
-        <FilterDropdown
-          label="Цена"
-          value={
-            filters.priceRange[0] !== priceRange[0] ||
-            filters.priceRange[1] !== priceRange[1]
-              ? `${formatPrice(filters.priceRange[0])} — ${formatPrice(filters.priceRange[1])}`
-              : null
-          }
-          filterId="price"
-        >
-          <div className="p-4 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="flex-1">
-                <label className="text-xs uppercase tracking-[0.1em] text-muted-foreground mb-1.5 block">
-                  От
-                </label>
-                <input
-                  type="number"
-                  value={filters.priceRange[0]}
-                  onChange={(e) =>
-                    handlePriceChange(Number(e.target.value), filters.priceRange[1])
-                  }
-                  min={priceRange[0]}
-                  max={filters.priceRange[1]}
-                  className="w-full px-3 py-2 text-sm border border-border bg-transparent focus:border-foreground outline-none transition-colors"
-                />
-              </div>
-              <div className="flex-1">
-                <label className="text-xs uppercase tracking-[0.1em] text-muted-foreground mb-1.5 block">
-                  До
-                </label>
-                <input
-                  type="number"
-                  value={filters.priceRange[1]}
-                  onChange={(e) =>
-                    handlePriceChange(filters.priceRange[0], Number(e.target.value))
-                  }
-                  min={filters.priceRange[0]}
-                  max={priceRange[1]}
-                  className="w-full px-3 py-2 text-sm border border-border bg-transparent focus:border-foreground outline-none transition-colors"
-                />
-              </div>
-            </div>
+          {/* Advanced filters toggle */}
+          <div className="flex items-center gap-4">
+            {hasActiveFilters && (
+              <button
+                onClick={clearAllFilters}
+                className="flex items-center gap-1.5 text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+                Сбросить
+              </button>
+            )}
             <button
-              onClick={() => setOpenFilter(null)}
-              className="w-full py-2.5 text-xs uppercase tracking-[0.15em] border border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground transition-all duration-300"
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className={`flex items-center gap-2 px-4 py-2 text-xs uppercase tracking-[0.15em] border transition-all duration-300 ${
+                showAdvanced
+                  ? 'border-foreground bg-foreground text-background'
+                  : 'border-border hover:border-foreground'
+              }`}
             >
-              Применить
+              <SlidersHorizontal className="w-3.5 h-3.5" />
+              Фильтры
             </button>
           </div>
-        </FilterDropdown>
+        </div>
 
-        {/* Clear filters */}
-        {hasActiveFilters && (
-          <button
-            onClick={clearAllFilters}
-            className="flex items-center gap-1.5 px-4 py-2.5 text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <X className="w-3.5 h-3.5" />
-            <span>Сбросить</span>
-          </button>
-        )}
+        {/* Advanced filters panel */}
+        <AnimatePresence>
+          {showAdvanced && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="py-6 border-b border-border">
+                <div className="flex items-end gap-8">
+                  {/* Price range */}
+                  <div className="flex items-center gap-4">
+                    <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                      Цена:
+                    </span>
+                    <div className="flex items-center gap-3">
+                      <div className="relative">
+                        <input
+                          type="number"
+                          value={filters.priceRange[0]}
+                          onChange={(e) =>
+                            handlePriceChange(Number(e.target.value), filters.priceRange[1])
+                          }
+                          min={priceRange[0]}
+                          max={filters.priceRange[1]}
+                          className="w-32 px-3 py-2 text-sm border border-border bg-transparent focus:border-foreground outline-none transition-colors"
+                          placeholder="От"
+                        />
+                      </div>
+                      <span className="text-muted-foreground">—</span>
+                      <div className="relative">
+                        <input
+                          type="number"
+                          value={filters.priceRange[1]}
+                          onChange={(e) =>
+                            handlePriceChange(filters.priceRange[0], Number(e.target.value))
+                          }
+                          min={filters.priceRange[0]}
+                          max={priceRange[1]}
+                          className="w-32 px-3 py-2 text-sm border border-border bg-transparent focus:border-foreground outline-none transition-colors"
+                          placeholder="До"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
