@@ -1,80 +1,181 @@
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import heroLiving from '@/assets/hero-living-room.jpg';
+import heroBedroom from '@/assets/hero-bedroom.jpg';
+import heroDining from '@/assets/hero-dining.jpg';
+
+const slides = [
+  {
+    id: 1,
+    image: heroLiving,
+    overline: 'Мебельное ателье — Санкт-Петербург',
+    title: 'ЭСТЕТИКА\nПРОСТРАНСТВА',
+  },
+  {
+    id: 2,
+    image: heroBedroom,
+    overline: 'Коллекция 2024',
+    title: 'ЧИСТАЯ\nФОРМА',
+  },
+  {
+    id: 3,
+    image: heroDining,
+    overline: 'Премиальный комфорт',
+    title: 'АРХИТЕКТУРА\nПРЕДМЕТА',
+  },
+];
 
 export const HeroSlider = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setProgress(0);
+  }, []);
+
+  // Autoplay
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, nextSlide, currentSlide]);
+
+  // Progress animation
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    setProgress(0);
+    const startTime = Date.now();
+    const duration = 6000;
+
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const newProgress = Math.min((elapsed / duration) * 100, 100);
+      setProgress(newProgress);
+      
+      if (elapsed < duration) {
+        requestAnimationFrame(updateProgress);
+      }
+    };
+
+    const animationId = requestAnimationFrame(updateProgress);
+    return () => cancelAnimationFrame(animationId);
+  }, [currentSlide, isAutoPlaying]);
+
+  const handleDotClick = (index: number) => {
+    setCurrentSlide(index);
+    setProgress(0);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Background Image with subtle scale */}
-      <motion.div
-        initial={{ scale: 1.05 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
-        className="absolute inset-0"
-      >
-        <img
-          src={heroLiving}
-          alt="THE IDEA интерьер"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/30" />
-      </motion.div>
-
-      {/* Content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 md:px-8">
-        <motion.p
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="text-caption text-white/80 mb-6"
-        >
-          Мебельное ателье — Санкт-Петербург
-        </motion.p>
-        
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-          className="text-h1 md:text-[72px] md:leading-[1.1] text-white text-center"
-        >
-          Эстетика пространства
-        </motion.h1>
-
-        <motion.p
+      {/* Background Images */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.3 }}
-          className="text-body-lg text-white/80 mt-6 max-w-xl"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0"
         >
-          Премиальная мебель ручной работы для вашего интерьера
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="mt-8"
-        >
-          <Link
-            to="/catalog"
-            className="btn-primary"
-          >
-            Перейти в каталог
-          </Link>
+          <div className="absolute inset-0 bg-black/40 z-10" />
+          <motion.img
+            src={slides[currentSlide].image}
+            alt={slides[currentSlide].title}
+            className="w-full h-full object-cover"
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.1 }}
+            transition={{ duration: 6, ease: 'linear' }}
+          />
         </motion.div>
+      </AnimatePresence>
+
+      {/* Content */}
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-6">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-5xl"
+          >
+            <span className="text-[10px] tracking-[0.4em] uppercase text-white/70 mb-8 block">
+              {slides[currentSlide].overline}
+            </span>
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-light tracking-tighter leading-[0.95] whitespace-pre-line mb-12">
+              {slides[currentSlide].title}
+            </h1>
+            
+            {/* Two Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to="/catalog"
+                className="bg-white text-foreground px-10 py-4 text-[10px] font-medium tracking-[0.2em] uppercase hover:bg-foreground hover:text-white transition-all duration-300 min-w-[200px]"
+              >
+                Смотреть каталог
+              </Link>
+              <Link
+                to="/collections"
+                className="border border-white/40 text-white px-10 py-4 text-[10px] font-medium tracking-[0.2em] uppercase hover:bg-white hover:text-foreground transition-all duration-300 min-w-[200px]"
+              >
+                Коллекции
+              </Link>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Slide Indicators with Progress */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className="relative w-12 h-[2px] bg-white/30 overflow-hidden"
+          >
+            <div 
+              className="absolute inset-y-0 left-0 bg-white transition-all duration-100"
+              style={{ 
+                width: index === currentSlide ? `${progress}%` : index < currentSlide ? '100%' : '0%'
+              }}
+            />
+          </button>
+        ))}
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.6 }}
-        transition={{ delay: 1, duration: 0.3 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
+      <button
+        onClick={scrollToContent}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-white/50 hover:text-white/80 transition-colors"
       >
-        <ChevronDown className="w-6 h-6 text-white" strokeWidth={1.5} />
-      </motion.div>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-6 h-6" strokeWidth={1} />
+        </motion.div>
+      </button>
     </section>
   );
 };
