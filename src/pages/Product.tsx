@@ -11,6 +11,7 @@ import ProductStory from "@/components/product/ProductStory";
 import ProductSpecs from "@/components/product/ProductSpecs";
 import ProductCTA from "@/components/product/ProductCTA";
 import RelatedProducts from "@/components/product/RelatedProducts";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
 // Mock product data
 const productData = {
@@ -62,10 +63,21 @@ const Product = () => {
   const { id } = useParams();
   const [selectedColor, setSelectedColor] = useState(productData.colors[0]);
   const [selectedSize, setSelectedSize] = useState(productData.sizes[1]);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const isProductFavorite = isFavorite(productData.id);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("ru-RU").format(price) + " ₽";
+  };
+
+  const handleFavoriteToggle = () => {
+    toggleFavorite({
+      id: productData.id,
+      name: productData.name,
+      price: productData.price,
+      collection: productData.collection,
+      image: productData.images[0],
+    });
   };
 
   return (
@@ -107,8 +119,8 @@ const Product = () => {
                 onSizeChange={setSelectedSize}
                 productionTime={productData.productionTime}
                 dimensions={selectedSize.dimensions}
-                isFavorite={isFavorite}
-                onFavoriteToggle={() => setIsFavorite(!isFavorite)}
+                isFavorite={isProductFavorite}
+                onFavoriteToggle={handleFavoriteToggle}
               />
             </div>
           </div>

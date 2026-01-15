@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Search, Heart, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useFavorites } from '@/contexts/FavoritesContext';
 
 const navLinks = [
   { name: 'Каталог', href: '/catalog' },
@@ -19,6 +20,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { favoritesCount } = useFavorites();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,11 +125,18 @@ export const Header = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/favorites"
-                  className={`p-1.5 transition-colors duration-300 ${
+                  className={`p-1.5 transition-colors duration-300 relative ${
                     isScrolled ? 'text-foreground hover:text-foreground/70' : 'text-white hover:text-white/70'
                   }`}
                 >
                   <Heart className="w-4 h-4" strokeWidth={1.5} />
+                  {favoritesCount > 0 && (
+                    <span className={`absolute -top-1 -right-1 w-4 h-4 text-[9px] font-medium flex items-center justify-center rounded-full ${
+                      isScrolled ? 'bg-foreground text-background' : 'bg-white text-foreground'
+                    }`}>
+                      {favoritesCount > 9 ? '9+' : favoritesCount}
+                    </span>
+                  )}
                 </Link>
                 <a
                   href="https://t.me/theidea_furniture"
@@ -178,11 +187,18 @@ export const Header = () => {
               </a>
               <Link
                 to="/favorites"
-                className={`p-2 transition-colors duration-300 ${
+                className={`p-2 transition-colors duration-300 relative ${
                   isScrolled ? 'text-foreground' : 'text-white'
                 }`}
               >
                 <Heart className="w-4 h-4" strokeWidth={1.5} />
+                {favoritesCount > 0 && (
+                  <span className={`absolute top-0 right-0 w-4 h-4 text-[9px] font-medium flex items-center justify-center rounded-full ${
+                    isScrolled ? 'bg-foreground text-background' : 'bg-white text-foreground'
+                  }`}>
+                    {favoritesCount > 9 ? '9+' : favoritesCount}
+                  </span>
+                )}
               </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
