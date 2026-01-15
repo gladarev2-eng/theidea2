@@ -116,7 +116,7 @@ export const HeroSlider = () => {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-6">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-4 sm:px-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -124,25 +124,25 @@ export const HeroSlider = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-5xl"
+            className="max-w-5xl w-full"
           >
-            <span className="text-[11px] tracking-[0.4em] uppercase text-white/60 mb-8 block font-light">
+            <span className="text-[9px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.4em] uppercase text-white/60 mb-4 sm:mb-8 block font-light">
               {slides[currentSlide].overline}
             </span>
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-[140px] font-extralight tracking-[-0.02em] leading-[0.9] whitespace-pre-line mb-14">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[140px] font-extralight tracking-[-0.02em] leading-[0.95] whitespace-pre-line mb-8 sm:mb-14">
               {slides[currentSlide].title}
             </h1>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link
                 to={slides[currentSlide].primaryCTA.href}
-                className="inline-block bg-white text-foreground px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase rounded-full hover:bg-foreground hover:text-white transition-all duration-300"
+                className="w-full sm:w-auto inline-block bg-white text-foreground px-8 sm:px-12 py-4 sm:py-5 text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase rounded-full hover:bg-foreground hover:text-white transition-all duration-300"
               >
                 {slides[currentSlide].primaryCTA.text}
               </Link>
               <Link
                 to={slides[currentSlide].secondaryCTA.href}
-                className="inline-block border border-white/40 text-white px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase rounded-full hover:bg-white/10 transition-all duration-300"
+                className="w-full sm:w-auto inline-block border border-white/40 text-white px-8 sm:px-12 py-4 sm:py-5 text-[10px] sm:text-[11px] font-medium tracking-[0.2em] sm:tracking-[0.25em] uppercase rounded-full hover:bg-white/10 transition-all duration-300"
               >
                 {slides[currentSlide].secondaryCTA.text}
               </Link>

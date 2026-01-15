@@ -31,28 +31,28 @@ const collections = [
 
 export const CollectionsSection = () => {
   return (
-    <section className="py-24 lg:py-40 bg-[#f8f8f6]">
-      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+    <section className="py-16 sm:py-24 lg:py-40 bg-[#f8f8f6]">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
         {/* Header */}
-        <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 lg:mb-20">
+        <AnimatedSection className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-8 mb-10 sm:mb-16 lg:mb-20">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6 font-light">
+            <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-muted-foreground mb-4 sm:mb-6 font-light">
               Наши миры
             </p>
-            <h2 className="text-3xl lg:text-5xl font-extralight tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-extralight tracking-tight">
               Кураторские коллекции
             </h2>
           </div>
           <Link 
             to="/collections" 
-            className="mt-8 lg:mt-0 inline-flex text-[11px] uppercase tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:opacity-60 transition-opacity duration-300"
+            className="inline-flex text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:opacity-60 transition-opacity duration-300 self-start sm:self-auto"
           >
             Все коллекции
           </Link>
         </AnimatedSection>
 
         {/* Collections Grid */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
           {collections.map((collection) => (
             <StaggerItem key={collection.id}>
               <Link 
@@ -60,7 +60,7 @@ export const CollectionsSection = () => {
                 className="group block"
               >
                 {/* Image */}
-                <div className="aspect-[3/4] overflow-hidden mb-6 bg-muted">
+                <div className="aspect-[4/5] sm:aspect-[3/4] overflow-hidden mb-4 sm:mb-6 bg-muted">
                   <img
                     src={collection.image}
                     alt={collection.name}
@@ -70,10 +70,10 @@ export const CollectionsSection = () => {
                 
                 {/* Content */}
                 <div>
-                  <h3 className="text-[11px] font-medium uppercase tracking-[0.3em] mb-2">
+                  <h3 className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1.5 sm:mb-2">
                     {collection.name}
                   </h3>
-                  <p className="text-sm font-light text-muted-foreground">
+                  <p className="text-xs sm:text-sm font-light text-muted-foreground">
                     {collection.description}
                   </p>
                 </div>
