@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heart, Menu, X } from 'lucide-react';
+import { Menu, X, Search, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const navigation = [
+const navLinks = [
   { name: 'Каталог', href: '/catalog' },
   { name: 'Коллекции', href: '/collections' },
-  { name: 'О компании', href: '/about' },
-  { name: 'Дизайнерам', href: '/designers' },
-  { name: 'Покупателям', href: '/buyers' },
+  { name: 'О нас', href: '/about' },
   { name: 'Контакты', href: '/contacts' },
 ];
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -26,11 +24,11 @@ export const Header = () => {
   }, []);
 
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    setIsOpen(false);
   }, [location]);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
+    if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -38,77 +36,73 @@ export const Header = () => {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isMobileMenuOpen]);
+  }, [isOpen]);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#F5F5F3]/90 backdrop-blur-xl py-4' 
-            : 'bg-transparent py-6'
+            ? 'glass shadow-sm' 
+            : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-20">
-          <div className="flex items-center justify-between">
+        <div className="container-wide">
+          <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link 
               to="/" 
-              className={`text-lg tracking-[0.3em] font-light uppercase transition-colors duration-300 ${
-                isScrolled ? 'text-black' : 'text-white'
+              className={`heading-h5 tracking-tight transition-colors duration-150 ${
+                isScrolled ? 'text-foreground' : 'text-white'
               }`}
             >
               THE IDEA
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {navigation.map((item) => (
+            <nav className="hidden md:flex items-center gap-8">
+              {navLinks.map((link) => (
                 <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`text-[11px] uppercase tracking-[0.15em] font-light hover:opacity-60 transition-opacity duration-300 ${
-                    isScrolled ? 'text-black' : 'text-white'
+                  key={link.name}
+                  to={link.href}
+                  className={`nav-link transition-colors duration-150 ${
+                    isScrolled ? 'text-foreground' : 'text-white'
                   }`}
                 >
-                  {item.name}
+                  {link.name}
                 </Link>
               ))}
             </nav>
 
-            {/* Right Actions */}
-            <div className="flex items-center gap-6">
-              {/* Phone - Desktop only */}
-              <a 
-                href="tel:+78002225043" 
-                className={`hidden md:block text-[11px] font-light tracking-wide hover:opacity-60 transition-opacity duration-300 ${
-                  isScrolled ? 'text-black' : 'text-white'
-                }`}
-              >
-                8 (800) 222-50-43
-              </a>
-
-              {/* Favorite */}
+            {/* Actions */}
+            <div className="flex items-center gap-2">
               <button 
-                className={`p-2 hover:opacity-60 transition-opacity duration-300 ${
-                  isScrolled ? 'text-black' : 'text-white'
+                className={`p-2 rounded-md transition-colors duration-150 ${
+                  isScrolled 
+                    ? 'hover:bg-muted text-foreground' 
+                    : 'hover:bg-white/10 text-white'
                 }`}
-                aria-label="Избранное"
               >
-                <Heart className="w-5 h-5" strokeWidth={1} />
+                <Search className="w-5 h-5" strokeWidth={1.5} />
               </button>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={`lg:hidden p-2 ${isScrolled ? 'text-black' : 'text-white'}`}
-                aria-label="Меню"
+              <button 
+                className={`p-2 rounded-md transition-colors duration-150 ${
+                  isScrolled 
+                    ? 'hover:bg-muted text-foreground' 
+                    : 'hover:bg-white/10 text-white'
+                }`}
               >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" strokeWidth={1} />
-                ) : (
-                  <Menu className="w-6 h-6" strokeWidth={1} />
-                )}
+                <ShoppingBag className="w-5 h-5" strokeWidth={1.5} />
+              </button>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className={`md:hidden p-2 rounded-md transition-colors duration-150 ${
+                  isScrolled 
+                    ? 'hover:bg-muted text-foreground' 
+                    : 'hover:bg-white/10 text-white'
+                }`}
+              >
+                {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -117,51 +111,50 @@ export const Header = () => {
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {isOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#F5F5F3] flex flex-col p-8 pt-32 lg:hidden"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-card pt-20"
           >
-            <div className="flex flex-col gap-8">
-              {navigation.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.4 }}
-                >
-                  <Link
-                    to={item.href}
-                    className="text-4xl font-light tracking-tighter block hover:opacity-60 transition-opacity duration-300"
+            <nav className="container-wide py-8">
+              <div className="flex flex-col gap-6">
+                {navLinks.map((link, index) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.2 }}
                   >
-                    {item.name}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+                    <Link
+                      to={link.href}
+                      onClick={() => setIsOpen(false)}
+                      className="heading-h3 hover:text-primary transition-colors duration-150"
+                    >
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
 
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-auto pt-12 border-t border-black/10 space-y-4"
-            >
-              <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400">
-                Связаться с нами
-              </p>
-              <a 
-                href="tel:+78002225043" 
-                className="block text-xl font-light"
+              {/* Contact */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="mt-12 pt-8 border-t border-border"
               >
-                8 (800) 222-50-43
-              </a>
-              <button className="w-full border border-black py-4 text-[10px] uppercase tracking-widest mt-4 hover:bg-black hover:text-white transition-colors duration-300">
-                Заказать звонок
-              </button>
-            </motion.div>
+                <p className="text-caption mb-4">Связаться с нами</p>
+                <a 
+                  href="tel:+78001234567" 
+                  className="heading-h4 hover:text-primary transition-colors duration-150"
+                >
+                  8 800 123-45-67
+                </a>
+              </motion.div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

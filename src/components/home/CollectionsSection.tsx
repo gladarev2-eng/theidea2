@@ -31,28 +31,35 @@ const collections = [
 
 export const CollectionsSection = () => {
   return (
-    <section className="py-40 px-6 md:px-20 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="section-padding bg-background">
+      <div className="container-wide">
+        <AnimatedSection className="text-center mb-12">
+          <p className="text-caption mb-4">Наши коллекции</p>
+          <h2 className="heading-h2">Выберите свой стиль</h2>
+        </AnimatedSection>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {collections.map((collection, index) => (
             <AnimatedSection key={collection.id} delay={index * 0.1}>
               <Link 
                 to={collection.href}
-                className="group block cursor-pointer"
+                className="group block"
               >
-                <div className="aspect-[3/4] overflow-hidden mb-8">
-                  <img
-                    src={collection.image}
-                    alt={collection.name}
-                    className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-110"
-                  />
+                <div className="card-base overflow-hidden">
+                  <div className="aspect-[4/5] overflow-hidden">
+                    <img
+                      src={collection.image}
+                      alt={collection.name}
+                      className="w-full h-full object-cover img-hover"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="heading-h5 mb-2">{collection.name}</h3>
+                    <p className="text-body-sm text-muted-foreground">
+                      {collection.description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-light tracking-tight mb-2 uppercase">
-                  {collection.name}
-                </h3>
-                <p className="text-xs text-gray-400 uppercase tracking-widest">
-                  {collection.description}
-                </p>
               </Link>
             </AnimatedSection>
           ))}

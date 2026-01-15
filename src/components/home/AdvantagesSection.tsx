@@ -26,25 +26,22 @@ const advantages = [
 
 export const AdvantagesSection = () => {
   return (
-    <section className="py-40 px-6 md:px-20 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <AnimatedSection>
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight">Почему выбирают нас</h2>
-          </AnimatedSection>
-        </div>
+    <section className="section-padding bg-card">
+      <div className="container-wide">
+        <AnimatedSection className="text-center mb-12">
+          <p className="text-caption mb-4">Преимущества</p>
+          <h2 className="heading-h2">Почему выбирают нас</h2>
+        </AnimatedSection>
 
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {advantages.map((advantage) => (
             <StaggerItem key={advantage.title}>
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 mb-6 border border-black/10">
-                  <advantage.icon className="w-6 h-6" strokeWidth={1} />
+              <div className="card-base p-6 text-center h-full">
+                <div className="inline-flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-lg">
+                  <advantage.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-lg font-light mb-3 tracking-tight">
-                  {advantage.title}
-                </h3>
-                <p className="text-sm font-light text-gray-500 leading-relaxed">
+                <h3 className="heading-h6 mb-2">{advantage.title}</h3>
+                <p className="text-body-sm text-muted-foreground">
                   {advantage.description}
                 </p>
               </div>

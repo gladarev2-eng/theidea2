@@ -47,45 +47,38 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
   const [isLiked, setIsLiked] = useState(false);
 
   return (
-    <Link 
-      to={product.href}
-      className="group block"
-    >
-      <div className="relative aspect-[4/5] overflow-hidden mb-6">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
-        />
-        
-        {/* Like Button */}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setIsLiked(!isLiked);
-          }}
-          className="absolute top-4 right-4 p-2 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          aria-label="Добавить в избранное"
-        >
-          <Heart 
-            className={`w-4 h-4 transition-colors ${isLiked ? 'fill-black text-black' : 'text-black'}`} 
-            strokeWidth={1} 
+    <Link to={product.href} className="group block">
+      <div className="card-base overflow-hidden">
+        <div className="relative aspect-[3/4] overflow-hidden bg-muted">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover img-hover"
           />
-        </button>
-      </div>
-
-      <div className="flex justify-between items-start">
-        <div>
-          <h3 className="text-lg font-light mb-1 group-hover:opacity-60 transition-opacity duration-300">
-            {product.name}
-          </h3>
-          <p className="text-xs uppercase tracking-widest text-gray-400">
-            {product.collection}
-          </p>
+          
+          {/* Like Button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIsLiked(!isLiked);
+            }}
+            className="absolute top-4 right-4 p-2 bg-card rounded-md shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+            aria-label="Добавить в избранное"
+          >
+            <Heart 
+              className={`w-4 h-4 transition-colors duration-150 ${
+                isLiked ? 'fill-primary text-primary' : 'text-foreground'
+              }`} 
+              strokeWidth={1.5} 
+            />
+          </button>
         </div>
-        <p className="text-sm font-light">
-          {product.price}
-        </p>
+
+        <div className="p-4">
+          <h3 className="heading-h6 mb-1">{product.name}</h3>
+          <p className="text-body-sm text-muted-foreground mb-2">{product.collection}</p>
+          <p className="text-body font-medium">{product.price}</p>
+        </div>
       </div>
     </Link>
   );
@@ -93,23 +86,22 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
 
 export const BestsellersSection = () => {
   return (
-    <section className="py-40 px-6 md:px-20 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-16">
-          <AnimatedSection>
-            <h2 className="text-4xl font-light tracking-tight">Бестселлеры</h2>
-          </AnimatedSection>
-          <AnimatedSection delay={0.1}>
-            <Link 
-              to="/catalog" 
-              className="text-xs uppercase tracking-widest border-b border-black pb-1 hover:opacity-60 transition-opacity duration-300"
-            >
-              Весь каталог
-            </Link>
-          </AnimatedSection>
-        </div>
+    <section className="section-padding bg-background">
+      <div className="container-wide">
+        <AnimatedSection className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+          <div>
+            <p className="text-caption mb-4">Популярное</p>
+            <h2 className="heading-h2">Бестселлеры</h2>
+          </div>
+          <Link 
+            to="/catalog"
+            className="mt-6 md:mt-0 text-body-sm text-primary font-medium hover:underline"
+          >
+            Смотреть все →
+          </Link>
+        </AnimatedSection>
 
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
             <StaggerItem key={product.id}>
               <ProductCard product={product} />
