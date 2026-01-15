@@ -1,35 +1,31 @@
 import { useRef } from 'react';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 
 const testimonials = [
   {
     id: 1,
-    text: 'Качество мебели превзошло все ожидания. Диван из коллекции Case стал центром нашей гостиной. Отдельное спасибо за внимательный сервис.',
-    author: 'Анна Петрова',
-    role: 'Дизайнер интерьеров',
-    rating: 5,
+    text: 'THE IDEA создали для нашего проекта уникальные предметы мебели, которые идеально вписались в концепцию пространства. Высочайшее качество исполнения и внимание к деталям.',
+    author: 'Анна Светлова',
+    position: 'Дизайнер интерьеров, Studio A+',
   },
   {
     id: 2,
-    text: 'Работаем с THE IDEA уже 5 лет. Для наших дизайн-проектов это идеальный партнёр — всегда качественно, в срок и с индивидуальным подходом.',
-    author: 'Студия Интерьер+',
-    role: 'Санкт-Петербург',
-    rating: 5,
+    text: 'Работаем с THE IDEA уже 5 лет. Это надёжный партнёр с безупречной репутацией. Каждый проект выполняется точно в срок с соблюдением всех технических требований.',
+    author: 'Михаил Крылов',
+    position: 'Архитектор, KRYLOV architects',
   },
   {
     id: 3,
-    text: 'Заказывали кровать и прикроватные тумбы. Мастера сделали точно по нашим размерам. Спим как в лучших отелях мира.',
-    author: 'Михаил и Елена',
-    role: 'Казань',
-    rating: 5,
+    text: 'Мебель THE IDEA — это инвестиция в комфорт на долгие годы. Диван Case служит уже 4 года и выглядит как новый. Отдельное спасибо за оперативную доставку.',
+    author: 'Елена Морозова',
+    position: 'Москва',
   },
   {
     id: 4,
-    text: 'Обставили весь загородный дом мебелью THE IDEA. Прошло 3 года — всё как новое. Рекомендую всем, кто ценит качество.',
-    author: 'Дмитрий Козлов',
-    role: 'Сочи',
-    rating: 5,
+    text: 'Превосходное соотношение цены и качества. THE IDEA — это российский бренд европейского уровня. Рекомендую всем своим клиентам.',
+    author: 'Дмитрий Волков',
+    position: 'Руководитель студии Volkov Design',
   },
 ];
 
@@ -38,7 +34,7 @@ export const TestimonialsSection = () => {
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
-    const scrollAmount = scrollRef.current.offsetWidth * 0.6;
+    const scrollAmount = window.innerWidth > 768 ? 520 : 300;
     scrollRef.current.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth',
@@ -46,63 +42,50 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="section-padding bg-card overflow-hidden">
-      <div className="container-wide">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <AnimatedSection>
-            <p className="text-caption mb-4">Отзывы</p>
-            <h2 className="heading-h2">Что говорят клиенты</h2>
-          </AnimatedSection>
-          
-          <AnimatedSection delay={0.1}>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => scroll('left')}
-                className="p-3 border border-border rounded-md hover:bg-muted transition-colors duration-150"
-                aria-label="Предыдущий отзыв"
-              >
-                <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
-              </button>
-              <button
-                onClick={() => scroll('right')}
-                className="p-3 border border-border rounded-md hover:bg-muted transition-colors duration-150"
-                aria-label="Следующий отзыв"
-              >
-                <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
-              </button>
-            </div>
-          </AnimatedSection>
-        </div>
+    <section className="py-20 lg:py-32 bg-background overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        {/* Header */}
+        <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-16">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-6">Отзывы</p>
+            <h2 className="text-3xl lg:text-4xl font-light tracking-tight">Что говорят о нас</h2>
+          </div>
+          <div className="flex items-center gap-2 mt-6 lg:mt-0">
+            <button
+              onClick={() => scroll('left')}
+              className="w-11 h-11 border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
+            >
+              <ChevronLeft className="w-5 h-5" strokeWidth={1.5} />
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              className="w-11 h-11 border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
+            >
+              <ChevronRight className="w-5 h-5" strokeWidth={1.5} />
+            </button>
+          </div>
+        </AnimatedSection>
       </div>
 
+      {/* Testimonials Scroll */}
       <AnimatedSection delay={0.15}>
-        <div 
+        <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 md:px-8"
+          className="flex gap-5 lg:gap-6 overflow-x-auto no-scrollbar px-6 lg:px-12"
         >
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="flex-shrink-0 w-[85vw] md:w-[450px] snap-start"
+              className="flex-shrink-0 w-[300px] sm:w-[400px] lg:w-[500px] p-6 sm:p-8 lg:p-10 border border-border bg-card"
             >
-              <div className="card-base p-6 md:p-8 h-full flex flex-col">
-                {/* Stars */}
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-warning text-warning" />
-                  ))}
-                </div>
-
-                {/* Text */}
-                <blockquote className="text-body-lg text-foreground mb-6 flex-1">
-                  "{testimonial.text}"
-                </blockquote>
-
-                {/* Author */}
-                <div className="pt-4 border-t border-border">
-                  <p className="heading-h6">{testimonial.author}</p>
-                  <p className="text-body-sm text-muted-foreground">{testimonial.role}</p>
-                </div>
+              <p className="text-lg lg:text-xl font-light leading-relaxed mb-8">
+                "{testimonial.text}"
+              </p>
+              <div className="pt-6 border-t border-border">
+                <p className="text-sm font-medium mb-1">{testimonial.author}</p>
+                <p className="text-xs text-muted-foreground">
+                  {testimonial.position}
+                </p>
               </div>
             </div>
           ))}

@@ -32,24 +32,24 @@ const collections = [
 
 export const CollectionsSection = () => {
   return (
-    <section className="section-gap bg-card">
-      <div className="container-wide">
+    <section className="py-20 lg:py-32 bg-card">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Header */}
-        <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 lg:mb-24">
+        <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-20">
           <div>
-            <p className="text-overline mb-6">Наши миры</p>
-            <h2 className="heading-h2">Кураторские коллекции</h2>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-6">Наши миры</p>
+            <h2 className="text-3xl lg:text-5xl font-light tracking-tight">Кураторские коллекции</h2>
           </div>
           <Link 
             to="/collections" 
-            className="mt-6 lg:mt-0 btn-ghost"
+            className="mt-6 lg:mt-0 inline-flex text-[10px] uppercase tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors duration-300"
           >
             Все коллекции
           </Link>
         </AnimatedSection>
 
         {/* Collections Grid */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {collections.map((collection) => (
             <StaggerItem key={collection.id}>
               <Link 
@@ -57,25 +57,25 @@ export const CollectionsSection = () => {
                 className="group block relative"
               >
                 {/* Image */}
-                <div className="aspect-[4/5] overflow-hidden mb-8">
+                <div className="aspect-[4/5] overflow-hidden mb-6">
                   <img
                     src={collection.image}
                     alt={collection.name}
-                    className="w-full h-full object-cover img-hover"
+                    className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
                   />
                 </div>
                 
                 {/* Content */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-xs font-medium uppercase tracking-[0.4em] mb-3">
+                    <h3 className="text-xs font-medium uppercase tracking-[0.3em] mb-2">
                       {collection.name}
                     </h3>
-                    <p className="text-body-sm max-w-[200px]">
+                    <p className="text-sm font-light text-muted-foreground max-w-[200px] leading-relaxed">
                       {collection.description}
                     </p>
                   </div>
-                  <button className="w-10 h-10 border border-border flex items-center justify-center transition-all duration-300 group-hover:bg-foreground group-hover:text-background group-hover:border-foreground">
+                  <button className="w-10 h-10 border border-border flex items-center justify-center transition-all duration-300 group-hover:bg-foreground group-hover:text-background group-hover:border-foreground flex-shrink-0">
                     <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
                   </button>
                 </div>

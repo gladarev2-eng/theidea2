@@ -1,61 +1,53 @@
 import { Link } from 'react-router-dom';
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
-
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import manufacturingImg from '@/assets/manufacturing.jpg';
-
-const stats = [
-  { number: '12+', label: 'лет на рынке' },
-  { number: '5000+', label: 'довольных клиентов' },
-  { number: '100%', label: 'своё производство' },
-];
 
 export const IntroSection = () => {
   return (
-    <section className="section-padding bg-card">
-      <div className="container-wide">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section className="py-20 lg:py-32 bg-background">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           {/* Text Content */}
-          <AnimatedSection>
-            <p className="text-caption mb-4">О компании</p>
-            <h2 className="heading-h2 mb-6">
-              Создаём мебель, которая вдохновляет
-            </h2>
-            <p className="text-body text-muted-foreground mb-8">
-              THE IDEA — петербургская мастерская, где каждый предмет мебели создаётся 
-              с особым вниманием к деталям. Мы объединяем традиции ремесла с современным дизайном,
-              чтобы ваш дом стал отражением вашего стиля.
-            </p>
-            <Link 
-              to="/about" 
-              className="btn-primary"
-            >
-              О компании
-            </Link>
-          </AnimatedSection>
-
-          {/* Image */}
-          <AnimatedSection delay={0.15}>
-            <div className="relative rounded-lg overflow-hidden">
-              <img 
-                src={manufacturingImg} 
-                alt="Производство THE IDEA"
-                className="w-full h-[400px] lg:h-[500px] object-cover"
-              />
-            </div>
-          </AnimatedSection>
+          <div className="lg:col-span-7">
+            <AnimatedSection>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-8">О бренде</p>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light tracking-tight leading-[1.05] uppercase mb-8">
+                12 лет<br />
+                собственного<br />
+                дизайна в<br />
+                Санкт-Петербурге
+              </h2>
+            </AnimatedSection>
+          </div>
+          
+          {/* Description */}
+          <div className="lg:col-span-5 lg:pt-16">
+            <AnimatedSection delay={0.1}>
+              <p className="text-lg font-light text-muted-foreground leading-relaxed mb-8 max-w-md">
+                Мы создаём объекты, которые становятся основой интерьера. 
+                Наше производство — это симбиоз технологий и мастерства, 
+                где каждая деталь продумана до миллиметра.
+              </p>
+              <Link 
+                to="/about" 
+                className="inline-flex text-[10px] uppercase tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors duration-300"
+              >
+                Подробнее о нас
+              </Link>
+            </AnimatedSection>
+          </div>
         </div>
 
-        {/* Stats */}
-        <StaggerContainer className="grid grid-cols-3 gap-6 mt-16">
-          {stats.map((stat) => (
-            <StaggerItem key={stat.label}>
-              <div className="text-center p-6 bg-background rounded-lg">
-                <div className="stat-number text-primary">{stat.number}</div>
-                <div className="stat-label mt-2">{stat.label}</div>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        {/* Image */}
+        <AnimatedSection delay={0.2} className="mt-16 lg:mt-24">
+          <div className="aspect-[21/9] overflow-hidden">
+            <img
+              src={manufacturingImg}
+              alt="Производство THE IDEA"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );

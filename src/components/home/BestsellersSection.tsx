@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
@@ -11,100 +10,96 @@ import productChair from '@/assets/product-chair.jpg';
 const products = [
   {
     id: 1,
-    name: 'Диван Берген',
-    collection: 'Case',
-    price: '189 000 ₽',
+    name: 'Диван Case 3-местный',
+    category: 'Мягкая мебель',
+    price: '189 000',
     image: productSofa,
-    href: '/product/sofa-bergen',
+    href: '/product/sofa-case-3',
   },
   {
     id: 2,
-    name: 'Кресло Осло',
-    collection: 'Saga',
-    price: '78 000 ₽',
+    name: 'Кресло Saga Lounge',
+    category: 'Кресла',
+    price: '78 000',
     image: productArmchair,
-    href: '/product/armchair-oslo',
+    href: '/product/armchair-saga',
   },
   {
     id: 3,
-    name: 'Кровать Нордик',
-    collection: 'Case',
-    price: '156 000 ₽',
+    name: 'Кровать Bergen King',
+    category: 'Спальня',
+    price: '156 000',
     image: productBed,
-    href: '/product/bed-nordic',
+    href: '/product/bed-bergen',
   },
   {
     id: 4,
     name: 'Стул Копенгаген',
-    collection: 'Code',
-    price: '34 000 ₽',
+    category: 'Стулья',
+    price: '34 000',
     image: productChair,
     href: '/product/chair-copenhagen',
   },
 ];
 
-const ProductCard = ({ product }: { product: typeof products[0] }) => {
-  const [isLiked, setIsLiked] = useState(false);
-
-  return (
-    <Link to={product.href} className="group block">
-      <div className="card-base overflow-hidden">
-        <div className="relative aspect-[3/4] overflow-hidden bg-muted">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-cover img-hover"
-          />
-          
-          {/* Like Button */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              setIsLiked(!isLiked);
-            }}
-            className="absolute top-4 right-4 p-2 bg-card rounded-md shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-150"
-            aria-label="Добавить в избранное"
-          >
-            <Heart 
-              className={`w-4 h-4 transition-colors duration-150 ${
-                isLiked ? 'fill-primary text-primary' : 'text-foreground'
-              }`} 
-              strokeWidth={1.5} 
-            />
-          </button>
-        </div>
-
-        <div className="p-4">
-          <h3 className="heading-h6 mb-1">{product.name}</h3>
-          <p className="text-body-sm text-muted-foreground mb-2">{product.collection}</p>
-          <p className="text-body font-medium">{product.price}</p>
-        </div>
-      </div>
-    </Link>
-  );
-};
-
 export const BestsellersSection = () => {
   return (
-    <section className="section-padding bg-background">
-      <div className="container-wide">
-        <AnimatedSection className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+    <section className="py-20 lg:py-32 bg-background">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        {/* Header */}
+        <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-16">
           <div>
-            <p className="text-caption mb-4">Популярное</p>
-            <h2 className="heading-h2">Бестселлеры</h2>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-6">Выбор дизайнеров</p>
+            <h2 className="text-3xl lg:text-4xl font-light tracking-tight">Бестселлеры</h2>
           </div>
           <Link 
             to="/catalog"
-            className="mt-6 md:mt-0 text-body-sm text-primary font-medium hover:underline"
+            className="mt-6 lg:mt-0 inline-flex text-[10px] uppercase tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:border-muted-foreground hover:text-muted-foreground transition-colors duration-300"
           >
-            Смотреть все →
+            Весь каталог
           </Link>
         </AnimatedSection>
 
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Products Grid */}
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 lg:gap-x-6 gap-y-10 lg:gap-y-12">
           {products.map((product) => (
             <StaggerItem key={product.id}>
-              <ProductCard product={product} />
+              <Link to={product.href} className="group block">
+                {/* Image */}
+                <div className="aspect-[4/5] bg-muted overflow-hidden mb-5 relative">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
+                    style={{ filter: 'grayscale(0.15)' }}
+                    onMouseEnter={(e) => e.currentTarget.style.filter = 'grayscale(0)'}
+                    onMouseLeave={(e) => e.currentTarget.style.filter = 'grayscale(0.15)'}
+                  />
+                  {/* Like Button */}
+                  <button 
+                    className="absolute top-3 right-3 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Heart className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+                  </button>
+                </div>
+                
+                {/* Content */}
+                <div className="space-y-1">
+                  <h4 className="text-sm font-medium tracking-wide line-clamp-1">
+                    {product.name}
+                  </h4>
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-[0.15em]">
+                    {product.category}
+                  </p>
+                  <p className="text-sm font-medium pt-2">
+                    {product.price} ₽
+                  </p>
+                </div>
+              </Link>
             </StaggerItem>
           ))}
         </StaggerContainer>

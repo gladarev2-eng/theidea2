@@ -1,5 +1,5 @@
 import { Truck, Shield, Ruler, Headphones } from 'lucide-react';
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
+import { StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
 
 const advantages = [
   {
@@ -26,20 +26,20 @@ const advantages = [
 
 export const AdvantagesSection = () => {
   return (
-    <section className="section-gap bg-card border-y border-border">
-      <div className="container-wide">
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+    <section className="py-16 lg:py-20 bg-card border-y border-border">
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16">
           {advantages.map((advantage) => (
             <StaggerItem key={advantage.title}>
               <div className="text-center lg:text-left">
                 <advantage.icon 
-                  className="w-6 h-6 mb-4 mx-auto lg:mx-0 text-muted-foreground" 
+                  className="w-5 h-5 mb-4 mx-auto lg:mx-0 text-muted-foreground" 
                   strokeWidth={1} 
                 />
-                <h3 className="text-sm font-medium mb-2 tracking-wide">
+                <h3 className="text-xs font-medium uppercase tracking-[0.1em] mb-2">
                   {advantage.title}
                 </h3>
-                <p className="text-body-sm">
+                <p className="text-sm font-light text-muted-foreground">
                   {advantage.description}
                 </p>
               </div>
