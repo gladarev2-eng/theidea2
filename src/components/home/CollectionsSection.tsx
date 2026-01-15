@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AnimatedSection, AnimatedText } from '@/components/ui/AnimatedSection';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
 
 import heroLiving from '@/assets/hero-living-room.jpg';
 import heroBedroom from '@/assets/hero-bedroom.jpg';
@@ -31,11 +31,11 @@ const collections = [
 
 export const CollectionsSection = () => {
   return (
-    <section className="py-24 md:py-40 px-6 md:px-20 bg-card">
+    <section className="py-40 px-6 md:px-20 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {collections.map((collection, index) => (
-            <AnimatedSection key={collection.id} delay={index * 0.15}>
+            <AnimatedSection key={collection.id} delay={index * 0.1}>
               <Link 
                 to={collection.href}
                 className="group block cursor-pointer"
@@ -44,13 +44,13 @@ export const CollectionsSection = () => {
                   <img
                     src={collection.image}
                     alt={collection.name}
-                    className="w-full h-full object-cover img-hover"
+                    className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-110"
                   />
                 </div>
                 <h3 className="text-2xl font-light tracking-tight mb-2 uppercase">
                   {collection.name}
                 </h3>
-                <p className="text-xs text-muted-foreground uppercase tracking-widest">
+                <p className="text-xs text-gray-400 uppercase tracking-widest">
                   {collection.description}
                 </p>
               </Link>

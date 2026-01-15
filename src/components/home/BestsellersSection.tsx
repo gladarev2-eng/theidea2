@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, ArrowRight } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
 
 import productSofa from '@/assets/product-sofa.jpg';
@@ -55,7 +55,7 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover card-hover"
+          className="w-full h-full object-cover transition-transform duration-[2000ms] ease-out group-hover:scale-105"
         />
         
         {/* Like Button */}
@@ -64,7 +64,7 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
             e.preventDefault();
             setIsLiked(!isLiked);
           }}
-          className="absolute top-4 right-4 p-2 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-4 right-4 p-2 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           aria-label="Добавить в избранное"
         >
           <Heart 
@@ -76,10 +76,10 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
 
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="text-lg font-light mb-1 group-hover:opacity-60 transition-opacity">
+          <h3 className="text-lg font-light mb-1 group-hover:opacity-60 transition-opacity duration-300">
             {product.name}
           </h3>
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">
+          <p className="text-xs uppercase tracking-widest text-gray-400">
             {product.collection}
           </p>
         </div>
@@ -93,16 +93,16 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
 
 export const BestsellersSection = () => {
   return (
-    <section className="py-24 md:py-40 px-6 md:px-20 bg-background">
+    <section className="py-40 px-6 md:px-20 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-16">
           <AnimatedSection>
-            <h2 className="heading-section">Бестселлеры</h2>
+            <h2 className="text-4xl font-light tracking-tight">Бестселлеры</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <Link 
               to="/catalog" 
-              className="btn-link hidden md:inline-block"
+              className="text-xs uppercase tracking-widest border-b border-black pb-1 hover:opacity-60 transition-opacity duration-300"
             >
               Весь каталог
             </Link>
@@ -116,16 +116,6 @@ export const BestsellersSection = () => {
             </StaggerItem>
           ))}
         </StaggerContainer>
-
-        <AnimatedSection delay={0.4} className="mt-12 md:hidden text-center">
-          <Link 
-            to="/catalog" 
-            className="btn-link inline-flex items-center gap-2"
-          >
-            Весь каталог
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </AnimatedSection>
       </div>
     </section>
   );
