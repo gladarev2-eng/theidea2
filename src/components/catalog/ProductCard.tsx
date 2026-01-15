@@ -65,7 +65,7 @@ const ProductCard = ({ id, name, price, category, collection, images, badge }: P
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f3] mb-6">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#f5f5f3] mb-6">
           {/* Images with crossfade */}
           {images.map((image, index) => (
             <img
@@ -126,14 +126,14 @@ const ProductCard = ({ id, name, price, category, collection, images, badge }: P
         </div>
 
         {/* Product info */}
-        <div className="space-y-2">
+        <div className="space-y-3">
           <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-light">
             {collection}
           </p>
-          <h3 className="text-lg font-normal leading-snug tracking-tight">
+          <h3 className="text-xl font-light leading-snug tracking-tight">
             {name}
           </h3>
-          <p className="text-xl font-medium tracking-tight pt-1">
+          <p className="text-2xl font-medium tracking-tight pt-1">
             {formatPrice(price)}
           </p>
         </div>

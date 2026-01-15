@@ -8,12 +8,14 @@ interface Color {
   id: string;
   name: string;
   hex: string;
+  productId?: string;
 }
 
 interface Size {
   id: string;
   name: string;
   dimensions: string;
+  productId?: string;
 }
 
 interface ProductInfoProps {

@@ -260,41 +260,132 @@ const CollectionPage = () => {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 lg:py-32">
+      {/* Immersive Gallery */}
+      <section className="py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="aspect-[4/3] lg:aspect-auto lg:h-[600px]"
+          >
+            <img
+              src={collection.heroImage}
+              alt={`${collection.name} атмосфера`}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="aspect-[4/3] lg:aspect-auto lg:h-[600px]"
+          >
+            <img
+              src={collection.storyImage}
+              alt={`${collection.name} детали`}
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Design Principles */}
+      <section className="py-24 lg:py-32">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-16"
+            className="max-w-4xl mx-auto text-center mb-20"
           >
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
-              Особенности
+            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
+              Принципы дизайна
             </p>
-            <h2 className="text-3xl lg:text-4xl font-extralight tracking-tight">
-              Что делает {collection.name} особенной
+            <h2 className="text-3xl lg:text-5xl font-extralight tracking-tight mb-8">
+              Каждая деталь имеет значение
             </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Мы верим, что красота — в гармонии формы и функции. 
+              Каждый предмет коллекции {collection.name} спроектирован так, 
+              чтобы быть не только красивым, но и максимально удобным в повседневной жизни.
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {collection.features.map((feature, index) => (
-              <motion.div
-                key={feature}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center lg:text-left"
-              >
-                <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center mx-auto lg:mx-0 mb-4">
-                  <span className="text-lg font-light">{index + 1}</span>
-                </div>
-                <p className="font-medium">{feature}</p>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 rounded-full border border-border flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-extralight">01</span>
+              </div>
+              <h3 className="text-xl font-medium mb-3">Пропорции</h3>
+              <p className="text-muted-foreground">
+                Выверенные соотношения размеров создают визуальную гармонию 
+                и комфорт в использовании
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 rounded-full border border-border flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-extralight">02</span>
+              </div>
+              <h3 className="text-xl font-medium mb-3">Материалы</h3>
+              <p className="text-muted-foreground">
+                Только проверенные поставщики и материалы, которые 
+                со временем становятся только лучше
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 rounded-full border border-border flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-extralight">03</span>
+              </div>
+              <h3 className="text-xl font-medium mb-3">Функция</h3>
+              <p className="text-muted-foreground">
+                Продуманная эргономика и скрытые механизмы 
+                для максимального удобства
+              </p>
+            </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Quote / Statement */}
+      <section className="py-24 lg:py-32 bg-foreground text-background">
+        <div className="container-wide">
+          <motion.blockquote
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto text-center"
+          >
+            <p className="text-2xl lg:text-4xl font-extralight leading-relaxed mb-8">
+              «{collection.name} — это наша интерпретация современного стиля. 
+              Мы создали коллекцию, которая будет актуальна и через 10, и через 20 лет.»
+            </p>
+            <footer className="text-background/60">
+              <p className="font-medium text-background">Команда дизайнеров THE IDEA</p>
+            </footer>
+          </motion.blockquote>
         </div>
       </section>
 
