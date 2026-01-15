@@ -5,43 +5,41 @@ const advantages = [
   {
     icon: Truck,
     title: 'Доставка по России',
-    description: 'Бережная доставка до двери в любую точку страны',
+    description: 'Бережная доставка до двери',
   },
   {
     icon: Shield,
     title: 'Гарантия 5 лет',
-    description: 'Уверенность в качестве каждого предмета',
+    description: 'Уверенность в качестве',
   },
   {
     icon: Ruler,
     title: 'Индивидуальные размеры',
-    description: 'Мебель по вашим меркам без доплаты',
+    description: 'Мебель по вашим меркам',
   },
   {
     icon: Headphones,
     title: 'Персональный менеджер',
-    description: 'Сопровождение на каждом этапе заказа',
+    description: 'Сопровождение заказа',
   },
 ];
 
 export const AdvantagesSection = () => {
   return (
-    <section className="section-padding bg-card">
+    <section className="section-gap bg-card border-y border-border">
       <div className="container-wide">
-        <AnimatedSection className="text-center mb-12">
-          <p className="text-caption mb-4">Преимущества</p>
-          <h2 className="heading-h2">Почему выбирают нас</h2>
-        </AnimatedSection>
-
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {advantages.map((advantage) => (
             <StaggerItem key={advantage.title}>
-              <div className="card-base p-6 text-center h-full">
-                <div className="inline-flex items-center justify-center w-12 h-12 mb-4 bg-primary/10 rounded-lg">
-                  <advantage.icon className="w-6 h-6 text-primary" strokeWidth={1.5} />
-                </div>
-                <h3 className="heading-h6 mb-2">{advantage.title}</h3>
-                <p className="text-body-sm text-muted-foreground">
+              <div className="text-center lg:text-left">
+                <advantage.icon 
+                  className="w-6 h-6 mb-4 mx-auto lg:mx-0 text-muted-foreground" 
+                  strokeWidth={1} 
+                />
+                <h3 className="text-sm font-medium mb-2 tracking-wide">
+                  {advantage.title}
+                </h3>
+                <p className="text-body-sm">
                   {advantage.description}
                 </p>
               </div>
