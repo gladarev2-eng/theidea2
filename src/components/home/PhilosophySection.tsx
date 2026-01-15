@@ -50,7 +50,7 @@ export const PhilosophySection = () => {
 
           <Link 
             to="/about" 
-            className="inline-flex w-fit px-10 py-4 border border-foreground text-[11px] uppercase tracking-[0.2em] font-medium hover:bg-foreground hover:text-background transition-all duration-300"
+            className="inline-flex w-fit px-10 py-4 rounded-full border border-foreground text-[11px] uppercase tracking-[0.2em] font-medium hover:bg-foreground hover:text-background transition-all duration-300"
           >
             О производстве
           </Link>

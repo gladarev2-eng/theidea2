@@ -6,8 +6,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import heroLiving from '@/assets/hero-living-room.jpg';
 import heroBedroom from '@/assets/hero-bedroom.jpg';
 import heroDining from '@/assets/hero-dining.jpg';
-import productSofa from '@/assets/product-sofa.jpg';
-import productArmchair from '@/assets/product-armchair.jpg';
 
 const slides = [
   {
@@ -28,11 +26,6 @@ const slides = [
     overline: 'Премиальный комфорт',
     title: 'АРХИТЕКТУРА\nПРЕДМЕТА',
   },
-];
-
-const sideImages = [
-  { image: productSofa, alt: 'Диван' },
-  { image: productArmchair, alt: 'Кресло' },
 ];
 
 export const HeroSlider = () => {
@@ -94,53 +87,30 @@ export const HeroSlider = () => {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Main Layout with Side Images */}
-      <div className="absolute inset-0 flex">
-        {/* Main Hero Image */}
-        <div className="flex-1 relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0"
-            >
-              <div className="absolute inset-0 bg-black/30 z-10" />
-              <motion.img
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                className="w-full h-full object-cover"
-                initial={{ scale: 1 }}
-                animate={{ scale: 1.05 }}
-                transition={{ duration: 6, ease: 'linear' }}
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Side Preview Images - Desktop only */}
-        <div className="hidden xl:flex flex-col w-[280px] border-l border-white/10">
-          {sideImages.map((item, index) => (
-            <Link 
-              key={index}
-              to="/catalog"
-              className="flex-1 relative overflow-hidden group border-b border-white/10 last:border-b-0"
-            >
-              <img
-                src={item.image}
-                alt={item.alt}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Full-screen Background Image */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0"
+        >
+          <div className="absolute inset-0 bg-black/30 z-10" />
+          <motion.img
+            src={slides[currentSlide].image}
+            alt={slides[currentSlide].title}
+            className="w-full h-full object-cover"
+            initial={{ scale: 1 }}
+            animate={{ scale: 1.05 }}
+            transition={{ duration: 6, ease: 'linear' }}
+          />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Content */}
-      <div className="absolute inset-0 xl:right-[280px] z-20 flex flex-col items-center justify-center text-center text-white px-6">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-6">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -159,7 +129,7 @@ export const HeroSlider = () => {
             
             <Link
               to="/catalog"
-              className="inline-block bg-white text-foreground px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase hover:bg-foreground hover:text-white transition-all duration-300"
+              className="inline-block bg-white text-foreground px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase rounded-full hover:bg-foreground hover:text-white transition-all duration-300"
             >
               Перейти в каталог
             </Link>
@@ -168,7 +138,7 @@ export const HeroSlider = () => {
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-24 left-1/2 xl:left-[calc(50%-140px)] -translate-x-1/2 z-30 flex items-center gap-3">
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -188,7 +158,7 @@ export const HeroSlider = () => {
       {/* Scroll Indicator */}
       <button
         onClick={scrollToContent}
-        className="absolute bottom-8 left-1/2 xl:left-[calc(50%-140px)] -translate-x-1/2 z-30 text-white/40 hover:text-white/70 transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-white/40 hover:text-white/70 transition-colors"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

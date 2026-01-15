@@ -32,7 +32,7 @@ const collections = [
 export const CollectionsSection = () => {
   return (
     <section className="py-24 lg:py-40 bg-[#f8f8f6]">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         {/* Header */}
         <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 lg:mb-20">
           <div>

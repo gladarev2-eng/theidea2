@@ -27,7 +27,7 @@ const advantages = [
 export const AdvantagesSection = () => {
   return (
     <section className="py-20 lg:py-24 bg-background border-y border-border">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-20">
           {advantages.map((advantage) => (
             <StaggerItem key={advantage.title}>
