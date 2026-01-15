@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   id: string;
@@ -12,7 +13,7 @@ interface ProductCardProps {
   badge?: 'new' | 'hit';
 }
 
-const ProductCard = ({ name, price, collection, images, badge }: ProductCardProps) => {
+const ProductCard = ({ id, name, price, collection, images, badge }: ProductCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -23,7 +24,7 @@ const ProductCard = ({ name, price, collection, images, badge }: ProductCardProp
     if (isHovered && images.length > 1) {
       intervalRef.current = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % images.length);
-      }, 1200);
+      }, 1000);
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -54,80 +55,81 @@ const ProductCard = ({ name, price, collection, images, badge }: ProductCardProp
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="group cursor-pointer"
+      className="group"
     >
-      <div
-        className="relative aspect-[4/5] overflow-hidden bg-muted mb-5"
+      <Link
+        to={`/product/${id}`}
+        className="block"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Images with crossfade */}
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`${name} - изображение ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0'
-            } ${isHovered ? 'scale-105' : 'scale-100'}`}
-          />
-        ))}
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#f5f5f3] mb-6">
+          {/* Images with crossfade */}
+          {images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`${name} - изображение ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
+                index === currentImageIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          ))}
 
-        {/* Badge */}
-        {badge && (
-          <div className="absolute top-4 left-4 px-3 py-1.5 bg-background text-foreground text-xs uppercase tracking-[0.15em]">
-            {badgeLabels[badge]}
-          </div>
-        )}
+          {/* Badge */}
+          {badge && (
+            <div className="absolute top-5 left-5 px-3 py-1.5 bg-white text-foreground text-[10px] uppercase tracking-[0.2em] font-medium">
+              {badgeLabels[badge]}
+            </div>
+          )}
 
-        {/* Image indicators */}
-        {images.length > 1 && (
-          <div className={`absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCurrentImageIndex(index);
-                }}
-                className={`w-8 h-0.5 transition-all duration-300 ${
-                  index === currentImageIndex ? 'bg-white' : 'bg-white/40'
-                }`}
-              />
-            ))}
-          </div>
-        )}
+          {/* Image indicators */}
+          {images.length > 1 && (
+            <div className={`absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+              {images.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-6 h-[2px] transition-all duration-300 ${
+                    index === currentImageIndex ? 'bg-foreground' : 'bg-foreground/30'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
 
-        {/* Favorite button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsFavorite(!isFavorite);
-          }}
-          className={`absolute top-4 right-4 p-2.5 bg-background/80 backdrop-blur-sm transition-all duration-300 ${
-            isHovered || isFavorite ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <Heart
-            className={`w-5 h-5 transition-all duration-300 ${
-              isFavorite ? 'fill-foreground stroke-foreground' : 'stroke-foreground'
+          {/* Favorite button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsFavorite(!isFavorite);
+            }}
+            className={`absolute top-5 right-5 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
+              isHovered || isFavorite ? 'opacity-100' : 'opacity-0'
             }`}
-          />
-        </button>
-      </div>
+          >
+            <Heart
+              className={`w-4 h-4 transition-all duration-300 ${
+                isFavorite ? 'fill-foreground stroke-foreground' : 'stroke-foreground'
+              }`}
+              strokeWidth={1.5}
+            />
+          </button>
+        </div>
 
-      {/* Product info */}
-      <div className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          {collection}
-        </p>
-        <h3 className="text-base md:text-lg font-light leading-snug group-hover:opacity-70 transition-opacity duration-300">
-          {name}
-        </h3>
-        <p className="text-lg md:text-xl font-medium tracking-tight">
-          {formatPrice(price)}
-        </p>
-      </div>
+        {/* Product info */}
+        <div className="space-y-2">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground font-light">
+            {collection}
+          </p>
+          <h3 className="text-lg font-normal leading-snug tracking-tight">
+            {name}
+          </h3>
+          <p className="text-xl font-medium tracking-tight pt-1">
+            {formatPrice(price)}
+          </p>
+        </div>
+      </Link>
     </motion.div>
   );
 };
