@@ -1,51 +1,58 @@
 import { Link } from 'react-router-dom';
-import { AnimatedSection, AnimatedText } from '@/components/ui/AnimatedSection';
-import { ArrowRight, MapPin } from 'lucide-react';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
+
+import heroBedroom from '@/assets/hero-bedroom.jpg';
+import heroDining from '@/assets/hero-dining.jpg';
+import manufacturingImg from '@/assets/manufacturing.jpg';
+import productSofa from '@/assets/product-sofa.jpg';
+
+const images = [heroBedroom, heroDining, manufacturingImg, productSofa];
 
 export const CTASection = () => {
   return (
-    <section className="section-padding bg-primary text-primary-foreground">
-      <div className="container-wide">
-        <div className="max-w-4xl mx-auto text-center">
-          <AnimatedText>
-            <p className="text-caption opacity-60 mb-6">Начните сегодня</p>
-          </AnimatedText>
-          
-          <AnimatedSection delay={0.1}>
-            <h2 className="font-display font-light text-4xl md:text-5xl lg:text-6xl tracking-tight">
-              Создадим интерьер вашей мечты вместе
-            </h2>
-          </AnimatedSection>
+    <section className="bg-black text-white py-24 md:py-40 px-6 md:px-20 text-center">
+      <AnimatedSection>
+        <h2 className="text-4xl md:text-6xl font-light mb-8 tracking-tight">
+          Вдохновение каждый день
+        </h2>
+      </AnimatedSection>
+      
+      <AnimatedSection delay={0.1}>
+        <p className="text-muted-foreground text-[10px] uppercase tracking-widest mb-16">
+          Следите за новинками в наших социальных сетях
+        </p>
+      </AnimatedSection>
 
-          <AnimatedSection delay={0.2}>
-            <p className="font-body font-light text-lg opacity-70 mt-8 max-w-2xl mx-auto">
-              Оставьте заявку на консультацию или посетите один из наших шоурумов, 
-              чтобы увидеть мебель вживую и получить персональные рекомендации.
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.3}>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
-              <Link
-                to="/contacts"
-                className="btn-premium border-primary-foreground text-primary-foreground"
-              >
-                <span className="flex items-center gap-2">
-                  Отправить заявку
-                  <ArrowRight className="w-4 h-4" />
-                </span>
-              </Link>
-              <Link
-                to="/showrooms"
-                className="inline-flex items-center gap-2 px-8 py-4 font-display text-sm tracking-[0.2em] uppercase text-primary-foreground hover:opacity-70 transition-opacity"
-              >
-                <MapPin className="w-4 h-4" />
-                <span>Найти шоурум</span>
-              </Link>
+      <AnimatedSection delay={0.2}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-16">
+          {images.map((img, index) => (
+            <div key={index} className="aspect-square overflow-hidden">
+              <img 
+                src={img} 
+                alt={`Вдохновение ${index + 1}`}
+                className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity duration-500"
+              />
             </div>
-          </AnimatedSection>
+          ))}
         </div>
-      </div>
+      </AnimatedSection>
+
+      <AnimatedSection delay={0.3}>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+          <Link
+            to="/contacts"
+            className="bg-white text-black px-12 py-5 text-[10px] uppercase tracking-[0.3em] hover:bg-accent transition-colors"
+          >
+            Отправить заявку
+          </Link>
+          <Link
+            to="/contacts"
+            className="border border-white/30 px-12 py-5 text-[10px] uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all"
+          >
+            Найти шоурум
+          </Link>
+        </div>
+      </AnimatedSection>
     </section>
   );
 };

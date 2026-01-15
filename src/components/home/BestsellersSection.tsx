@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Heart, ArrowRight } from 'lucide-react';
-import { AnimatedSection, AnimatedText, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
 
 import productSofa from '@/assets/product-sofa.jpg';
 import productArmchair from '@/assets/product-armchair.jpg';
@@ -13,7 +12,7 @@ const products = [
   {
     id: 1,
     name: 'Диван Берген',
-    collection: 'Скандинавия',
+    collection: 'Case',
     price: '189 000 ₽',
     image: productSofa,
     href: '/product/sofa-bergen',
@@ -21,7 +20,7 @@ const products = [
   {
     id: 2,
     name: 'Кресло Осло',
-    collection: 'Минимал',
+    collection: 'Saga',
     price: '78 000 ₽',
     image: productArmchair,
     href: '/product/armchair-oslo',
@@ -29,7 +28,7 @@ const products = [
   {
     id: 3,
     name: 'Кровать Нордик',
-    collection: 'Скандинавия',
+    collection: 'Case',
     price: '156 000 ₽',
     image: productBed,
     href: '/product/bed-nordic',
@@ -37,7 +36,7 @@ const products = [
   {
     id: 4,
     name: 'Стул Копенгаген',
-    collection: 'Модерн',
+    collection: 'Code',
     price: '34 000 ₽',
     image: productChair,
     href: '/product/chair-copenhagen',
@@ -52,13 +51,11 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
       to={product.href}
       className="group block"
     >
-      <div className="relative aspect-product overflow-hidden bg-card">
-        <motion.img
+      <div className="relative aspect-[4/5] overflow-hidden mb-6">
+        <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover"
-          whileHover={{ scale: 1.03 }}
-          transition={{ duration: 0.6 }}
+          className="w-full h-full object-cover card-hover"
         />
         
         {/* Like Button */}
@@ -67,24 +64,26 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
             e.preventDefault();
             setIsLiked(!isLiked);
           }}
-          className="absolute top-4 right-4 p-2 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-4 right-4 p-2 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity"
           aria-label="Добавить в избранное"
         >
           <Heart 
-            className={`w-5 h-5 transition-colors ${isLiked ? 'fill-accent text-accent' : 'text-foreground'}`} 
-            strokeWidth={1.5} 
+            className={`w-4 h-4 transition-colors ${isLiked ? 'fill-black text-black' : 'text-black'}`} 
+            strokeWidth={1} 
           />
         </button>
       </div>
 
-      <div className="mt-6">
-        <p className="text-caption text-muted-foreground">
-          {product.collection}
-        </p>
-        <h3 className="heading-card mt-1 group-hover:text-accent transition-colors">
-          {product.name}
-        </h3>
-        <p className="font-body font-light text-lg mt-2">
+      <div className="flex justify-between items-start">
+        <div>
+          <h3 className="text-lg font-light mb-1 group-hover:opacity-60 transition-opacity">
+            {product.name}
+          </h3>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">
+            {product.collection}
+          </p>
+        </div>
+        <p className="text-sm font-light">
           {product.price}
         </p>
       </div>
@@ -94,35 +93,39 @@ const ProductCard = ({ product }: { product: typeof products[0] }) => {
 
 export const BestsellersSection = () => {
   return (
-    <section className="section-padding bg-background">
-      <div className="container-wide">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <div>
-            <AnimatedText>
-              <p className="text-caption mb-4">Популярное</p>
-            </AnimatedText>
-            <AnimatedSection delay={0.1}>
-              <h2 className="heading-section">Бестселлеры</h2>
-            </AnimatedSection>
-          </div>
-          <AnimatedSection delay={0.2}>
+    <section className="py-24 md:py-40 px-6 md:px-20 bg-background">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-16">
+          <AnimatedSection>
+            <h2 className="heading-section">Бестселлеры</h2>
+          </AnimatedSection>
+          <AnimatedSection delay={0.1}>
             <Link 
               to="/catalog" 
-              className="link-underline inline-flex items-center gap-2 font-body font-light text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="btn-link hidden md:inline-block"
             >
               Весь каталог
-              <ArrowRight className="w-4 h-4" />
             </Link>
           </AnimatedSection>
         </div>
 
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
           {products.map((product) => (
             <StaggerItem key={product.id}>
               <ProductCard product={product} />
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        <AnimatedSection delay={0.4} className="mt-12 md:hidden text-center">
+          <Link 
+            to="/catalog" 
+            className="btn-link inline-flex items-center gap-2"
+          >
+            Весь каталог
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </AnimatedSection>
       </div>
     </section>
   );
