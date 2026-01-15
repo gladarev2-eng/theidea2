@@ -4,131 +4,8 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import ProductCard from '@/components/catalog/ProductCard';
 import CatalogSort, { SortOption } from '@/components/catalog/CatalogSort';
-import { X, SlidersHorizontal } from 'lucide-react';
-
-// Import product images
-import productSofa from '@/assets/product-sofa.jpg';
-import productChair from '@/assets/product-chair.jpg';
-import productArmchair from '@/assets/product-armchair.jpg';
-import productBed from '@/assets/product-bed.jpg';
-import heroLiving from '@/assets/hero-living-room.jpg';
-import heroBedroom from '@/assets/hero-bedroom.jpg';
-import heroDining from '@/assets/hero-dining.jpg';
-
-// Level 1: Main Categories
-const categories = [
-  { 
-    id: 'all', 
-    name: 'Все',
-    subcategories: []
-  },
-  { 
-    id: 'soft', 
-    name: 'Мягкая мебель',
-    subcategories: ['Диваны', 'Кресла', 'Пуфы']
-  },
-  { 
-    id: 'corpus', 
-    name: 'Корпус',
-    subcategories: ['Шкафы', 'Комоды', 'Тумбы']
-  },
-  { 
-    id: 'tables', 
-    name: 'Столы',
-    subcategories: ['Обеденные', 'Журнальные', 'Консоли']
-  },
-];
-
-// Level 3: Collections
-const collections = ['Case', 'Bergen', 'Saga', 'Code', 'Savi'];
-
-// Mock product data
-const mockProducts = [
-  {
-    id: '1',
-    name: 'Диван CASE 3-местный',
-    price: 145000,
-    category: 'soft',
-    subcategory: 'Диваны',
-    collection: 'Case',
-    images: [productSofa, heroLiving, heroDining],
-    badge: 'new' as const,
-  },
-  {
-    id: '2',
-    name: 'Комод CASE Slim',
-    price: 78000,
-    category: 'corpus',
-    subcategory: 'Комоды',
-    collection: 'Case',
-    images: [productArmchair, heroLiving, heroBedroom],
-    badge: 'hit' as const,
-  },
-  {
-    id: '3',
-    name: 'Стол BERGEN обеденный',
-    price: 92000,
-    category: 'tables',
-    subcategory: 'Обеденные',
-    collection: 'Bergen',
-    images: [productChair, heroDining, heroLiving],
-  },
-  {
-    id: '4',
-    name: 'Кровать SAVI с мягким изголовьем',
-    price: 120000,
-    category: 'soft',
-    subcategory: 'Диваны',
-    collection: 'Savi',
-    images: [productBed, heroBedroom, heroLiving],
-  },
-  {
-    id: '5',
-    name: 'Диван SAGA модульный',
-    price: 210000,
-    category: 'soft',
-    subcategory: 'Диваны',
-    collection: 'Saga',
-    images: [productSofa, heroLiving, heroDining, heroBedroom],
-  },
-  {
-    id: '6',
-    name: 'Буфет CODE Geometric',
-    price: 115000,
-    category: 'corpus',
-    subcategory: 'Шкафы',
-    collection: 'Code',
-    images: [productArmchair, heroDining, heroLiving],
-  },
-  {
-    id: '7',
-    name: 'Кресло SAGA Lounge',
-    price: 89000,
-    category: 'soft',
-    subcategory: 'Кресла',
-    collection: 'Saga',
-    images: [productArmchair, heroLiving, heroBedroom],
-  },
-  {
-    id: '8',
-    name: 'Стол CODE журнальный',
-    price: 54000,
-    category: 'tables',
-    subcategory: 'Журнальные',
-    collection: 'Code',
-    images: [productChair, heroLiving],
-    badge: 'new' as const,
-  },
-  {
-    id: '9',
-    name: 'Тумба BERGEN прикроватная',
-    price: 38000,
-    category: 'corpus',
-    subcategory: 'Тумбы',
-    collection: 'Bergen',
-    images: [productBed, heroBedroom],
-  },
-];
+import { X, SlidersHorizontal, ChevronRight } from 'lucide-react';
+import { categories, collections, mockProducts } from '@/data/catalogData';
 
 const defaultPriceRange: [number, number] = [0, 350000];
 
@@ -136,6 +13,7 @@ const Catalog = () => {
   // 3-level filters
   const [activeCategory, setActiveCategory] = useState('all');
   const [activeSubcategory, setActiveSubcategory] = useState<string | null>(null);
+  const [activeSubSubcategory, setActiveSubSubcategory] = useState<string | null>(null);
   const [activeCollection, setActiveCollection] = useState<string | null>(null);
   
   const [priceRange, setPriceRange] = useState<[number, number]>(defaultPriceRange);
@@ -143,11 +21,25 @@ const Catalog = () => {
   const [sortOption, setSortOption] = useState<SortOption>('default');
 
   // Get current category's subcategories
-  const currentSubcategories = categories.find(c => c.id === activeCategory)?.subcategories || [];
+  const currentCategory = categories.find(c => c.id === activeCategory);
+  const currentSubcategories = currentCategory?.subcategories || [];
+  
+  // Get current subcategory's sub-subcategories
+  const currentSubcategory = currentSubcategories.find(s => s.id === activeSubcategory);
+  const currentSubSubcategories = currentSubcategory?.subcategories || [];
+
+  // Get collections filtered by current category
+  const filteredCollections = useMemo(() => {
+    if (activeCategory === 'all') {
+      return collections;
+    }
+    return collections.filter(c => c.type === activeCategory);
+  }, [activeCategory]);
 
   const hasActiveFilters = 
     activeCategory !== 'all' || 
     activeSubcategory !== null ||
+    activeSubSubcategory !== null ||
     activeCollection !== null || 
     priceRange[0] !== defaultPriceRange[0] || 
     priceRange[1] !== defaultPriceRange[1];
@@ -155,6 +47,7 @@ const Catalog = () => {
   const clearAllFilters = () => {
     setActiveCategory('all');
     setActiveSubcategory(null);
+    setActiveSubSubcategory(null);
     setActiveCollection(null);
     setPriceRange(defaultPriceRange);
     setShowFilters(false);
@@ -162,7 +55,14 @@ const Catalog = () => {
 
   const handleCategoryChange = (categoryId: string) => {
     setActiveCategory(categoryId);
-    setActiveSubcategory(null); // Reset subcategory when category changes
+    setActiveSubcategory(null);
+    setActiveSubSubcategory(null);
+    setActiveCollection(null);
+  };
+
+  const handleSubcategoryChange = (subcategoryId: string | null) => {
+    setActiveSubcategory(subcategoryId);
+    setActiveSubSubcategory(null);
   };
 
   const filteredAndSortedProducts = useMemo(() => {
@@ -174,6 +74,9 @@ const Catalog = () => {
     }
     if (activeSubcategory) {
       result = result.filter((p) => p.subcategory === activeSubcategory);
+    }
+    if (activeSubSubcategory) {
+      result = result.filter((p) => p.subsubcategory === activeSubSubcategory);
     }
     if (activeCollection) {
       result = result.filter((p) => p.collection === activeCollection);
@@ -206,7 +109,7 @@ const Catalog = () => {
     }
 
     return result;
-  }, [activeCategory, activeSubcategory, activeCollection, priceRange, sortOption]);
+  }, [activeCategory, activeSubcategory, activeSubSubcategory, activeCollection, priceRange, sortOption]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -246,7 +149,7 @@ const Catalog = () => {
             <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
               <nav className="flex items-center gap-3 py-4 overflow-x-auto no-scrollbar">
                 <button
-                  onClick={() => setActiveSubcategory(null)}
+                  onClick={() => handleSubcategoryChange(null)}
                   className={`px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                     !activeSubcategory
                       ? 'bg-foreground text-background'
@@ -257,15 +160,18 @@ const Catalog = () => {
                 </button>
                 {currentSubcategories.map((sub) => (
                   <button
-                    key={sub}
-                    onClick={() => setActiveSubcategory(sub)}
-                    className={`px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
-                      activeSubcategory === sub
+                    key={sub.id}
+                    onClick={() => handleSubcategoryChange(sub.id)}
+                    className={`flex items-center gap-1.5 px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                      activeSubcategory === sub.id
                         ? 'bg-foreground text-background'
                         : 'bg-transparent text-muted-foreground hover:text-foreground border border-border'
                     }`}
                   >
-                    {sub}
+                    {sub.name}
+                    {sub.subcategories.length > 0 && (
+                      <ChevronRight className="w-3 h-3" />
+                    )}
                   </button>
                 ))}
               </nav>
@@ -274,7 +180,48 @@ const Catalog = () => {
         )}
       </AnimatePresence>
 
-      {/* Level 3: Collections + Filters */}
+      {/* Level 3: Sub-Subcategories */}
+      <AnimatePresence>
+        {activeSubcategory && currentSubSubcategories.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="border-b border-border bg-muted/50"
+          >
+            <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+              <nav className="flex items-center gap-3 py-3 overflow-x-auto no-scrollbar">
+                <button
+                  onClick={() => setActiveSubSubcategory(null)}
+                  className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                    !activeSubSubcategory
+                      ? 'bg-foreground text-background'
+                      : 'bg-transparent text-muted-foreground hover:text-foreground border border-border/50'
+                  }`}
+                >
+                  Все
+                </button>
+                {currentSubSubcategories.map((subsub) => (
+                  <button
+                    key={subsub.id}
+                    onClick={() => setActiveSubSubcategory(subsub.id)}
+                    className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                      activeSubSubcategory === subsub.id
+                        ? 'bg-foreground text-background'
+                        : 'bg-transparent text-muted-foreground hover:text-foreground border border-border/50'
+                    }`}
+                  >
+                    {subsub.name}
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Collections + Filters */}
       <div className="border-b border-border bg-background">
         <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
           <div className="flex items-center justify-between py-4">
@@ -288,19 +235,19 @@ const Catalog = () => {
                     : 'border border-border hover:border-foreground bg-transparent'
                 }`}
               >
-                Все
+                Все коллекции
               </button>
-              {collections.map((collection) => (
+              {filteredCollections.map((collection) => (
                 <button
-                  key={collection}
-                  onClick={() => setActiveCollection(activeCollection === collection ? null : collection)}
+                  key={collection.id}
+                  onClick={() => setActiveCollection(activeCollection === collection.id ? null : collection.id)}
                   className={`px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
-                    activeCollection === collection
+                    activeCollection === collection.id
                       ? 'bg-foreground text-background'
                       : 'border border-border hover:border-foreground bg-transparent'
                   }`}
                 >
-                  {collection}
+                  {collection.name}
                 </button>
               ))}
             </div>
