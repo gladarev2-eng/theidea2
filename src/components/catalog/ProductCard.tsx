@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useFavorites } from '@/contexts/FavoritesContext';
 
 interface ProductCardProps {
   id: string;
@@ -13,11 +14,12 @@ interface ProductCardProps {
   badge?: 'new' | 'hit';
 }
 
-const ProductCard = ({ id, name, price, collection, images, badge }: ProductCardProps) => {
+const ProductCard = ({ id, name, price, category, collection, images, badge }: ProductCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const isItemFavorite = isFavorite(id);
 
   // Auto-scroll images on hover
   useEffect(() => {
@@ -102,15 +104,21 @@ const ProductCard = ({ id, name, price, collection, images, badge }: ProductCard
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setIsFavorite(!isFavorite);
+              toggleFavorite({
+                id,
+                name,
+                price,
+                collection,
+                image: images[0],
+              });
             }}
             className={`absolute top-5 right-5 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300 ${
-              isHovered || isFavorite ? 'opacity-100' : 'opacity-0'
+              isHovered || isItemFavorite ? 'opacity-100' : 'opacity-0'
             }`}
           >
             <Heart
               className={`w-4 h-4 transition-all duration-300 ${
-                isFavorite ? 'fill-foreground stroke-foreground' : 'stroke-foreground'
+                isItemFavorite ? 'fill-foreground stroke-foreground' : 'stroke-foreground'
               }`}
               strokeWidth={1.5}
             />

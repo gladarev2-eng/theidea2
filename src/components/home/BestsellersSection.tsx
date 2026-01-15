@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
+import { useFavorites } from '@/contexts/FavoritesContext';
 
 import productSofa from '@/assets/product-sofa.jpg';
 import productArmchair from '@/assets/product-armchair.jpg';
@@ -12,42 +13,43 @@ import heroBedroom from '@/assets/hero-bedroom.jpg';
 
 const products = [
   {
-    id: 1,
+    id: 'sofa-case-3',
     name: 'Диван Case 3-местный',
     collection: 'Case',
-    price: '189 000',
+    price: 189000,
     images: [productSofa, heroLiving],
     href: '/product/sofa-case-3',
     badge: 'new' as const,
   },
   {
-    id: 2,
+    id: 'armchair-saga',
     name: 'Кресло Saga Lounge',
     collection: 'Saga',
-    price: '78 000',
+    price: 78000,
     images: [productArmchair, heroBedroom],
     href: '/product/armchair-saga',
     badge: 'hit' as const,
   },
   {
-    id: 3,
+    id: 'bed-bergen',
     name: 'Кровать Bergen King',
     collection: 'Bergen',
-    price: '156 000',
+    price: 156000,
     images: [productBed, heroBedroom],
     href: '/product/bed-bergen',
   },
   {
-    id: 4,
+    id: 'chair-copenhagen',
     name: 'Стул Копенгаген',
     collection: 'Copenhagen',
-    price: '34 000',
+    price: 34000,
     images: [productChair, heroLiving],
     href: '/product/chair-copenhagen',
   },
 ];
 
 const ProductCardHome = ({ 
+  id,
   name, 
   collection, 
   price, 
@@ -58,6 +60,12 @@ const ProductCardHome = ({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const isItemFavorite = isFavorite(id);
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
+  };
 
   useEffect(() => {
     if (isHovered && images.length > 1) {
@@ -116,13 +124,25 @@ const ProductCardHome = ({
         )}
         
         <button 
-          className={`absolute top-4 right-4 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute top-4 right-4 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center transition-opacity duration-300 ${isHovered || isItemFavorite ? 'opacity-100' : 'opacity-0'}`}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            toggleFavorite({
+              id,
+              name,
+              price,
+              collection,
+              image: images[0],
+            });
           }}
         >
-          <Heart className="w-4 h-4 text-foreground" strokeWidth={1.5} />
+          <Heart 
+            className={`w-4 h-4 transition-all duration-300 ${
+              isItemFavorite ? 'fill-foreground stroke-foreground' : 'stroke-foreground'
+            }`} 
+            strokeWidth={1.5} 
+          />
         </button>
       </div>
       
@@ -134,7 +154,7 @@ const ProductCardHome = ({
           {name}
         </h4>
         <p className="text-lg font-medium pt-1">
-          {price} ₽
+          {formatPrice(price)}
         </p>
       </div>
     </Link>
