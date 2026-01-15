@@ -5,7 +5,7 @@ import heroLiving from '@/assets/hero-living-room.jpg';
 export const EcosystemSection = () => {
   return (
     <section className="py-24 lg:py-40 bg-[#f8f8f6]">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           {/* Text */}
           <AnimatedSection className="order-2 lg:order-1">
@@ -18,7 +18,7 @@ export const EcosystemSection = () => {
             </p>
             <Link 
               to="/catalog" 
-              className="inline-flex px-10 py-4 border border-foreground text-[11px] uppercase tracking-[0.2em] font-medium hover:bg-foreground hover:text-background transition-all duration-300"
+              className="inline-flex px-10 py-4 rounded-full border border-foreground text-[11px] uppercase tracking-[0.2em] font-medium hover:bg-foreground hover:text-background transition-all duration-300"
             >
               В каталог
             </Link>

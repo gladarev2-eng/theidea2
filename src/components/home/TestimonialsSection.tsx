@@ -43,7 +43,7 @@ export const TestimonialsSection = () => {
 
   return (
     <section className="py-24 lg:py-40 bg-background overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
           <div>
             <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6 font-light">Отзывы</p>
@@ -52,13 +52,13 @@ export const TestimonialsSection = () => {
           <div className="flex items-center gap-3 mt-8 lg:mt-0">
             <button
               onClick={() => scroll('left')}
-              className="w-12 h-12 border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
             >
               <ChevronLeft className="w-5 h-5" strokeWidth={1} />
             </button>
             <button
               onClick={() => scroll('right')}
-              className="w-12 h-12 border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
+              className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
             >
               <ChevronRight className="w-5 h-5" strokeWidth={1} />
             </button>
@@ -69,12 +69,12 @@ export const TestimonialsSection = () => {
       <AnimatedSection delay={0.15}>
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto no-scrollbar px-6 lg:px-12"
+          className="flex gap-6 overflow-x-auto no-scrollbar px-6 lg:px-16"
         >
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="flex-shrink-0 w-[320px] sm:w-[420px] lg:w-[520px] p-8 lg:p-12 border border-border bg-background"
+              className="flex-shrink-0 w-[320px] sm:w-[420px] lg:w-[520px] p-8 lg:p-12 border border-border bg-background rounded-2xl"
             >
               <p className="text-lg lg:text-xl font-light leading-relaxed mb-10">
                 "{testimonial.text}"

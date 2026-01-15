@@ -48,7 +48,6 @@ const products = [
 ];
 
 const ProductCardHome = ({ 
-  id, 
   name, 
   collection, 
   price, 
@@ -98,7 +97,7 @@ const ProductCardHome = ({
         ))}
         
         {badge && (
-          <div className="absolute top-4 left-4 px-3 py-1.5 bg-white text-foreground text-[10px] uppercase tracking-[0.15em] font-medium">
+          <div className="absolute top-4 left-4 px-3 py-1.5 bg-white text-foreground text-[10px] uppercase tracking-[0.15em] font-medium rounded-full">
             {badgeLabels[badge]}
           </div>
         )}
@@ -117,7 +116,7 @@ const ProductCardHome = ({
         )}
         
         <button 
-          className={`absolute top-4 right-4 w-9 h-9 bg-white/90 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute top-4 right-4 w-9 h-9 bg-white/90 rounded-full flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -145,7 +144,7 @@ const ProductCardHome = ({
 export const BestsellersSection = () => {
   return (
     <section className="py-24 lg:py-40 bg-background">
-      <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
         {/* Header */}
         <AnimatedSection className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 lg:mb-20">
           <div>
