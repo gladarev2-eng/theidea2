@@ -44,7 +44,9 @@ export const Header = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'glass py-4' : 'bg-transparent py-6'
+          isScrolled 
+            ? 'bg-[#F5F5F3]/90 backdrop-blur-xl py-4' 
+            : 'bg-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-20">
@@ -52,7 +54,9 @@ export const Header = () => {
             {/* Logo */}
             <Link 
               to="/" 
-              className="text-xl tracking-[0.3em] font-light uppercase"
+              className={`text-lg tracking-[0.3em] font-light uppercase transition-colors duration-300 ${
+                isScrolled ? 'text-black' : 'text-white'
+              }`}
             >
               THE IDEA
             </Link>
@@ -63,7 +67,9 @@ export const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="nav-link"
+                  className={`text-[11px] uppercase tracking-[0.15em] font-light hover:opacity-60 transition-opacity duration-300 ${
+                    isScrolled ? 'text-black' : 'text-white'
+                  }`}
                 >
                   {item.name}
                 </Link>
@@ -75,14 +81,18 @@ export const Header = () => {
               {/* Phone - Desktop only */}
               <a 
                 href="tel:+78002225043" 
-                className="hidden md:block text-[11px] font-light tracking-wide hover:opacity-60 transition-opacity"
+                className={`hidden md:block text-[11px] font-light tracking-wide hover:opacity-60 transition-opacity duration-300 ${
+                  isScrolled ? 'text-black' : 'text-white'
+                }`}
               >
                 8 (800) 222-50-43
               </a>
 
               {/* Favorite */}
               <button 
-                className="p-2 hover:opacity-60 transition-opacity"
+                className={`p-2 hover:opacity-60 transition-opacity duration-300 ${
+                  isScrolled ? 'text-black' : 'text-white'
+                }`}
                 aria-label="Избранное"
               >
                 <Heart className="w-5 h-5" strokeWidth={1} />
@@ -91,7 +101,7 @@ export const Header = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2"
+                className={`lg:hidden p-2 ${isScrolled ? 'text-black' : 'text-white'}`}
                 aria-label="Меню"
               >
                 {isMobileMenuOpen ? (
@@ -113,7 +123,7 @@ export const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background flex flex-col p-8 pt-32 lg:hidden"
+            className="fixed inset-0 z-40 bg-[#F5F5F3] flex flex-col p-8 pt-32 lg:hidden"
           >
             <div className="flex flex-col gap-8">
               {navigation.map((item, index) => (
@@ -125,7 +135,7 @@ export const Header = () => {
                 >
                   <Link
                     to={item.href}
-                    className="mobile-nav-link block"
+                    className="text-4xl font-light tracking-tighter block hover:opacity-60 transition-opacity duration-300"
                   >
                     {item.name}
                   </Link>
@@ -137,9 +147,9 @@ export const Header = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="mt-auto pt-12 border-t border-black/5 space-y-4"
+              className="mt-auto pt-12 border-t border-black/10 space-y-4"
             >
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-gray-400">
                 Связаться с нами
               </p>
               <a 
@@ -148,7 +158,7 @@ export const Header = () => {
               >
                 8 (800) 222-50-43
               </a>
-              <button className="w-full border border-black py-4 text-[10px] uppercase tracking-widest mt-4 hover:bg-black hover:text-white transition-colors">
+              <button className="w-full border border-black py-4 text-[10px] uppercase tracking-widest mt-4 hover:bg-black hover:text-white transition-colors duration-300">
                 Заказать звонок
               </button>
             </motion.div>

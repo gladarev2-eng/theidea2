@@ -43,24 +43,24 @@ export const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-24 md:py-40 bg-muted overflow-hidden">
+    <section className="py-40 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-20">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <AnimatedSection>
-            <h2 className="heading-section">Отзывы клиентов</h2>
+            <h2 className="text-4xl font-light tracking-tight">Отзывы клиентов</h2>
           </AnimatedSection>
           <AnimatedSection delay={0.1}>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => scroll('left')}
-                className="p-4 border border-border hover:bg-card transition-colors"
+                className="p-4 border border-black/10 hover:bg-black hover:text-white transition-colors duration-300"
                 aria-label="Предыдущий отзыв"
               >
                 <ChevronLeft className="w-5 h-5" strokeWidth={1} />
               </button>
               <button
                 onClick={() => scroll('right')}
-                className="p-4 border border-border hover:bg-card transition-colors"
+                className="p-4 border border-black/10 hover:bg-black hover:text-white transition-colors duration-300"
                 aria-label="Следующий отзыв"
               >
                 <ChevronRight className="w-5 h-5" strokeWidth={1} />
@@ -84,13 +84,13 @@ export const TestimonialsSection = () => {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex-shrink-0 w-[85vw] md:w-[550px] snap-start"
             >
-              <div className="bg-card p-8 md:p-12 h-full">
+              <div className="bg-[#F5F5F3] p-8 md:p-12 h-full">
                 <blockquote className="text-xl md:text-2xl font-light leading-relaxed mb-8">
                   "{testimonial.text}"
                 </blockquote>
-                <div className="pt-6 border-t border-border">
+                <div className="pt-6 border-t border-black/10">
                   <p className="text-sm font-light">{testimonial.author}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-gray-400 mt-1">
                     {testimonial.location}
                   </p>
                 </div>
