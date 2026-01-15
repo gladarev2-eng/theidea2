@@ -15,113 +15,150 @@ import heroLiving from '@/assets/hero-living-room.jpg';
 import heroBedroom from '@/assets/hero-bedroom.jpg';
 import heroDining from '@/assets/hero-dining.jpg';
 
+// Categories with subcategories
+const categoriesData = [
+  { 
+    name: 'Мягкая мебель', 
+    subcategories: ['Диваны', 'Кресла', 'Пуфы', 'Банкетки'] 
+  },
+  { 
+    name: 'Корпус', 
+    subcategories: ['Шкафы', 'Комоды', 'Тумбы', 'Стеллажи'] 
+  },
+  { 
+    name: 'Столы', 
+    subcategories: ['Обеденные', 'Журнальные', 'Консоли', 'Письменные'] 
+  },
+  { 
+    name: 'Кровати', 
+    subcategories: ['Двуспальные', 'Односпальные', 'Детские'] 
+  },
+];
+
+const collections = ['Case', 'Bergen', 'Saga', 'Code', 'Savi'];
+
 // Mock product data
 const mockProducts = [
   {
     id: '1',
-    name: 'Диван Oslo трёхместный с подлокотниками',
+    name: 'Диван CASE 3-местный',
     price: 245000,
-    category: 'Диваны',
-    collection: 'Oslo',
+    category: 'Мягкая мебель',
+    subcategory: 'Диваны',
+    collection: 'Case',
     images: [productSofa, heroLiving, heroDining],
+    badge: 'new' as const,
   },
   {
     id: '2',
-    name: 'Кресло Copenhagen с высокой спинкой',
+    name: 'Кресло BERGEN с высокой спинкой',
     price: 89000,
-    category: 'Кресла',
-    collection: 'Copenhagen',
+    category: 'Мягкая мебель',
+    subcategory: 'Кресла',
+    collection: 'Bergen',
     images: [productArmchair, heroLiving],
+    badge: 'hit' as const,
   },
   {
     id: '3',
-    name: 'Стул Bergen обеденный',
-    price: 34500,
-    category: 'Стулья',
+    name: 'Стол BERGEN обеденный',
+    price: 92000,
+    category: 'Столы',
+    subcategory: 'Обеденные',
     collection: 'Bergen',
-    images: [productChair, heroDining],
+    images: [productChair, heroDining, heroLiving],
   },
   {
     id: '4',
-    name: 'Кровать Stockholm с мягким изголовьем',
+    name: 'Кровать SAVI с мягким изголовьем',
     price: 178000,
     category: 'Кровати',
-    collection: 'Stockholm',
+    subcategory: 'Двуспальные',
+    collection: 'Savi',
     images: [productBed, heroBedroom],
   },
   {
     id: '5',
-    name: 'Диван Oslo двухместный',
-    price: 195000,
-    category: 'Диваны',
-    collection: 'Oslo',
-    images: [productSofa, heroLiving],
+    name: 'Диван SAGA модульный',
+    price: 210000,
+    category: 'Мягкая мебель',
+    subcategory: 'Диваны',
+    collection: 'Saga',
+    images: [productSofa, heroLiving, heroDining],
   },
   {
     id: '6',
-    name: 'Кресло Bergen с деревянными ножками',
-    price: 67000,
-    category: 'Кресла',
-    collection: 'Bergen',
+    name: 'Буфет CODE Geometric',
+    price: 115000,
+    category: 'Корпус',
+    subcategory: 'Шкафы',
+    collection: 'Code',
     images: [productArmchair, heroDining],
   },
   {
     id: '7',
-    name: 'Стул Copenhagen мягкий',
-    price: 42000,
-    category: 'Стулья',
-    collection: 'Copenhagen',
+    name: 'Комод CASE Slim',
+    price: 78000,
+    category: 'Корпус',
+    subcategory: 'Комоды',
+    collection: 'Case',
     images: [productChair, heroLiving],
+    badge: 'hit' as const,
   },
   {
     id: '8',
-    name: 'Кровать Oslo с ящиками',
-    price: 215000,
+    name: 'Кровать BERGEN двуспальная',
+    price: 156000,
     category: 'Кровати',
-    collection: 'Oslo',
+    subcategory: 'Двуспальные',
+    collection: 'Bergen',
     images: [productBed, heroBedroom, heroLiving],
   },
   {
     id: '9',
-    name: 'Диван Copenhagen угловой',
-    price: 320000,
-    category: 'Диваны',
-    collection: 'Copenhagen',
-    images: [productSofa, heroLiving, heroDining],
+    name: 'Стол CODE журнальный',
+    price: 45000,
+    category: 'Столы',
+    subcategory: 'Журнальные',
+    collection: 'Code',
+    images: [productChair, heroLiving],
+    badge: 'new' as const,
   },
   {
     id: '10',
-    name: 'Кресло Stockholm для отдыха',
+    name: 'Кресло SAGA для отдыха',
     price: 95000,
-    category: 'Кресла',
-    collection: 'Stockholm',
+    category: 'Мягкая мебель',
+    subcategory: 'Кресла',
+    collection: 'Saga',
     images: [productArmchair, heroBedroom],
   },
   {
     id: '11',
-    name: 'Стул Oslo барный',
-    price: 28000,
-    category: 'Стулья',
-    collection: 'Oslo',
+    name: 'Консоль SAVI минималистичная',
+    price: 68000,
+    category: 'Столы',
+    subcategory: 'Консоли',
+    collection: 'Savi',
     images: [productChair, heroDining],
   },
   {
     id: '12',
-    name: 'Кровать Bergen двуспальная',
-    price: 156000,
-    category: 'Кровати',
-    collection: 'Bergen',
+    name: 'Тумба CASE прикроватная',
+    price: 34000,
+    category: 'Корпус',
+    subcategory: 'Тумбы',
+    collection: 'Case',
     images: [productBed, heroBedroom],
   },
 ];
 
-const categories = ['Диваны', 'Кресла', 'Стулья', 'Кровати'];
-const collections = ['Oslo', 'Copenhagen', 'Bergen', 'Stockholm'];
 const defaultPriceRange: [number, number] = [0, 350000];
 
 const Catalog = () => {
   const [filters, setFilters] = useState({
     category: null as string | null,
+    subcategory: null as string | null,
     collection: null as string | null,
     priceRange: defaultPriceRange,
   });
@@ -133,6 +170,9 @@ const Catalog = () => {
     // Apply filters
     if (filters.category) {
       result = result.filter((p) => p.category === filters.category);
+    }
+    if (filters.subcategory) {
+      result = result.filter((p) => p.subcategory === filters.subcategory);
     }
     if (filters.collection) {
       result = result.filter((p) => p.collection === filters.collection);
@@ -155,6 +195,13 @@ const Catalog = () => {
       case 'name-desc':
         result.sort((a, b) => b.name.localeCompare(a.name, 'ru'));
         break;
+      case 'new':
+        result.sort((a, b) => {
+          if (a.badge === 'new' && b.badge !== 'new') return -1;
+          if (a.badge !== 'new' && b.badge === 'new') return 1;
+          return 0;
+        });
+        break;
     }
 
     return result;
@@ -164,32 +211,17 @@ const Catalog = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <main className="pt-32 pb-24">
+      {/* Filters as second-level navigation */}
+      <CatalogFilters
+        filters={filters}
+        onFiltersChange={setFilters}
+        categories={categoriesData}
+        collections={collections}
+        priceRange={defaultPriceRange}
+      />
+
+      <main className="pb-24">
         <div className="container-wide">
-          {/* Page header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
-              Мебель
-            </h1>
-            <p className="text-muted-foreground font-light max-w-xl">
-              Коллекция премиальной мебели ручной работы для современного интерьера
-            </p>
-          </motion.div>
-
-          {/* Filters */}
-          <CatalogFilters
-            filters={filters}
-            onFiltersChange={setFilters}
-            categories={categories}
-            collections={collections}
-            priceRange={defaultPriceRange}
-          />
-
           {/* Sort and count */}
           <CatalogSort
             value={sortOption}
@@ -199,7 +231,7 @@ const Catalog = () => {
 
           {/* Products grid */}
           {filteredAndSortedProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
               {filteredAndSortedProducts.map((product) => (
                 <ProductCard key={product.id} {...product} />
               ))}
@@ -210,18 +242,19 @@ const Catalog = () => {
               animate={{ opacity: 1 }}
               className="text-center py-24"
             >
-              <p className="text-lg font-light text-muted-foreground mb-4">
-                По выбранным фильтрам товары не найдены
+              <p className="text-xl font-light text-muted-foreground mb-6">
+                По вашему запросу ничего не найдено
               </p>
               <button
                 onClick={() =>
                   setFilters({
                     category: null,
+                    subcategory: null,
                     collection: null,
                     priceRange: defaultPriceRange,
                   })
                 }
-                className="text-sm uppercase tracking-[0.15em] border-b border-foreground pb-1 hover:opacity-70 transition-opacity"
+                className="text-sm uppercase tracking-[0.15em] px-6 py-3 border border-foreground hover:bg-foreground hover:text-background transition-all duration-300"
               >
                 Сбросить фильтры
               </button>
