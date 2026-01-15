@@ -1,6 +1,7 @@
-@import '@fontsource/inter/300.css';
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
 
 @tailwind base;
 @tailwind components;
@@ -8,40 +9,65 @@
 
 @layer base {
   :root {
-    /* Reference Design System - Clean Minimal */
-    --background: 40 10% 96%; /* #F5F5F3 */
-    --foreground: 0 0% 10%; /* #1A1A1A */
+    /* Design System v1.0.0 Colors */
+    --background: 210 40% 98%; /* #F8FAFC */
+    --foreground: 222 47% 11%; /* #0F172A - Gray 900 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card: 0 0% 100%; /* #FFFFFF - Surface */
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 0 0% 0%;
+    --primary: 217 91% 60%; /* #2563EB */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 10% 96%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 215 16% 47%; /* #64748B */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 40 5% 92%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 210 40% 96%; /* #F1F5F9 - Gray 100 */
+    --muted-foreground: 215 25% 27%; /* #334155 - Gray 700 */
 
-    --accent: 30 30% 55%; /* Warm tan accent #D2B48C */
-    --accent-foreground: 0 0% 100%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
 
-    --destructive: 0 65% 50%;
+    --destructive: 0 84% 60%; /* #EF4444 - Error */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 0%;
+    --success: 160 84% 39%; /* #10B981 */
+    --warning: 38 92% 50%; /* #F59E0B */
 
-    --radius: 0px;
+    --border: 214 32% 91%; /* #CBD5E1 - Gray 300 */
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
 
-    /* Custom Properties */
-    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Border Radius */
+    --radius-sm: 2px;
+    --radius-md: 6px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+    --radius: 6px;
+
+    /* Spacing (8px base) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --space-16: 64px;
+
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-medium: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -54,39 +80,40 @@
   }
 
   .dark {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 95%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 95%;
+    --card: 217 33% 17%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 217 33% 17%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 215 25% 27%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 30 35% 60%;
-    --accent-foreground: 0 0% 0%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 0 0% 100%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
 
   html {
@@ -97,120 +124,251 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
   }
 }
 
 @layer components {
-  /* Container */
+  /* Container - max-width 1280px */
   .container-wide {
-    @apply max-w-7xl mx-auto px-6 md:px-20;
+    @apply max-w-[1280px] mx-auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
   }
 
-  /* Section Padding - Reference style */
+  @media (min-width: 768px) {
+    .container-wide {
+      padding-left: var(--space-8);
+      padding-right: var(--space-8);
+    }
+  }
+
+  /* Section Padding */
   .section-padding {
-    @apply py-24 md:py-40 px-6 md:px-20;
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
   }
 
-  /* Caption - 9-10px uppercase tracking-widest */
-  .text-caption {
-    @apply text-[10px] uppercase tracking-[0.4em] text-muted-foreground font-medium;
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: var(--space-16);
+      padding-bottom: var(--space-16);
+      padding-left: var(--space-8);
+      padding-right: var(--space-8);
+    }
   }
 
-  /* Hero Title - Massive, light weight, tight leading */
-  .hero-title {
-    @apply text-6xl md:text-[10rem] font-light tracking-tighter leading-[0.85];
+  /* Typography - H1: 48px, Bold, -0.02em */
+  .heading-h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
   }
 
-  /* Section Heading */
-  .heading-section {
-    @apply text-4xl md:text-5xl font-light tracking-tight leading-tight;
+  /* Typography - H2: 36px, Bold, -0.01em */
+  .heading-h2 {
+    font-size: 36px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
   }
 
-  /* Body Text */
+  /* Typography - H3: 30px, SemiBold */
+  .heading-h3 {
+    font-size: 30px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: hsl(var(--foreground));
+  }
+
+  /* Typography - H4: 24px, SemiBold */
+  .heading-h4 {
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: hsl(var(--foreground));
+  }
+
+  /* Typography - H5: 20px, SemiBold */
+  .heading-h5 {
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: hsl(var(--foreground));
+  }
+
+  /* Typography - H6: 18px, SemiBold */
+  .heading-h6 {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: hsl(var(--foreground));
+  }
+
+  /* Body Large: 18px */
+  .text-body-lg {
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: hsl(var(--foreground));
+  }
+
+  /* Body Medium: 16px (Default) */
   .text-body {
-    @apply text-base font-light leading-relaxed text-muted-foreground;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: hsl(var(--foreground));
   }
 
-  /* Button - Primary (filled) */
+  /* Body Small: 14px */
+  .text-body-sm {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Caption: 12px */
+  .text-caption {
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Button Text: 16px, Medium, 0.01em */
+  .text-button {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  /* Button - Primary */
   .btn-primary {
-    @apply inline-block bg-primary text-primary-foreground;
-    @apply px-12 py-5 text-[10px] uppercase tracking-[0.3em];
-    @apply hover:bg-accent transition-colors duration-300;
+    @apply inline-flex items-center justify-center;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Button - Secondary */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+  }
+
+  .btn-secondary:hover {
+    opacity: 0.9;
   }
 
   /* Button - Outline */
   .btn-outline {
-    @apply inline-block border border-current;
-    @apply px-12 py-5 text-[10px] uppercase tracking-[0.3em];
-    @apply hover:bg-primary hover:text-primary-foreground transition-all duration-300;
+    @apply inline-flex items-center justify-center;
+    border: 1px solid hsl(var(--border));
+    background-color: transparent;
+    color: hsl(var(--foreground));
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
   }
 
-  /* Button - Link with underline */
-  .btn-link {
-    @apply inline-block text-xs uppercase tracking-widest;
-    @apply border-b border-current pb-1;
-    @apply hover:opacity-60 transition-opacity duration-300;
+  .btn-outline:hover {
+    background-color: hsl(var(--muted));
   }
 
   /* Navigation Link */
   .nav-link {
-    @apply text-[11px] uppercase tracking-[0.15em] font-light;
-    @apply hover:opacity-60 transition-opacity duration-300;
+    font-size: 14px;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    transition: var(--transition-fast);
   }
 
-  /* Mobile Nav Link */
-  .mobile-nav-link {
-    @apply text-4xl font-light tracking-tighter;
-    @apply hover:opacity-60 transition-opacity duration-300;
+  .nav-link:hover {
+    color: hsl(var(--primary));
   }
 
-  /* Image Hover Scale */
+  /* Card Component */
+  .card-base {
+    background-color: hsl(var(--card));
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-medium);
+  }
+
+  .card-base:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Image Hover */
   .img-hover {
-    @apply transition-transform ease-out;
-    transition-duration: 2000ms;
+    transition: transform var(--transition-medium);
   }
 
   .group:hover .img-hover {
-    @apply scale-110;
-  }
-
-  /* Card Hover */
-  .card-hover {
-    @apply transition-transform ease-out;
-    transition-duration: 2000ms;
-  }
-
-  .group:hover .card-hover {
-    @apply scale-105;
+    transform: scale(1.05);
   }
 
   /* Footer */
-  .footer-dark {
-    @apply bg-black text-white;
+  .footer-section {
+    background-color: hsl(222 47% 11%);
+    color: hsl(210 40% 98%);
   }
 
-  /* Glass Header */
+  /* Glass Effect */
   .glass {
-    @apply bg-background/90 backdrop-blur-xl;
-  }
-
-  /* Aspect Ratios */
-  .aspect-product {
-    aspect-ratio: 3/4;
-  }
-
-  .aspect-collection {
-    aspect-ratio: 4/5;
+    background-color: hsl(var(--background) / 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   /* Stats */
   .stat-number {
-    @apply text-3xl md:text-4xl font-light mb-1;
+    font-size: 36px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: hsl(var(--foreground));
   }
 
   .stat-label {
-    @apply text-[9px] uppercase tracking-widest text-muted-foreground;
+    font-size: 14px;
+    font-weight: 400;
+    color: hsl(var(--muted-foreground));
   }
 }
 
