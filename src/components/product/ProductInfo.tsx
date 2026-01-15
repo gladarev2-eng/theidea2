@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Heart, Clock, Ruler, Download } from "lucide-react";
+import { Heart, Clock, Ruler, Download, ShoppingBag, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 interface Color {
   id: string;
@@ -15,9 +17,11 @@ interface Size {
 }
 
 interface ProductInfoProps {
+  id: string;
   name: string;
   collection: string;
   price: string;
+  priceNumber: number;
   description: string;
   colors: Color[];
   sizes: Size[];
@@ -29,12 +33,15 @@ interface ProductInfoProps {
   dimensions: string;
   isFavorite: boolean;
   onFavoriteToggle: () => void;
+  image: string;
 }
 
 const ProductInfo = ({
+  id,
   name,
   collection,
   price,
+  priceNumber,
   description,
   colors,
   sizes,
@@ -46,7 +53,29 @@ const ProductInfo = ({
   dimensions,
   isFavorite,
   onFavoriteToggle,
+  image,
 }: ProductInfoProps) => {
+  const { addItem, getItemQuantity } = useCart();
+  const itemInCart = getItemQuantity(id) > 0;
+
+  const handleAddToCart = () => {
+    addItem({
+      id,
+      name,
+      price: priceNumber,
+      collection,
+      image,
+      color: selectedColor.name,
+      size: selectedSize.name,
+    });
+    toast.success('Товар добавлен в корзину', {
+      action: {
+        label: 'Перейти',
+        onClick: () => window.location.href = '/cart',
+      },
+    });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -133,8 +162,21 @@ const ProductInfo = ({
 
       {/* Action Buttons */}
       <div className="space-y-4 pt-4">
-        <Button className="w-full h-14 rounded-full text-base">
-          Заказать
+        <Button 
+          className="w-full h-14 rounded-full text-base"
+          onClick={handleAddToCart}
+        >
+          {itemInCart ? (
+            <>
+              <Check className="w-5 h-5 mr-2" />
+              В корзине
+            </>
+          ) : (
+            <>
+              <ShoppingBag className="w-5 h-5 mr-2" />
+              Добавить в корзину
+            </>
+          )}
         </Button>
         
         <div className="flex gap-3">

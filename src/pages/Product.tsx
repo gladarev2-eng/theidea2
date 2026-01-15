@@ -107,9 +107,11 @@ const Product = () => {
             {/* Right - Sticky Product Info */}
             <div className="lg:sticky lg:top-28 lg:h-fit">
               <ProductInfo
+                id={productData.id}
                 name={productData.name}
                 collection={productData.collection}
                 price={formatPrice(productData.price)}
+                priceNumber={productData.price}
                 description={productData.description}
                 colors={productData.colors}
                 sizes={productData.sizes}
@@ -121,6 +123,7 @@ const Product = () => {
                 dimensions={selectedSize.dimensions}
                 isFavorite={isProductFavorite}
                 onFavoriteToggle={handleFavoriteToggle}
+                image={productData.images[0]}
               />
             </div>
           </div>
