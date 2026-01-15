@@ -13,18 +13,24 @@ const slides = [
     image: heroLiving,
     overline: 'Мебельное ателье — Санкт-Петербург',
     title: 'ЭСТЕТИКА\nПРОСТРАНСТВА',
+    primaryCTA: { text: 'В каталог', href: '/catalog' },
+    secondaryCTA: { text: 'Коллекции', href: '/collections' },
   },
   {
     id: 2,
     image: heroBedroom,
     overline: 'Коллекция 2024',
     title: 'ЧИСТАЯ\nФОРМА',
+    primaryCTA: { text: 'Смотреть коллекцию', href: '/collection/case' },
+    secondaryCTA: { text: 'Все коллекции', href: '/collections' },
   },
   {
     id: 3,
     image: heroDining,
     overline: 'Премиальный комфорт',
     title: 'АРХИТЕКТУРА\nПРЕДМЕТА',
+    primaryCTA: { text: 'Перейти в каталог', href: '/catalog' },
+    secondaryCTA: { text: 'О бренде', href: '/about' },
   },
 ];
 
@@ -127,12 +133,20 @@ export const HeroSlider = () => {
               {slides[currentSlide].title}
             </h1>
             
-            <Link
-              to="/catalog"
-              className="inline-block bg-white text-foreground px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase rounded-full hover:bg-foreground hover:text-white transition-all duration-300"
-            >
-              Перейти в каталог
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to={slides[currentSlide].primaryCTA.href}
+                className="inline-block bg-white text-foreground px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase rounded-full hover:bg-foreground hover:text-white transition-all duration-300"
+              >
+                {slides[currentSlide].primaryCTA.text}
+              </Link>
+              <Link
+                to={slides[currentSlide].secondaryCTA.href}
+                className="inline-block border border-white/40 text-white px-12 py-5 text-[11px] font-medium tracking-[0.25em] uppercase rounded-full hover:bg-white/10 transition-all duration-300"
+              >
+                {slides[currentSlide].secondaryCTA.text}
+              </Link>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>

@@ -1,18 +1,49 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Play } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import manufacturingImg from '@/assets/manufacturing.jpg';
 
 export const PhilosophySection = () => {
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  
+  // Video URL - can be updated with actual video
+  const videoUrl = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1";
+
   return (
     <section className="bg-background overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2">
-        {/* Image */}
-        <AnimatedSection className="h-[450px] lg:h-[750px] overflow-hidden">
-          <img
-            src={manufacturingImg}
-            alt="Производство THE IDEA"
-            className="w-full h-full object-cover"
-          />
+        {/* Image / Video */}
+        <AnimatedSection className="h-[450px] lg:h-[750px] overflow-hidden relative group">
+          {!isVideoPlaying ? (
+            <>
+              <img
+                src={manufacturingImg}
+                alt="Производство THE IDEA"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              {/* Video play overlay */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  onClick={() => setIsVideoPlaying(true)}
+                  className="w-24 h-24 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-white group/btn"
+                >
+                  <Play className="w-8 h-8 ml-1 text-foreground" fill="currentColor" />
+                </button>
+              </div>
+              <div className="absolute bottom-6 left-6 text-[11px] uppercase tracking-[0.3em] text-white font-light">
+                Смотреть видео о производстве
+              </div>
+            </>
+          ) : (
+            <iframe
+              src={videoUrl}
+              title="Видео о производстве THE IDEA"
+              className="w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          )}
         </AnimatedSection>
 
         {/* Content */}

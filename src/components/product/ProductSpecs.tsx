@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Download, FileBox } from "lucide-react";
+import { toast } from "sonner";
 
 interface Spec {
   label: string;
@@ -9,14 +10,69 @@ interface Spec {
 
 interface ProductSpecsProps {
   specs: Spec[];
+  productName?: string;
 }
 
-const ProductSpecs = ({ specs }: ProductSpecsProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const ProductSpecs = ({ specs, productName = "товар" }: ProductSpecsProps) => {
+  const [expandedSection, setExpandedSection] = useState<string | null>("specs");
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  const handle3DRequest = () => {
+    toast.success("Заявка на 3D-модель отправлена", {
+      description: "Мы свяжемся с вами в течение рабочего дня",
+    });
+  };
+
+  const careInstructions = [
+    "Протирайте пыль мягкой сухой тканью",
+    "Избегайте прямых солнечных лучей",
+    "Используйте специальные средства для натуральных материалов",
+    "При появлении пятен обращайтесь к специалистам",
+  ];
+
+  const deliveryInfo = [
+    { label: "Санкт-Петербург", value: "Бесплатно от 50 000 ₽" },
+    { label: "Москва", value: "Бесплатно от 100 000 ₽" },
+    { label: "Россия", value: "Рассчитывается индивидуально" },
+    { label: "Сборка", value: "Включена в стоимость" },
+  ];
 
   return (
     <section className="py-24">
       <div className="container-wide max-w-4xl">
+        {/* 3D Model Request */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-8 p-8 bg-muted/30 border border-border"
+        >
+          <div className="flex items-start justify-between gap-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <FileBox className="w-6 h-6" strokeWidth={1.5} />
+                <h3 className="text-lg font-medium">3D-модель для проекта</h3>
+              </div>
+              <p className="text-sm text-muted-foreground mb-0 lg:mb-0">
+                Получите 3D-модель в форматах 3ds, obj, fbx для использования в ваших проектах. 
+                Доступно для дизайнеров-партнёров.
+              </p>
+            </div>
+            <button
+              onClick={handle3DRequest}
+              className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-full border border-foreground text-[11px] uppercase tracking-[0.15em] font-medium hover:bg-foreground hover:text-background transition-all duration-300"
+            >
+              <Download className="w-4 h-4" />
+              Запросить 3D
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Technical Specs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -24,7 +80,7 @@ const ProductSpecs = ({ specs }: ProductSpecsProps) => {
           transition={{ duration: 0.6 }}
         >
           <button
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={() => toggleSection("specs")}
             className="w-full flex items-center justify-between py-6 border-b border-border group"
           >
             <h2 className="text-2xl font-light tracking-tight">
@@ -32,32 +88,34 @@ const ProductSpecs = ({ specs }: ProductSpecsProps) => {
             </h2>
             <ChevronDown
               className={`w-6 h-6 transition-transform duration-300 ${
-                isExpanded ? "rotate-180" : ""
+                expandedSection === "specs" ? "rotate-180" : ""
               }`}
             />
           </button>
 
-          <motion.div
-            initial={false}
-            animate={{
-              height: isExpanded ? "auto" : 0,
-              opacity: isExpanded ? 1 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden"
-          >
-            <div className="py-8 space-y-0">
-              {specs.map((spec, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between py-4 border-b border-border/50"
-                >
-                  <span className="text-muted-foreground">{spec.label}</span>
-                  <span className="font-medium">{spec.value}</span>
+          <AnimatePresence>
+            {expandedSection === "specs" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="py-8 space-y-0">
+                  {specs.map((spec, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between py-4 border-b border-border/50"
+                    >
+                      <span className="text-muted-foreground">{spec.label}</span>
+                      <span className="font-medium">{spec.value}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Care Instructions */}
@@ -69,13 +127,39 @@ const ProductSpecs = ({ specs }: ProductSpecsProps) => {
           className="mt-2"
         >
           <button
+            onClick={() => toggleSection("care")}
             className="w-full flex items-center justify-between py-6 border-b border-border group"
           >
             <h2 className="text-2xl font-light tracking-tight">
               Уход за изделием
             </h2>
-            <ChevronDown className="w-6 h-6" />
+            <ChevronDown
+              className={`w-6 h-6 transition-transform duration-300 ${
+                expandedSection === "care" ? "rotate-180" : ""
+              }`}
+            />
           </button>
+
+          <AnimatePresence>
+            {expandedSection === "care" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <ul className="py-8 space-y-4">
+                  {careInstructions.map((item, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Delivery */}
@@ -87,13 +171,42 @@ const ProductSpecs = ({ specs }: ProductSpecsProps) => {
           className="mt-2"
         >
           <button
+            onClick={() => toggleSection("delivery")}
             className="w-full flex items-center justify-between py-6 border-b border-border group"
           >
             <h2 className="text-2xl font-light tracking-tight">
               Доставка и сборка
             </h2>
-            <ChevronDown className="w-6 h-6" />
+            <ChevronDown
+              className={`w-6 h-6 transition-transform duration-300 ${
+                expandedSection === "delivery" ? "rotate-180" : ""
+              }`}
+            />
           </button>
+
+          <AnimatePresence>
+            {expandedSection === "delivery" && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="overflow-hidden"
+              >
+                <div className="py-8 space-y-0">
+                  {deliveryInfo.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between py-4 border-b border-border/50"
+                    >
+                      <span className="text-muted-foreground">{item.label}</span>
+                      <span className="font-medium">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>
