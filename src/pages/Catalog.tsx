@@ -116,14 +116,14 @@ const Catalog = () => {
       <Header />
 
       {/* Level 1: Main Categories */}
-      <div className="pt-20 border-b border-border sticky top-[72px] bg-background z-40">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-          <nav className="flex items-center gap-10 -mb-px overflow-x-auto no-scrollbar">
+      <div className="pt-16 sm:pt-20 border-b border-border sticky top-[56px] sm:top-[72px] bg-background z-40">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
+          <nav className="flex items-center gap-4 sm:gap-10 -mb-px overflow-x-auto no-scrollbar">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => handleCategoryChange(cat.id)}
-                className={`py-5 text-[11px] uppercase tracking-[0.25em] border-b-2 transition-all duration-300 whitespace-nowrap font-light ${
+                className={`py-3 sm:py-5 text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.25em] border-b-2 transition-all duration-300 whitespace-nowrap font-light ${
                   activeCategory === cat.id
                     ? 'border-foreground text-foreground'
                     : 'border-transparent text-muted-foreground hover:text-foreground'
@@ -146,11 +146,11 @@ const Catalog = () => {
             transition={{ duration: 0.3 }}
             className="border-b border-border bg-muted/30"
           >
-            <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-              <nav className="flex items-center gap-3 py-4 overflow-x-auto no-scrollbar">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
+              <nav className="flex items-center gap-2 sm:gap-3 py-3 sm:py-4 overflow-x-auto no-scrollbar">
                 <button
                   onClick={() => handleSubcategoryChange(null)}
-                  className={`px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                  className={`px-3 sm:px-5 py-2 sm:py-2.5 text-[9px] sm:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                     !activeSubcategory
                       ? 'bg-foreground text-background'
                       : 'bg-transparent text-muted-foreground hover:text-foreground border border-border'
@@ -162,7 +162,7 @@ const Catalog = () => {
                   <button
                     key={sub.id}
                     onClick={() => handleSubcategoryChange(sub.id)}
-                    className={`flex items-center gap-1.5 px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-3 sm:px-5 py-2 sm:py-2.5 text-[9px] sm:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                       activeSubcategory === sub.id
                         ? 'bg-foreground text-background'
                         : 'bg-transparent text-muted-foreground hover:text-foreground border border-border'
@@ -170,7 +170,7 @@ const Catalog = () => {
                   >
                     {sub.name}
                     {sub.subcategories.length > 0 && (
-                      <ChevronRight className="w-3 h-3" />
+                      <ChevronRight className="w-2.5 sm:w-3 h-2.5 sm:h-3" />
                     )}
                   </button>
                 ))}
@@ -190,11 +190,11 @@ const Catalog = () => {
             transition={{ duration: 0.3 }}
             className="border-b border-border bg-muted/50"
           >
-            <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-              <nav className="flex items-center gap-3 py-3 overflow-x-auto no-scrollbar">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
+              <nav className="flex items-center gap-2 sm:gap-3 py-2.5 sm:py-3 overflow-x-auto no-scrollbar">
                 <button
                   onClick={() => setActiveSubSubcategory(null)}
-                  className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[8px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                     !activeSubSubcategory
                       ? 'bg-foreground text-background'
                       : 'bg-transparent text-muted-foreground hover:text-foreground border border-border/50'
@@ -206,7 +206,7 @@ const Catalog = () => {
                   <button
                     key={subsub.id}
                     onClick={() => setActiveSubSubcategory(subsub.id)}
-                    className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                    className={`px-3 sm:px-4 py-1.5 sm:py-2 text-[8px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                       activeSubSubcategory === subsub.id
                         ? 'bg-foreground text-background'
                         : 'bg-transparent text-muted-foreground hover:text-foreground border border-border/50'
@@ -223,25 +223,25 @@ const Catalog = () => {
 
       {/* Collections + Filters */}
       <div className="border-b border-border bg-background">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
-          <div className="flex items-center justify-between py-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
+          <div className="flex items-center justify-between py-3 sm:py-4 gap-3">
             {/* Collections */}
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar flex-1 min-w-0">
               <button
                 onClick={() => setActiveCollection(null)}
-                className={`px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                className={`px-3 sm:px-5 py-2 sm:py-2.5 text-[9px] sm:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                   !activeCollection
                     ? 'bg-foreground text-background'
                     : 'border border-border hover:border-foreground bg-transparent'
                 }`}
               >
-                Все коллекции
+                Все
               </button>
               {filteredCollections.map((collection) => (
                 <button
                   key={collection.id}
                   onClick={() => setActiveCollection(activeCollection === collection.id ? null : collection.id)}
-                  className={`px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
+                  className={`px-3 sm:px-5 py-2 sm:py-2.5 text-[9px] sm:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 whitespace-nowrap ${
                     activeCollection === collection.id
                       ? 'bg-foreground text-background'
                       : 'border border-border hover:border-foreground bg-transparent'
@@ -253,26 +253,26 @@ const Catalog = () => {
             </div>
 
             {/* Filters toggle */}
-            <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               {hasActiveFilters && (
                 <button
                   onClick={clearAllFilters}
-                  className="flex items-center gap-1.5 text-[11px] uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors"
+                  className="hidden sm:flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <X className="w-3.5 h-3.5" />
-                  Сбросить
+                  <X className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+                  <span className="hidden md:inline">Сбросить</span>
                 </button>
               )}
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center gap-2 px-5 py-2.5 text-[11px] uppercase tracking-[0.15em] rounded-full transition-all duration-300 ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 text-[9px] sm:text-[11px] uppercase tracking-[0.1em] sm:tracking-[0.15em] rounded-full transition-all duration-300 ${
                   showFilters
                     ? 'bg-foreground text-background'
                     : 'border border-border hover:border-foreground'
                 }`}
               >
-                <SlidersHorizontal className="w-3.5 h-3.5" />
-                Фильтры
+                <SlidersHorizontal className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+                <span className="hidden sm:inline">Фильтры</span>
               </button>
             </div>
           </div>
@@ -289,36 +289,45 @@ const Catalog = () => {
             transition={{ duration: 0.3 }}
             className="border-b border-border bg-muted/30 overflow-hidden"
           >
-            <div className="max-w-[1600px] mx-auto px-6 lg:px-16 py-6">
-              <div className="flex items-center gap-8">
-                <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16 py-4 sm:py-6">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-muted-foreground">
                   Цена:
                 </span>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4">
                   <input
                     type="number"
                     value={priceRange[0]}
                     onChange={(e) => setPriceRange([Number(e.target.value), priceRange[1]])}
-                    className="w-32 px-4 py-2.5 text-sm rounded-full border border-border bg-transparent focus:border-foreground outline-none transition-colors"
+                    className="w-24 sm:w-32 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm rounded-full border border-border bg-transparent focus:border-foreground outline-none transition-colors"
                     placeholder="От"
                   />
-                  <span className="text-muted-foreground">—</span>
+                  <span className="text-muted-foreground text-sm">—</span>
                   <input
                     type="number"
                     value={priceRange[1]}
                     onChange={(e) => setPriceRange([priceRange[0], Number(e.target.value)])}
-                    className="w-32 px-4 py-2.5 text-sm rounded-full border border-border bg-transparent focus:border-foreground outline-none transition-colors"
+                    className="w-24 sm:w-32 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm rounded-full border border-border bg-transparent focus:border-foreground outline-none transition-colors"
                     placeholder="До"
                   />
                 </div>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="sm:hidden flex items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors mt-2"
+                  >
+                    <X className="w-3 h-3" />
+                    Сбросить фильтры
+                  </button>
+                )}
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <main className="pb-24">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
+      <main className="pb-16 sm:pb-24">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
           {/* Sort and count */}
           <CatalogSort
             value={sortOption}
@@ -328,7 +337,7 @@ const Catalog = () => {
 
           {/* Products grid - 3 columns with larger images */}
           {filteredAndSortedProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-20">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-3 sm:gap-x-6 lg:gap-x-8 gap-y-8 sm:gap-y-12 lg:gap-y-20">
               {filteredAndSortedProducts.map((product) => (
                 <ProductCard key={product.id} {...product} />
               ))}
@@ -337,14 +346,14 @@ const Catalog = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-32"
+              className="text-center py-16 sm:py-32"
             >
-              <p className="text-xl font-light text-muted-foreground mb-8">
+              <p className="text-base sm:text-xl font-light text-muted-foreground mb-6 sm:mb-8">
                 По вашему запросу ничего не найдено.
               </p>
               <button
                 onClick={clearAllFilters}
-                className="text-[11px] uppercase tracking-[0.2em] px-8 py-4 rounded-full border border-foreground hover:bg-foreground hover:text-background transition-all duration-300"
+                className="text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] px-6 sm:px-8 py-3 sm:py-4 rounded-full border border-foreground hover:bg-foreground hover:text-background transition-all duration-300"
               >
                 Сбросить фильтры
               </button>
