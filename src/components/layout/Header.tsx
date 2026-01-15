@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Search, Heart, Phone } from 'lucide-react';
+import { Menu, X, Search, Heart, Phone, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFavorites } from '@/contexts/FavoritesContext';
+import { useCart } from '@/contexts/CartContext';
 import SearchDialog from '@/components/search/SearchDialog';
 
 const navLinks = [
@@ -23,6 +24,7 @@ export const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const { favoritesCount } = useFavorites();
+  const { totalItems } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -135,7 +137,6 @@ export const Header = () => {
 
               <div className={`w-px h-4 flex-shrink-0 ${isScrolled ? 'bg-foreground/20' : 'bg-white/30'}`} />
 
-              {/* Icons */}
               <div className="flex items-center gap-2">
                 <Link
                   to="/favorites"
@@ -149,6 +150,21 @@ export const Header = () => {
                       isScrolled ? 'bg-foreground text-background' : 'bg-white text-foreground'
                     }`}>
                       {favoritesCount > 9 ? '9+' : favoritesCount}
+                    </span>
+                  )}
+                </Link>
+                <Link
+                  to="/cart"
+                  className={`p-1.5 transition-colors duration-300 relative ${
+                    isScrolled ? 'text-foreground hover:text-foreground/70' : 'text-white hover:text-white/70'
+                  }`}
+                >
+                  <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
+                  {totalItems > 0 && (
+                    <span className={`absolute -top-1 -right-1 w-4 h-4 text-[9px] font-medium flex items-center justify-center rounded-full ${
+                      isScrolled ? 'bg-foreground text-background' : 'bg-white text-foreground'
+                    }`}>
+                      {totalItems > 9 ? '9+' : totalItems}
                     </span>
                   )}
                 </Link>
@@ -222,6 +238,21 @@ export const Header = () => {
                   </span>
                 )}
               </Link>
+              <Link
+                to="/cart"
+                className={`p-2 transition-colors duration-300 relative ${
+                  isScrolled ? 'text-foreground' : 'text-white'
+                }`}
+              >
+                <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
+                {totalItems > 0 && (
+                  <span className={`absolute top-0 right-0 w-4 h-4 text-[9px] font-medium flex items-center justify-center rounded-full ${
+                    isScrolled ? 'bg-foreground text-background' : 'bg-white text-foreground'
+                  }`}>
+                    {totalItems > 9 ? '9+' : totalItems}
+                  </span>
+                )}
+              </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={`p-2 transition-colors duration-300 ${
@@ -287,8 +318,21 @@ export const Header = () => {
                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                   </svg>
                 </a>
-                <Link to="/favorites" onClick={() => setIsOpen(false)} className="p-2.5 border border-border">
+                <Link to="/favorites" onClick={() => setIsOpen(false)} className="p-2.5 border border-border relative">
                   <Heart className="w-4 h-4" strokeWidth={1.5} />
+                  {favoritesCount > 0 && (
+                    <span className="absolute -top-2 -right-2 w-5 h-5 text-[9px] font-medium flex items-center justify-center rounded-full bg-foreground text-background">
+                      {favoritesCount > 9 ? '9+' : favoritesCount}
+                    </span>
+                  )}
+                </Link>
+                <Link to="/cart" onClick={() => setIsOpen(false)} className="p-2.5 border border-border relative">
+                  <ShoppingBag className="w-4 h-4" strokeWidth={1.5} />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 w-5 h-5 text-[9px] font-medium flex items-center justify-center rounded-full bg-foreground text-background">
+                      {totalItems > 9 ? '9+' : totalItems}
+                    </span>
+                  )}
                 </Link>
               </div>
             </div>
