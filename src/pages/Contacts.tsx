@@ -213,16 +213,16 @@ const Contacts = () => {
               transition={{ duration: 0.8 }}
             >
               <div className="sticky top-32">
-                <div className="aspect-square bg-muted/50 flex items-center justify-center border border-border">
-                  <div className="text-center p-8">
-                    <MapPin className="w-12 h-12 mx-auto mb-4 text-muted-foreground" strokeWidth={1} />
-                    <p className="text-muted-foreground">
-                      Интерактивная карта шоурумов
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      {totalStores} точек продаж по всей России
-                    </p>
-                  </div>
+                <div className="aspect-square overflow-hidden border border-border">
+                  <iframe
+                    src="https://yandex.ru/map-widget/v1/?um=constructor%3A0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p&amp;source=constructor&amp;ll=37.618423%2C55.751244&amp;z=4&amp;pt=30.315868%2C59.939099%2Cpm2rdl~37.617644%2C55.755819%2Cpm2rdl~60.597465%2C56.838011%2Cpm2gnl~82.920430%2C55.030199%2Cpm2gnl~49.106324%2C55.796127%2Cpm2gnl~38.975313%2C45.035470%2Cpm2gnl~39.718549%2C47.222078%2Cpm2gnl~43.936059%2C56.326887%2Cpm2gnl"
+                    width="100%"
+                    height="100%"
+                    frameBorder="0"
+                    allowFullScreen
+                    className="w-full h-full"
+                    title="Карта шоурумов The Idea"
+                  />
                 </div>
               </div>
             </motion.div>
