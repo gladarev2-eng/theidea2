@@ -1,48 +1,54 @@
+import { Link } from 'react-router-dom';
 import { AnimatedSection, AnimatedText } from '@/components/ui/AnimatedSection';
+
+import manufacturingImg from '@/assets/manufacturing.jpg';
 
 export const IntroSection = () => {
   return (
-    <section className="section-padding bg-background">
-      <div className="container-wide">
-        <div className="max-w-5xl mx-auto text-center">
-          <AnimatedText>
-            <p className="text-caption mb-6">О бренде</p>
-          </AnimatedText>
-          
-          <AnimatedSection delay={0.1}>
-            <h2 className="heading-display text-foreground">
-              Создаём мебель, которая вдохновляет на жизнь
+    <section className="py-24 md:py-40 px-6 md:px-20 overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center max-w-7xl mx-auto">
+        {/* Text Content */}
+        <AnimatedSection>
+          <div>
+            <p className="text-caption mb-8">Ателье мебели</p>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-12 max-w-md leading-tight">
+              Собственное производство в Петербурге с 2014 года.
             </h2>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.2}>
-            <p className="text-body max-w-3xl mx-auto mt-8 md:mt-12">
-              The Idea — это собственное производство дизайнерской мебели в Санкт-Петербурге. 
-              Уже 12 лет мы создаём предметы интерьера, которые сочетают в себе эстетику 
-              современного дизайна и безупречное качество исполнения.
+            <p className="text-muted-foreground font-light leading-relaxed mb-12 max-w-sm">
+              Мы не просто собираем мебель — мы проектируем её с нуля, выбираем лучшие слэбы дуба и вручную доводим каждую деталь до совершенства.
             </p>
-          </AnimatedSection>
-
-          <AnimatedSection delay={0.3}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mt-16 md:mt-24">
-              {[
-                { value: '12', label: 'Лет опыта' },
-                { value: '5000+', label: 'Реализованных проектов' },
-                { value: '200+', label: 'Моделей мебели' },
-                { value: '15', label: 'Шоурумов по России' },
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <span className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-accent">
-                    {stat.value}
-                  </span>
-                  <p className="font-body font-light text-sm text-muted-foreground mt-2">
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
+            
+            {/* Stats */}
+            <div className="flex gap-12 mb-16">
+              <div>
+                <p className="stat-number">10+</p>
+                <p className="stat-label">Лет мастерства</p>
+              </div>
+              <div>
+                <p className="stat-number">2.5k</p>
+                <p className="stat-label">Вариантов отделки</p>
+              </div>
             </div>
-          </AnimatedSection>
-        </div>
+
+            <Link 
+              to="/about" 
+              className="btn-primary"
+            >
+              О компании
+            </Link>
+          </div>
+        </AnimatedSection>
+
+        {/* Image */}
+        <AnimatedSection delay={0.2}>
+          <div className="relative">
+            <img 
+              src={manufacturingImg} 
+              alt="Производство THE IDEA"
+              className="w-full h-[70vh] object-cover"
+            />
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Send, Instagram, Youtube } from 'lucide-react';
+import { Send, Instagram } from 'lucide-react';
 
 const footerLinks = {
   catalog: {
@@ -9,62 +9,53 @@ const footerLinks = {
       { name: 'Кресла', href: '/catalog/armchairs' },
       { name: 'Кровати', href: '/catalog/beds' },
       { name: 'Столы', href: '/catalog/tables' },
-      { name: 'Стулья', href: '/catalog/chairs' },
-      { name: 'Хранение', href: '/catalog/storage' },
+      { name: 'Системы хранения', href: '/catalog/storage' },
     ],
   },
   collections: {
     title: 'Коллекции',
     links: [
-      { name: 'Скандинавия', href: '/collections/scandinavia' },
-      { name: 'Минимал', href: '/collections/minimal' },
-      { name: 'Модерн', href: '/collections/modern' },
-      { name: 'Классика', href: '/collections/classic' },
+      { name: 'Case', href: '/collections/case' },
+      { name: 'Saga', href: '/collections/saga' },
+      { name: 'Code', href: '/collections/code' },
+      { name: 'Bergen', href: '/collections/bergen' },
     ],
   },
   company: {
     title: 'Компания',
     links: [
       { name: 'О нас', href: '/about' },
-      { name: 'Производство', href: '/about#manufacturing' },
-      { name: 'Карьера', href: '/careers' },
-      { name: 'Пресса', href: '/press' },
+      { name: 'Дизайнерам', href: '/designers' },
+      { name: 'Контакты', href: '/contacts' },
     ],
   },
   support: {
     title: 'Покупателям',
     links: [
-      { name: 'Доставка и оплата', href: '/buyers#delivery' },
-      { name: 'Возврат и обмен', href: '/buyers#returns' },
+      { name: 'Доставка', href: '/buyers#delivery' },
+      { name: 'Оплата', href: '/buyers#payment' },
       { name: 'Гарантия', href: '/buyers#warranty' },
-      { name: 'FAQ', href: '/buyers#faq' },
     ],
   },
-};
-
-const contacts = {
-  phone: '8 800 123 45 67',
-  email: 'info@theidea.ru',
-  address: 'Санкт-Петербург, Лиговский пр. 50, к. 12',
 };
 
 export const Footer = () => {
   return (
     <footer className="footer-dark">
-      <div className="container-wide section-padding">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 lg:gap-8">
+      <div className="max-w-7xl mx-auto px-6 md:px-20 py-20 md:py-32">
+        {/* Main Content */}
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-10 md:gap-8">
           {/* Brand Column */}
           <div className="col-span-2">
             <Link 
               to="/" 
-              className="font-display text-3xl font-light tracking-tight"
+              className="text-xl tracking-[0.3em] font-light uppercase"
             >
-              The Idea
+              THE IDEA
             </Link>
-            <p className="mt-6 font-body font-light text-sm leading-relaxed opacity-70">
-              Собственное производство дизайнерской мебели в Санкт-Петербурге. 
-              Создаём уникальные предметы интерьера с 2012 года.
+            <p className="mt-8 text-sm font-light leading-relaxed opacity-60 max-w-xs">
+              Мебельное ателье в Санкт-Петербурге. 
+              Собственное производство дизайнерской мебели с 2014 года.
             </p>
             
             {/* Social Links */}
@@ -73,28 +64,19 @@ export const Footer = () => {
                 href="https://t.me/theidea" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 border border-current/20 rounded-full hover:bg-white/10 transition-colors"
+                className="p-3 border border-white/20 hover:bg-white/10 transition-colors"
                 aria-label="Telegram"
               >
-                <Send className="w-4 h-4" strokeWidth={1.5} />
+                <Send className="w-4 h-4" strokeWidth={1} />
               </a>
               <a 
                 href="https://instagram.com/theidea" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="p-3 border border-current/20 rounded-full hover:bg-white/10 transition-colors"
+                className="p-3 border border-white/20 hover:bg-white/10 transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="w-4 h-4" strokeWidth={1.5} />
-              </a>
-              <a 
-                href="https://youtube.com/theidea" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 border border-current/20 rounded-full hover:bg-white/10 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-4 h-4" strokeWidth={1.5} />
+                <Instagram className="w-4 h-4" strokeWidth={1} />
               </a>
             </div>
           </div>
@@ -102,7 +84,7 @@ export const Footer = () => {
           {/* Link Columns */}
           {Object.values(footerLinks).map((section) => (
             <div key={section.title}>
-              <h4 className="font-display text-sm tracking-wide uppercase mb-6 opacity-50">
+              <h4 className="text-[10px] tracking-[0.2em] uppercase mb-6 opacity-40">
                 {section.title}
               </h4>
               <ul className="space-y-3">
@@ -110,7 +92,7 @@ export const Footer = () => {
                   <li key={link.name}>
                     <Link
                       to={link.href}
-                      className="font-body font-light text-sm opacity-70 hover:opacity-100 transition-opacity"
+                      className="text-sm font-light opacity-60 hover:opacity-100 transition-opacity"
                     >
                       {link.name}
                     </Link>
@@ -122,24 +104,24 @@ export const Footer = () => {
         </div>
 
         {/* Contact Row */}
-        <div className="mt-16 pt-10 border-t border-white/10">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-10">
+        <div className="mt-20 pt-10 border-t border-white/10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <p className="text-[9px] uppercase tracking-widest opacity-40 mb-2">Санкт-Петербург</p>
+              <p className="text-sm font-light">Б. Монетная, 16 к.30</p>
+            </div>
+            <div>
+              <p className="text-[9px] uppercase tracking-widest opacity-40 mb-2">Москва</p>
+              <p className="text-sm font-light">ТЦ Family Room</p>
+            </div>
+            <div>
+              <p className="text-[9px] uppercase tracking-widest opacity-40 mb-2">Телефон</p>
               <a 
-                href={`tel:${contacts.phone.replace(/\s/g, '')}`}
-                className="font-body font-light text-lg hover:opacity-70 transition-opacity"
+                href="tel:+78002225043"
+                className="text-sm font-light hover:opacity-60 transition-opacity"
               >
-                {contacts.phone}
+                8 (800) 222-50-43
               </a>
-              <a 
-                href={`mailto:${contacts.email}`}
-                className="font-body font-light opacity-70 hover:opacity-100 transition-opacity"
-              >
-                {contacts.email}
-              </a>
-              <span className="font-body font-light text-sm opacity-50">
-                {contacts.address}
-              </span>
             </div>
           </div>
         </div>
@@ -147,21 +129,15 @@ export const Footer = () => {
         {/* Bottom Row */}
         <div className="mt-10 pt-6 border-t border-white/10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <p className="font-body font-light text-xs opacity-40">
-              © {new Date().getFullYear()} The Idea. Все права защищены.
+            <p className="text-xs font-light opacity-40">
+              © {new Date().getFullYear()} THE IDEA. Все права защищены.
             </p>
             <div className="flex items-center gap-6">
               <Link 
                 to="/privacy" 
-                className="font-body font-light text-xs opacity-40 hover:opacity-70 transition-opacity"
+                className="text-xs font-light opacity-40 hover:opacity-70 transition-opacity"
               >
                 Политика конфиденциальности
-              </Link>
-              <Link 
-                to="/terms" 
-                className="font-body font-light text-xs opacity-40 hover:opacity-70 transition-opacity"
-              >
-                Пользовательское соглашение
               </Link>
             </div>
           </div>

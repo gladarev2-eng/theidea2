@@ -1,75 +1,36 @@
 import { Link } from 'react-router-dom';
-import { AnimatedSection, AnimatedText, AnimatedImage } from '@/components/ui/AnimatedSection';
-import { ArrowRight } from 'lucide-react';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
 
 import manufacturingImg from '@/assets/manufacturing.jpg';
 
 export const PhilosophySection = () => {
   return (
-    <section className="section-padding bg-card">
-      <div className="container-wide">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image */}
-          <AnimatedImage className="order-2 lg:order-1">
-            <div className="relative aspect-collection overflow-hidden">
-              <img
-                src={manufacturingImg}
-                alt="Производство мебели The Idea"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
-            </div>
-          </AnimatedImage>
+    <section className="grid grid-cols-1 md:grid-cols-2 bg-card">
+      {/* Image */}
+      <AnimatedSection className="h-[60vh] md:h-[80vh] overflow-hidden">
+        <img
+          src={manufacturingImg}
+          alt="Мастерство THE IDEA"
+          className="w-full h-full object-cover"
+        />
+      </AnimatedSection>
 
-          {/* Content */}
-          <div className="order-1 lg:order-2">
-            <AnimatedText>
-              <p className="text-caption mb-4">Философия</p>
-            </AnimatedText>
-            
-            <AnimatedSection delay={0.1}>
-              <h2 className="heading-section">
-                Мастерство в каждой детали
-              </h2>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.2}>
-              <p className="text-body mt-8">
-                Каждый предмет мебели The Idea — это результат работы наших мастеров, 
-                которые передают своё мастерство из поколения в поколение. Мы используем 
-                только лучшие материалы и современные технологии, сохраняя при этом 
-                традиции ручной работы.
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.3}>
-              <ul className="mt-10 space-y-4">
-                {[
-                  'Собственное производство в Санкт-Петербурге',
-                  'Экологичные материалы высшего качества',
-                  'Индивидуальный подход к каждому заказу',
-                  'Гарантия 5 лет на всю продукцию',
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2.5 flex-shrink-0" />
-                    <span className="font-body font-light text-foreground/80">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.4}>
-              <Link 
-                to="/about"
-                className="inline-flex items-center gap-3 mt-12 font-display text-sm tracking-[0.15em] uppercase text-foreground hover:text-accent transition-colors"
-              >
-                Подробнее о производстве
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </AnimatedSection>
-          </div>
-        </div>
-      </div>
+      {/* Content */}
+      <AnimatedSection delay={0.2} className="flex flex-col justify-center px-6 md:px-20 py-20">
+        <p className="text-caption mb-8">Мастерство</p>
+        <h3 className="text-4xl font-light mb-8 tracking-tight leading-tight">
+          От эскиза до воплощения.
+        </h3>
+        <p className="text-muted-foreground font-light leading-relaxed mb-12 max-w-md">
+          Мы используем современные ЧПУ-станки для идеальной точности и ручную доводку для безупречного тактильного ощущения. Каждый предмет THE IDEA проходит многоступенчатый контроль качества.
+        </p>
+        <Link 
+          to="/about"
+          className="btn-link w-max"
+        >
+          О производстве
+        </Link>
+      </AnimatedSection>
     </section>
   );
 };
