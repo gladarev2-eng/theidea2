@@ -1,10 +1,21 @@
 import { motion } from "framer-motion";
-import { Heart, Clock, Ruler, Download, ShoppingBag, Check } from "lucide-react";
+import { Heart, Clock, Ruler, Download, ShoppingBag, Check, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 import MaterialsSheet from "./MaterialsSheet";
 import DimensionsSheet from "./DimensionsSheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 interface Color {
   id: string;
@@ -61,6 +72,10 @@ const ProductInfo = ({
 }: ProductInfoProps) => {
   const { addItem, getItemQuantity } = useCart();
   const itemInCart = getItemQuantity(id) > 0;
+  const [questionOpen, setQuestionOpen] = useState(false);
+  const [formName, setFormName] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formMessage, setFormMessage] = useState("");
 
   const handleAddToCart = () => {
     addItem({
@@ -80,6 +95,15 @@ const ProductInfo = ({
     });
   };
 
+  const handleQuestionSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Ваш вопрос отправлен!");
+    setFormName("");
+    setFormPhone("");
+    setFormMessage("");
+    setQuestionOpen(false);
+  };
+
   // Parse dimensions for the sheet
   const parsedDimensions = dimensions.split('×').length === 3
     ? [
@@ -94,49 +118,49 @@ const ProductInfo = ({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6 }}
-      className="space-y-6 md:space-y-8"
+      className="space-y-5 md:space-y-6"
     >
       {/* Collection & Name */}
       <div>
-        <p className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-2 md:mb-3">
+        <p className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-2">
           {collection}
         </p>
-        <h1 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-tight mb-3 md:mb-4">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-light tracking-tight mb-2">
           {name}
         </h1>
-        <p className="text-2xl md:text-3xl font-light">{price}</p>
+        <p className="text-xl md:text-2xl font-medium">{price}</p>
       </div>
 
-      {/* Description */}
-      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+      {/* Description - Compact */}
+      <p className="text-sm text-muted-foreground leading-relaxed">
         {description}
       </p>
 
-      {/* Quick Info */}
-      <div className="flex flex-wrap gap-4 md:gap-6 py-4 md:py-6 border-y border-border">
-        <div className="flex items-center gap-2 text-xs md:text-sm">
-          <Clock className="w-4 h-4 text-muted-foreground" />
+      {/* Quick Info - Inline compact */}
+      <div className="flex flex-wrap gap-4 py-3 border-y border-border text-xs">
+        <div className="flex items-center gap-1.5">
+          <Clock className="w-3.5 h-3.5 text-muted-foreground" />
           <span className="text-muted-foreground">Срок:</span>
           <span className="font-medium">{productionTime}</span>
         </div>
-        <div className="flex items-center gap-2 text-xs md:text-sm">
-          <Ruler className="w-4 h-4 text-muted-foreground" />
+        <div className="flex items-center gap-1.5">
+          <Ruler className="w-3.5 h-3.5 text-muted-foreground" />
           <span className="text-muted-foreground">Размер:</span>
           <span className="font-medium">{dimensions}</span>
         </div>
       </div>
 
-      {/* Color Selection */}
+      {/* Color Selection - Compact */}
       <div>
-        <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-muted-foreground mb-3 md:mb-4">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
           Цвет: <span className="text-foreground">{selectedColor.name}</span>
         </p>
-        <div className="flex flex-wrap gap-2 md:gap-3">
+        <div className="flex flex-wrap gap-2">
           {colors.map((color) => (
             <button
               key={color.id}
               onClick={() => onColorChange(color)}
-              className={`w-9 h-9 md:w-10 md:h-10 rounded-full border-2 transition-all ${
+              className={`w-8 h-8 rounded-full border-2 transition-all ${
                 selectedColor.id === color.id
                   ? "border-foreground scale-110"
                   : "border-transparent hover:scale-105"
@@ -148,17 +172,17 @@ const ProductInfo = ({
         </div>
       </div>
 
-      {/* Size Selection */}
+      {/* Size Selection - Compact */}
       <div>
-        <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-muted-foreground mb-3 md:mb-4">
+        <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-2">
           Размер
         </p>
-        <div className="flex flex-wrap gap-2 md:gap-3">
+        <div className="flex flex-wrap gap-2">
           {sizes.map((size) => (
             <button
               key={size.id}
               onClick={() => onSizeChange(size)}
-              className={`px-4 md:px-6 py-2.5 md:py-3 rounded-full border transition-all text-sm ${
+              className={`px-4 py-2 rounded-full border transition-all text-sm ${
                 selectedSize.id === size.id
                   ? "border-foreground bg-foreground text-background"
                   : "border-border hover:border-foreground"
@@ -168,55 +192,99 @@ const ProductInfo = ({
             </button>
           ))}
         </div>
-        <p className="text-xs md:text-sm text-muted-foreground mt-2 md:mt-3">
+        <p className="text-xs text-muted-foreground mt-1.5">
           {selectedSize.dimensions}
         </p>
       </div>
 
-      {/* Technical Info - Materials & Dimensions Sheets */}
+      {/* Technical Info - Materials & Dimensions */}
       <div className="space-y-0">
         <MaterialsSheet />
         <DimensionsSheet dimensions={parsedDimensions} productName={name} />
       </div>
 
-      {/* Action Buttons */}
-      <div className="space-y-3 md:space-y-4 pt-2 md:pt-4">
+      {/* Action Buttons - Compact & Hierarchical */}
+      <div className="space-y-3 pt-2">
+        {/* Primary CTA - Add to Cart (Full width, prominent) */}
         <Button 
-          className="w-full h-12 md:h-14 rounded-full text-sm md:text-base"
+          className="w-full h-12 rounded-full text-sm font-medium"
           onClick={handleAddToCart}
         >
           {itemInCart ? (
             <>
-              <Check className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+              <Check className="w-4 h-4 mr-2" />
               В корзине
             </>
           ) : (
             <>
-              <ShoppingBag className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+              <ShoppingBag className="w-4 h-4 mr-2" />
               Добавить в корзину
             </>
           )}
         </Button>
-        
-        <div className="flex gap-2 md:gap-3">
+
+        {/* Secondary Actions - Row with Ask Question as prominent secondary */}
+        <div className="flex gap-2">
+          <Dialog open={questionOpen} onOpenChange={setQuestionOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="flex-1 h-10 rounded-full text-xs">
+                <MessageCircle className="w-4 h-4 mr-1.5" />
+                Задать вопрос
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-lg font-light">Задать вопрос</DialogTitle>
+                <DialogDescription>о товаре {name}</DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleQuestionSubmit} className="space-y-3 mt-3">
+                <Input
+                  placeholder="Имя"
+                  value={formName}
+                  onChange={(e) => setFormName(e.target.value)}
+                  required
+                  className="h-10 rounded-full px-4"
+                />
+                <Input
+                  type="tel"
+                  placeholder="Телефон"
+                  value={formPhone}
+                  onChange={(e) => setFormPhone(e.target.value)}
+                  required
+                  className="h-10 rounded-full px-4"
+                />
+                <Textarea
+                  placeholder="Ваш вопрос"
+                  value={formMessage}
+                  onChange={(e) => setFormMessage(e.target.value)}
+                  className="min-h-[80px] rounded-xl px-4 py-3 resize-none"
+                />
+                <Button type="submit" className="w-full h-10 rounded-full">
+                  Отправить
+                </Button>
+              </form>
+            </DialogContent>
+          </Dialog>
+
           <Button
             variant="outline"
-            className="flex-1 h-11 md:h-12 rounded-full text-xs md:text-sm"
+            className="h-10 rounded-full px-4"
             onClick={onFavoriteToggle}
+            title={isFavorite ? "В избранном" : "В избранное"}
           >
             <Heart
-              className={`w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 transition-colors ${
+              className={`w-4 h-4 transition-colors ${
                 isFavorite ? "fill-current text-red-500" : ""
               }`}
             />
-            <span className="hidden sm:inline">{isFavorite ? "В избранном" : "В избранное"}</span>
-            <span className="sm:hidden">{isFavorite ? "❤️" : "♡"}</span>
           </Button>
           
-          <Button variant="outline" className="h-11 md:h-12 rounded-full px-4 md:px-6 text-xs md:text-sm">
-            <Download className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
-            <span className="hidden sm:inline">3D модель</span>
-            <span className="sm:hidden">3D</span>
+          <Button 
+            variant="outline" 
+            className="h-10 rounded-full px-4"
+            title="Скачать 3D модель"
+          >
+            <Download className="w-4 h-4" />
           </Button>
         </div>
       </div>
