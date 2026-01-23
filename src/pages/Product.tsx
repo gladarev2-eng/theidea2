@@ -204,7 +204,7 @@ const Product = () => {
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
             {/* Left - Scrolling Gallery with 1:1 images */}
-            <ProductGallery images={currentProduct.images} name={currentProduct.name} showAskQuestion={true} />
+            <ProductGallery images={currentProduct.images} name={currentProduct.name} />
 
             {/* Right - Sticky Product Info */}
             <div className="lg:sticky lg:top-28 lg:h-fit">

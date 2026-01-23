@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Expand } from "lucide-react";
-import AskQuestionButton from "./AskQuestionButton";
 
 interface ProductGalleryProps {
   images: string[];
   name: string;
-  showAskQuestion?: boolean;
 }
 
-const ProductGallery = ({ images, name, showAskQuestion = true }: ProductGalleryProps) => {
+const ProductGallery = ({ images, name }: ProductGalleryProps) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -41,83 +39,37 @@ const ProductGallery = ({ images, name, showAskQuestion = true }: ProductGallery
 
   return (
     <>
-      <div className="space-y-3 md:space-y-4">
-        {/* Ask Question CTA - Above gallery */}
-        {showAskQuestion && (
-          <div className="flex justify-end mb-2">
-            <AskQuestionButton productName={name} variant="outline" className="hidden lg:flex" />
-          </div>
-        )}
-
-        {/* Image Grid - 1:1 Aspect Ratio */}
-        <div className="grid grid-cols-2 gap-2 md:gap-3">
-          {images.slice(0, 4).map((image, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`relative aspect-square overflow-hidden bg-muted group cursor-pointer ${
-                index === 0 ? 'col-span-2 row-span-2 md:col-span-1 md:row-span-1' : ''
-              }`}
-              onClick={() => openLightbox(index)}
-            >
-              <img
-                src={image}
-                alt={`${name} - изображение ${index + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              {/* Fullscreen button */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Expand className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.5} />
-                </div>
+      {/* Single Column Gallery - Maximum Size Images */}
+      <div className="space-y-2 md:space-y-3">
+        {images.map((image, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: index * 0.08 }}
+            className="relative aspect-square overflow-hidden bg-muted group cursor-pointer"
+            onClick={() => openLightbox(index)}
+          >
+            <img
+              src={image}
+              alt={`${name} - изображение ${index + 1}`}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* Fullscreen button */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Expand className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.5} />
               </div>
-              {/* Image counter badge on first image */}
-              {index === 0 && images.length > 4 && (
-                <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">
-                  +{images.length - 4} фото
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Additional images (if more than 4) */}
-        {images.length > 4 && (
-          <div className="grid grid-cols-3 gap-2 md:gap-3">
-            {images.slice(4).map((image, index) => (
-              <motion.div
-                key={index + 4}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative aspect-square overflow-hidden bg-muted group cursor-pointer"
-                onClick={() => openLightbox(index + 4)}
-              >
-                <img
-                  src={image}
-                  alt={`${name} - изображение ${index + 5}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
-                  <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Expand className="w-4 h-4" strokeWidth={1.5} />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
-
-        {/* Mobile Ask Question Button */}
-        {showAskQuestion && (
-          <div className="lg:hidden pt-4">
-            <AskQuestionButton productName={name} variant="outline" className="w-full" />
-          </div>
-        )}
+            </div>
+            {/* Image counter on first image */}
+            {index === 0 && images.length > 1 && (
+              <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">
+                1 / {images.length}
+              </div>
+            )}
+          </motion.div>
+        ))}
       </div>
 
       {/* Fullscreen Lightbox */}
