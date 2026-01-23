@@ -183,28 +183,28 @@ const Product = () => {
       <Header />
       
       {/* Breadcrumbs */}
-      <div className="pt-24 pb-6">
+      <div className="pt-20 md:pt-24 pb-4 md:pb-6">
         <div className="container-wide">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-1.5 md:gap-2 text-xs md:text-sm text-muted-foreground">
             <Link to="/" className="hover:text-foreground transition-colors">Главная</Link>
             <span>/</span>
             <Link to="/catalog" className="hover:text-foreground transition-colors">Каталог</Link>
             <span>/</span>
-            <Link to={`/collection/${currentProduct.collectionSlug}`} className="hover:text-foreground transition-colors">
+            <Link to={`/collection/${currentProduct.collectionSlug}`} className="hover:text-foreground transition-colors truncate max-w-[100px] md:max-w-none">
               {currentProduct.collection}
             </Link>
             <span>/</span>
-            <span className="text-foreground">{currentProduct.name}</span>
+            <span className="text-foreground truncate max-w-[120px] md:max-w-none">{currentProduct.name}</span>
           </div>
         </div>
       </div>
 
       {/* Main Product Section - Split Layout */}
-      <section className="pb-24">
+      <section className="pb-12 md:pb-24">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-            {/* Left - Scrolling Gallery */}
-            <ProductGallery images={currentProduct.images} name={currentProduct.name} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
+            {/* Left - Scrolling Gallery with 1:1 images */}
+            <ProductGallery images={currentProduct.images} name={currentProduct.name} showAskQuestion={true} />
 
             {/* Right - Sticky Product Info */}
             <div className="lg:sticky lg:top-28 lg:h-fit">
@@ -233,24 +233,24 @@ const Product = () => {
       </section>
 
       {/* Extended Design Presentation */}
-      <section className="py-24 lg:py-32 bg-muted/30">
+      <section className="py-16 md:py-24 lg:py-32 bg-muted/30">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="text-center mb-20"
+            className="text-center mb-12 md:mb-20"
           >
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
+            <p className="text-[10px] md:text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-3 md:mb-4">
               Детали
             </p>
-            <h2 className="text-3xl lg:text-5xl font-extralight tracking-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-5xl font-extralight tracking-tight">
               Искусство в деталях
             </h2>
           </motion.div>
 
-          <div className="space-y-32">
+          <div className="space-y-16 md:space-y-24 lg:space-y-32">
             {Object.entries(designDetails).map(([key, detail], index) => (
               <motion.div
                 key={key}
@@ -258,12 +258,12 @@ const Product = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center ${
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 lg:gap-24 items-center ${
                   index % 2 === 1 ? '' : ''
                 }`}
               >
                 <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="aspect-[4/3] overflow-hidden">
+                  <div className="aspect-[4/3] md:aspect-[4/3] overflow-hidden">
                     <img
                       src={detail.image}
                       alt={detail.title}
@@ -271,11 +271,11 @@ const Product = () => {
                     />
                   </div>
                 </div>
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <h3 className="text-2xl lg:text-3xl font-light tracking-tight mb-6">
+                <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} py-4 md:py-0`}>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-light tracking-tight mb-4 md:mb-6">
                     {detail.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed text-lg">
+                  <p className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed">
                     {detail.description}
                   </p>
                 </div>

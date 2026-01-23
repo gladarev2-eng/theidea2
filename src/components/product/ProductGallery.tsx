@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Expand } from "lucide-react";
+import AskQuestionButton from "./AskQuestionButton";
 
 interface ProductGalleryProps {
   images: string[];
   name: string;
+  showAskQuestion?: boolean;
 }
 
-const ProductGallery = ({ images, name }: ProductGalleryProps) => {
+const ProductGallery = ({ images, name, showAskQuestion = true }: ProductGalleryProps) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -39,30 +41,83 @@ const ProductGallery = ({ images, name }: ProductGalleryProps) => {
 
   return (
     <>
-      <div className="space-y-4">
-        {images.map((image, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="relative aspect-[4/3] overflow-hidden bg-muted group cursor-pointer"
-            onClick={() => openLightbox(index)}
-          >
-            <img
-              src={image}
-              alt={`${name} - изображение ${index + 1}`}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            {/* Fullscreen button */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <Expand className="w-5 h-5" strokeWidth={1.5} />
+      <div className="space-y-3 md:space-y-4">
+        {/* Ask Question CTA - Above gallery */}
+        {showAskQuestion && (
+          <div className="flex justify-end mb-2">
+            <AskQuestionButton productName={name} variant="outline" className="hidden lg:flex" />
+          </div>
+        )}
+
+        {/* Image Grid - 1:1 Aspect Ratio */}
+        <div className="grid grid-cols-2 gap-2 md:gap-3">
+          {images.slice(0, 4).map((image, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={`relative aspect-square overflow-hidden bg-muted group cursor-pointer ${
+                index === 0 ? 'col-span-2 row-span-2 md:col-span-1 md:row-span-1' : ''
+              }`}
+              onClick={() => openLightbox(index)}
+            >
+              <img
+                src={image}
+                alt={`${name} - изображение ${index + 1}`}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              {/* Fullscreen button */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Expand className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.5} />
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+              {/* Image counter badge on first image */}
+              {index === 0 && images.length > 4 && (
+                <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">
+                  +{images.length - 4} фото
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Additional images (if more than 4) */}
+        {images.length > 4 && (
+          <div className="grid grid-cols-3 gap-2 md:gap-3">
+            {images.slice(4).map((image, index) => (
+              <motion.div
+                key={index + 4}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative aspect-square overflow-hidden bg-muted group cursor-pointer"
+                onClick={() => openLightbox(index + 4)}
+              >
+                <img
+                  src={image}
+                  alt={`${name} - изображение ${index + 5}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Expand className="w-4 h-4" strokeWidth={1.5} />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+
+        {/* Mobile Ask Question Button */}
+        {showAskQuestion && (
+          <div className="lg:hidden pt-4">
+            <AskQuestionButton productName={name} variant="outline" className="w-full" />
+          </div>
+        )}
       </div>
 
       {/* Fullscreen Lightbox */}
@@ -81,9 +136,9 @@ const ProductGallery = ({ images, name }: ProductGalleryProps) => {
             {/* Close button */}
             <button
               onClick={closeLightbox}
-              className="absolute top-6 right-6 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+              className="absolute top-4 right-4 md:top-6 md:right-6 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
             >
-              <X className="w-6 h-6" strokeWidth={1.5} />
+              <X className="w-5 h-5 md:w-6 md:h-6" strokeWidth={1.5} />
             </button>
 
             {/* Navigation */}
@@ -91,15 +146,15 @@ const ProductGallery = ({ images, name }: ProductGalleryProps) => {
               <>
                 <button
                   onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                  className="absolute left-6 z-10 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                  className="absolute left-2 md:left-6 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
                 >
-                  <ChevronLeft className="w-7 h-7" strokeWidth={1.5} />
+                  <ChevronLeft className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                  className="absolute right-6 z-10 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                  className="absolute right-2 md:right-6 z-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
                 >
-                  <ChevronRight className="w-7 h-7" strokeWidth={1.5} />
+                  <ChevronRight className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} />
                 </button>
               </>
             )}
@@ -111,28 +166,28 @@ const ProductGallery = ({ images, name }: ProductGalleryProps) => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.3 }}
-              className="relative max-w-[90vw] max-h-[90vh]"
+              className="relative w-[90vw] h-[90vw] max-w-[90vh] max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={images[lightboxIndex]}
                 alt={`${name} - изображение ${lightboxIndex + 1}`}
-                className="max-w-full max-h-[90vh] object-contain"
+                className="w-full h-full object-contain"
               />
             </motion.div>
 
             {/* Image counter */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm font-light">
+            <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 text-white/60 text-sm font-light">
               {lightboxIndex + 1} / {images.length}
             </div>
 
             {/* Thumbnail indicators */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2">
+            <div className="absolute bottom-12 md:bottom-16 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2">
               {images.map((_, index) => (
                 <button
                   key={index}
                   onClick={(e) => { e.stopPropagation(); setLightboxIndex(index); }}
-                  className={`w-12 h-1 transition-all duration-300 ${
+                  className={`w-8 md:w-12 h-1 transition-all duration-300 ${
                     index === lightboxIndex ? 'bg-white' : 'bg-white/30 hover:bg-white/50'
                   }`}
                 />
