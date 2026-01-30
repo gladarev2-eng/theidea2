@@ -12,6 +12,7 @@ interface CollectionCardProps {
   itemsCount: number;
   year: string;
   type: 'soft' | 'corpus' | 'tables';
+  features?: string[];
 }
 
 const CollectionCard = ({
@@ -21,8 +22,7 @@ const CollectionCard = ({
   description,
   images,
   itemsCount,
-  year,
-  type,
+  features = [],
 }: CollectionCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -46,12 +46,6 @@ const CollectionCard = ({
       }
     };
   }, [isHovered, images.length]);
-
-  const typeLabels = {
-    soft: 'Мягкая мебель',
-    corpus: 'Корпусная мебель',
-    tables: 'Столы',
-  };
 
   return (
     <Link
@@ -99,21 +93,17 @@ const CollectionCard = ({
             ))}
           </div>
         )}
-
-        {/* Type badge */}
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1.5 text-[10px] uppercase tracking-[0.2em] bg-white/90 backdrop-blur-sm">
-            {typeLabels[type]}
-          </span>
-        </div>
       </div>
 
       {/* Content */}
       <div className="space-y-4">
+        {/* Key feature instead of year */}
         <div className="flex items-center gap-4">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            {year}
-          </span>
+          {features.length > 0 && (
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              {features[0]}
+            </span>
+          )}
           <span className="w-6 h-px bg-border" />
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {itemsCount} предметов

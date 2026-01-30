@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Percent, Clock, Palette, Box, Users, FileText, Headphones, Truck } from "lucide-react";
+import { ArrowRight, Palette, Box, Users, Headphones, FileText, Briefcase } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
@@ -11,19 +11,9 @@ import manufacturing from "@/assets/manufacturing.jpg";
 
 const benefits = [
   {
-    icon: Percent,
-    title: "Специальные цены",
-    description: "Скидки до 25% на весь ассортимент для партнёров-дизайнеров",
-  },
-  {
-    icon: Clock,
-    title: "Приоритетные сроки",
-    description: "Ускоренное производство и первоочередная отгрузка заказов",
-  },
-  {
     icon: Palette,
     title: "Индивидуальная отделка",
-    description: "Возможность выбора материалов и цветов вне стандартной палитры",
+    description: "Возможность выбора материалов и цветов вне стандартной палитры для уникальных проектов",
   },
   {
     icon: Box,
@@ -33,39 +23,22 @@ const benefits = [
   {
     icon: Users,
     title: "Персональный менеджер",
-    description: "Выделенный специалист для оперативного решения любых вопросов",
+    description: "Выделенный специалист для оперативного решения любых вопросов по проекту",
   },
   {
     icon: Headphones,
     title: "Техническая поддержка",
-    description: "Консультации по интеграции мебели в проект на любом этапе",
-  },
-];
-
-const loyaltyLevels = [
-  {
-    name: "Партнёр",
-    discount: "10%",
-    requirements: "Регистрация в программе",
-    perks: ["Скидка 10%", "Доступ к 3D-библиотеке", "Персональный менеджер"],
+    description: "Консультации по интеграции мебели в проект на любом этапе реализации",
   },
   {
-    name: "Серебряный",
-    discount: "15%",
-    requirements: "От 500 000 ₽ в год",
-    perks: ["Скидка 15%", "Приоритетное производство", "Бесплатная доставка"],
+    icon: FileText,
+    title: "Полный пакет документов",
+    description: "Спецификации, развёртки, технические чертежи — всё для реализации проекта",
   },
   {
-    name: "Золотой",
-    discount: "20%",
-    requirements: "От 1 500 000 ₽ в год",
-    perks: ["Скидка 20%", "Индивидуальные решения", "VIP-поддержка 24/7"],
-  },
-  {
-    name: "Платиновый",
-    discount: "25%",
-    requirements: "От 5 000 000 ₽ в год",
-    perks: ["Скидка 25%", "Эксклюзивные коллекции", "Совместные проекты"],
+    icon: Briefcase,
+    title: "Контрактные поставки",
+    description: "Опыт работы с HoReCa: отели, рестораны, офисы. Гарантируем сроки при серийном производстве",
   },
 ];
 
@@ -88,10 +61,10 @@ const services = [
 ];
 
 const steps = [
-  { number: "01", title: "Регистрация", description: "Заполните форму и получите доступ к личному кабинету" },
+  { number: "01", title: "Регистрация", description: "Заполните форму и получите доступ к личному кабинету партнёра" },
   { number: "02", title: "Подтверждение", description: "Менеджер свяжется для уточнения деталей сотрудничества" },
-  { number: "03", title: "Доступ", description: "Получите специальные цены и полную библиотеку материалов" },
-  { number: "04", title: "Работа", description: "Создавайте проекты с нашей мебелью и растите в программе лояльности" },
+  { number: "03", title: "Доступ", description: "Получите специальные условия и полную библиотеку материалов" },
+  { number: "04", title: "Работа", description: "Создавайте проекты с нашей мебелью и развивайте партнёрство" },
 ];
 
 const Designers = () => {
@@ -124,7 +97,7 @@ const Designers = () => {
               Создавайте вместе с нами
             </h1>
             <p className="text-xl text-white/80 font-light mb-10">
-              Специальные условия, персональный сервис и безграничные 
+              Персональный сервис и безграничные 
               возможности для реализации ваших проектов
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -154,8 +127,8 @@ const Designers = () => {
               <p className="text-sm text-muted-foreground">Дизайнеров-партнёров</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-extralight mb-2">25%</p>
-              <p className="text-sm text-muted-foreground">Максимальная скидка</p>
+              <p className="text-4xl font-extralight mb-2">50+</p>
+              <p className="text-sm text-muted-foreground">Коллекций мебели</p>
             </div>
             <div className="text-center">
               <p className="text-4xl font-extralight mb-2">1000+</p>
@@ -187,7 +160,7 @@ const Designers = () => {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Мы создали программу, которая делает сотрудничество 
-              максимально удобным и выгодным для профессионалов
+              максимально удобным для профессионалов
             </p>
           </motion.div>
 
@@ -212,71 +185,8 @@ const Designers = () => {
         </div>
       </section>
 
-      {/* Loyalty Program */}
-      <section className="py-24 lg:py-32 bg-muted/30">
-        <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16 lg:mb-20"
-          >
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
-              Программа лояльности
-            </p>
-            <h2 className="text-3xl lg:text-4xl font-extralight tracking-tight mb-4">
-              Растите вместе с нами
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Чем больше проектов — тем выгоднее условия. 
-              Четыре уровня партнёрства с растущими привилегиями.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {loyaltyLevels.map((level, index) => (
-              <motion.div
-                key={level.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`p-8 ${
-                  index === loyaltyLevels.length - 1 
-                    ? 'bg-foreground text-background' 
-                    : 'bg-background border border-border'
-                }`}
-              >
-                <p className={`text-[10px] uppercase tracking-[0.2em] mb-4 ${
-                  index === loyaltyLevels.length - 1 ? 'text-background/60' : 'text-muted-foreground'
-                }`}>
-                  {level.name}
-                </p>
-                <p className="text-5xl font-extralight mb-2">{level.discount}</p>
-                <p className={`text-sm mb-6 ${
-                  index === loyaltyLevels.length - 1 ? 'text-background/60' : 'text-muted-foreground'
-                }`}>
-                  {level.requirements}
-                </p>
-                <ul className="space-y-3">
-                  {level.perks.map((perk) => (
-                    <li key={perk} className="flex items-center gap-2 text-sm">
-                      <span className={`w-1 h-1 rounded-full ${
-                        index === loyaltyLevels.length - 1 ? 'bg-background' : 'bg-foreground'
-                      }`} />
-                      {perk}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Services */}
-      <section className="py-24 lg:py-32">
+      <section className="py-24 lg:py-32 bg-muted/30">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -336,7 +246,7 @@ const Designers = () => {
       </section>
 
       {/* How it works */}
-      <section className="py-24 lg:py-32 bg-muted/30">
+      <section className="py-24 lg:py-32">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -397,15 +307,15 @@ const Designers = () => {
               <ul className="space-y-4 mb-10">
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-background" />
-                  <span>Мгновенный доступ к 3D-библиотеке</span>
+                  Доступ к полной библиотеке 3D-моделей
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-background" />
-                  <span>Скидка 10% с первого заказа</span>
+                  Персональный менеджер проекта
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-background" />
-                  <span>Персональный менеджер</span>
+                  Специальные условия сотрудничества
                 </li>
               </ul>
             </motion.div>
@@ -415,74 +325,110 @@ const Designers = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-background/10 backdrop-blur-sm p-8 lg:p-12"
             >
-              <h3 className="text-2xl font-light mb-8">Заявка на партнёрство</h3>
-              <form className="space-y-6">
-                <div>
+              <form className="space-y-6 bg-background/5 p-8 lg:p-12 backdrop-blur-sm">
+                <div className="grid grid-cols-2 gap-4">
                   <input
                     type="text"
-                    placeholder="Ваше имя"
-                    className="w-full px-0 py-4 bg-transparent border-b border-background/30 text-background placeholder:text-background/50 focus:border-background outline-none transition-colors"
+                    placeholder="Имя"
+                    className="w-full px-4 py-4 bg-background/10 border border-background/20 text-background placeholder:text-background/50 focus:border-background/50 outline-none transition-colors"
                   />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full px-0 py-4 bg-transparent border-b border-background/30 text-background placeholder:text-background/50 focus:border-background outline-none transition-colors"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="tel"
-                    placeholder="Телефон"
-                    className="w-full px-0 py-4 bg-transparent border-b border-background/30 text-background placeholder:text-background/50 focus:border-background outline-none transition-colors"
-                  />
-                </div>
-                <div>
                   <input
                     type="text"
-                    placeholder="Название студии / компании"
-                    className="w-full px-0 py-4 bg-transparent border-b border-background/30 text-background placeholder:text-background/50 focus:border-background outline-none transition-colors"
+                    placeholder="Фамилия"
+                    className="w-full px-4 py-4 bg-background/10 border border-background/20 text-background placeholder:text-background/50 focus:border-background/50 outline-none transition-colors"
                   />
                 </div>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  className="w-full px-4 py-4 bg-background/10 border border-background/20 text-background placeholder:text-background/50 focus:border-background/50 outline-none transition-colors"
+                />
+                <input
+                  type="tel"
+                  placeholder="Телефон"
+                  className="w-full px-4 py-4 bg-background/10 border border-background/20 text-background placeholder:text-background/50 focus:border-background/50 outline-none transition-colors"
+                />
+                <input
+                  type="text"
+                  placeholder="Компания / Студия"
+                  className="w-full px-4 py-4 bg-background/10 border border-background/20 text-background placeholder:text-background/50 focus:border-background/50 outline-none transition-colors"
+                />
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-full bg-background text-foreground text-[11px] uppercase tracking-[0.2em] hover:bg-background/90 transition-colors mt-8"
+                  className="w-full py-4 bg-background text-foreground text-[11px] uppercase tracking-[0.2em] hover:bg-background/90 transition-colors"
                 >
                   Отправить заявку
                 </button>
+                <p className="text-xs text-background/50 text-center">
+                  Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                </p>
               </form>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Secondary CTA */}
-      <section className="py-16 border-b border-border">
+      {/* FAQ */}
+      <section className="py-24 lg:py-32">
         <div className="container-wide">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div>
-              <h3 className="text-2xl font-light mb-2">Остались вопросы?</h3>
-              <p className="text-muted-foreground">
-                Свяжитесь с нами — менеджер ответит в течение часа
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
+                FAQ
               </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a
-                href="tel:88002225043"
-                className="px-8 py-4 rounded-full border border-border hover:border-foreground text-[11px] uppercase tracking-[0.2em] transition-colors text-center"
+              <h2 className="text-3xl lg:text-4xl font-extralight tracking-tight mb-6">
+                Часто задаваемые вопросы
+              </h2>
+              <p className="text-muted-foreground mb-8">
+                Не нашли ответ на свой вопрос? Свяжитесь с нами, 
+                и мы с удовольствием поможем.
+              </p>
+              <Link
+                to="/contacts"
+                className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] hover:gap-4 transition-all group"
               >
-                8 800 222-50-43
-              </a>
-              <a
-                href="mailto:designers@theidea.ru"
-                className="px-8 py-4 rounded-full bg-foreground text-background text-[11px] uppercase tracking-[0.2em] hover:bg-foreground/90 transition-colors text-center"
-              >
-                designers@theidea.ru
-              </a>
-            </div>
+                Связаться с нами
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-6"
+            >
+              {[
+                {
+                  q: "Как стать партнёром программы?",
+                  a: "Заполните форму заявки выше. После проверки менеджер свяжется с вами для обсуждения условий сотрудничества.",
+                },
+                {
+                  q: "Какие материалы доступны партнёрам?",
+                  a: "Партнёры получают доступ к библиотеке из 1000+ 3D-моделей, техническим чертежам, каталогам материалов и образцам.",
+                },
+                {
+                  q: "Можно ли заказать мебель по индивидуальным размерам?",
+                  a: "Да, мы изготавливаем мебель по индивидуальным размерам и эскизам. Обсудите детали с персональным менеджером.",
+                },
+                {
+                  q: "Какие сроки производства?",
+                  a: "Стандартные сроки — от 3 недель. Для сложных проектов сроки обсуждаются индивидуально.",
+                },
+              ].map((faq, index) => (
+                <div key={index} className="p-6 border border-border">
+                  <h3 className="font-medium mb-2">{faq.q}</h3>
+                  <p className="text-muted-foreground text-sm">{faq.a}</p>
+                </div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>

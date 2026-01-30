@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Users, Factory, Heart } from "lucide-react";
+import { ArrowRight, Award, Users, Factory, Heart, Play, Check } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 
@@ -9,6 +9,7 @@ import heroBedroom from "@/assets/hero-bedroom.jpg";
 import heroDining from "@/assets/hero-dining.jpg";
 import manufacturing from "@/assets/manufacturing.jpg";
 import productSofa from "@/assets/product-sofa.jpg";
+import productArmchair from "@/assets/product-armchair.jpg";
 
 const stats = [
   { value: "12+", label: "Лет на рынке" },
@@ -55,6 +56,11 @@ const team = [
   { name: "Анна Козлова", role: "Главный дизайнер", image: heroDining },
 ];
 
+// Slider images for sections
+const buyersImages = [heroLiving, heroBedroom, heroDining];
+const designersImages = [manufacturing, productSofa, productArmchair];
+const collectionsImages = [heroLiving, productSofa, heroBedroom];
+
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -79,7 +85,7 @@ const About = () => {
             className="max-w-3xl"
           >
             <p className="text-[11px] uppercase tracking-[0.3em] text-white/70 mb-6">
-              О компании
+              О фабрике
             </p>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-tight mb-6">
               Создаём мебель, которая вдохновляет
@@ -198,7 +204,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Production */}
+      {/* Production with Video */}
       <section className="py-24 lg:py-32">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -207,13 +213,18 @@ const About = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative aspect-[4/3] overflow-hidden order-2 lg:order-1"
+              className="relative aspect-[4/3] overflow-hidden order-2 lg:order-1 group cursor-pointer"
             >
               <img
                 src={manufacturing}
                 alt="Производство"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Play className="w-8 h-8 text-foreground ml-1" fill="currentColor" />
+                </div>
+              </div>
             </motion.div>
 
             <motion.div
@@ -383,60 +394,217 @@ const About = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 lg:py-32 bg-foreground text-background">
+      {/* === BUYERS SECTION === */}
+      <section className="py-24 lg:py-40">
         <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center max-w-2xl mx-auto"
-          >
-            <h2 className="text-3xl lg:text-4xl font-extralight tracking-tight mb-6">
-              Готовы создать ваш идеальный интерьер?
-            </h2>
-            <p className="text-background/60 mb-10">
-              Посетите наш шоурум, чтобы увидеть коллекции вживую, 
-              или закажите консультацию дизайнера онлайн.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            {/* Images Slider */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                <div className="aspect-[3/4] overflow-hidden">
+                  <img src={buyersImages[0]} alt="Для покупателей" className="w-full h-full object-cover" />
+                </div>
+                <div className="aspect-[3/4] overflow-hidden mt-8">
+                  <img src={buyersImages[1]} alt="Для покупателей" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
+                Покупателям
+              </p>
+              <h2 className="text-3xl lg:text-5xl font-extralight tracking-tight mb-8">
+                Всё для вашего комфорта
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                Мы создали удобный сервис, который делает процесс выбора и покупки мебели 
+                максимально простым и приятным. От консультации до установки — мы рядом на каждом этапе.
+              </p>
+              
+              <ul className="space-y-4 mb-10">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Бесплатная консультация дизайнера</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Доставка и сборка по всей России</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Гарантия 5 лет на всю продукцию</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Рассрочка без переплат</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-600" />
+                  <span>Возврат в течение 14 дней</span>
+                </li>
+              </ul>
+
               <Link
-                to="/contacts"
-                className="px-8 py-4 rounded-full bg-background text-foreground text-[11px] uppercase tracking-[0.2em] hover:bg-background/90 transition-colors"
+                to="/buyers"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-foreground text-background text-[11px] uppercase tracking-[0.2em] rounded-full hover:bg-foreground/90 transition-colors"
               >
-                Найти шоурум
+                Подробнее для покупателей
+                <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link
-                to="/catalog"
-                className="px-8 py-4 rounded-full border border-background/30 text-[11px] uppercase tracking-[0.2em] hover:bg-background/10 transition-colors"
-              >
-                Смотреть каталог
-              </Link>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Navigation to other pages */}
-      <section className="py-16 border-t border-border">
+      {/* === DESIGNERS SECTION === */}
+      <section className="py-24 lg:py-40 bg-foreground text-background">
         <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Link to="/collections" className="group p-8 border border-border hover:border-foreground transition-colors">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">Исследуйте</p>
-              <h3 className="text-xl font-light mb-2 group-hover:translate-x-2 transition-transform">Коллекции</h3>
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-            </Link>
-            <Link to="/designers" className="group p-8 border border-border hover:border-foreground transition-colors">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">Сотрудничество</p>
-              <h3 className="text-xl font-light mb-2 group-hover:translate-x-2 transition-transform">Дизайнерам</h3>
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-            </Link>
-            <Link to="/buyers" className="group p-8 border border-border hover:border-foreground transition-colors">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mb-3">Информация</p>
-              <h3 className="text-xl font-light mb-2 group-hover:translate-x-2 transition-transform">Покупателям</h3>
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-            </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="order-2 lg:order-1"
+            >
+              <p className="text-[11px] uppercase tracking-[0.3em] text-background/60 mb-6">
+                Дизайнерам
+              </p>
+              <h2 className="text-3xl lg:text-5xl font-extralight tracking-tight mb-8">
+                Партнёрство для профессионалов
+              </h2>
+              <p className="text-lg text-background/70 leading-relaxed mb-8">
+                Присоединяйтесь к сообществу из 500+ дизайнеров, которые уже работают с нами. 
+                Специальные условия, персональный сервис и безграничные возможности для реализации ваших проектов.
+              </p>
+              
+              <ul className="space-y-4 mb-10">
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-400" />
+                  <span>Специальные цены для партнёров</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-400" />
+                  <span>Библиотека 3D-моделей (1000+ объектов)</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-400" />
+                  <span>Персональный менеджер проекта</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-400" />
+                  <span>Индивидуальное производство</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-400" />
+                  <span>Техническая поддержка 24/7</span>
+                </li>
+              </ul>
+
+              <Link
+                to="/designers"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-background text-foreground text-[11px] uppercase tracking-[0.2em] rounded-full hover:bg-background/90 transition-colors"
+              >
+                Стать партнёром
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+
+            {/* Images */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="order-1 lg:order-2"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                <div className="aspect-[3/4] overflow-hidden">
+                  <img src={designersImages[0]} alt="Для дизайнеров" className="w-full h-full object-cover" />
+                </div>
+                <div className="aspect-[3/4] overflow-hidden mt-8">
+                  <img src={designersImages[1]} alt="Для дизайнеров" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* === COLLECTIONS SECTION === */}
+      <section className="py-24 lg:py-40">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+            {/* Images */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="grid grid-cols-3 gap-3">
+                {collectionsImages.map((img, index) => (
+                  <div key={index} className="aspect-square overflow-hidden">
+                    <img src={img} alt="Коллекции" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 aspect-[3/1] overflow-hidden">
+                <img src={heroDining} alt="Коллекции" className="w-full h-full object-cover" />
+              </div>
+            </motion.div>
+
+            {/* Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
+                Коллекции
+              </p>
+              <h2 className="text-3xl lg:text-5xl font-extralight tracking-tight mb-8">
+                50+ коллекций для любого стиля
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                От скандинавского минимализма до современной классики — каждая коллекция 
+                создана с вниманием к деталям и уважением к материалам. Найдите свою историю.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-6 mb-10">
+                <div className="p-6 border border-border">
+                  <p className="text-3xl font-extralight mb-2">6</p>
+                  <p className="text-sm text-muted-foreground">Типов коллекций</p>
+                </div>
+                <div className="p-6 border border-border">
+                  <p className="text-3xl font-extralight mb-2">500+</p>
+                  <p className="text-sm text-muted-foreground">Предметов мебели</p>
+                </div>
+              </div>
+
+              <Link
+                to="/collections"
+                className="inline-flex items-center gap-3 px-8 py-4 border border-foreground text-[11px] uppercase tracking-[0.2em] rounded-full hover:bg-foreground hover:text-background transition-colors"
+              >
+                Смотреть все коллекции
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart } from 'lucide-react';
-import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/AnimatedSection';
+import { Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { useFavorites } from '@/contexts/FavoritesContext';
 
 import productSofa from '@/assets/product-sofa.jpg';
@@ -10,6 +10,7 @@ import productBed from '@/assets/product-bed.jpg';
 import productChair from '@/assets/product-chair.jpg';
 import heroLiving from '@/assets/hero-living-room.jpg';
 import heroBedroom from '@/assets/hero-bedroom.jpg';
+import heroDining from '@/assets/hero-dining.jpg';
 
 const products = [
   {
@@ -46,16 +47,50 @@ const products = [
     images: [productChair, heroLiving],
     href: '/product/chair-copenhagen',
   },
+  {
+    id: 'sofa-saga-modular',
+    name: 'Диван Saga модульный',
+    collection: 'Saga',
+    price: 245000,
+    images: [heroLiving, productSofa],
+    href: '/product/sofa-saga-modular',
+    badge: 'hit' as const,
+  },
+  {
+    id: 'table-mavis',
+    name: 'Стол Mavis обеденный',
+    collection: 'Mavis',
+    price: 92000,
+    images: [heroDining, productChair],
+    href: '/product/table-mavis',
+  },
+  {
+    id: 'commode-case',
+    name: 'Комод Case широкий',
+    collection: 'Case',
+    price: 98000,
+    images: [heroLiving, heroBedroom],
+    href: '/product/commode-case',
+    badge: 'new' as const,
+  },
+  {
+    id: 'armchair-savi',
+    name: 'Кресло Savi Cocoon',
+    collection: 'Savi',
+    price: 112000,
+    images: [productArmchair, heroLiving],
+    href: '/product/armchair-savi',
+  },
 ];
 
-const ProductCardHome = ({ 
+const ProductCardHome = ({
   id,
-  name, 
-  collection, 
-  price, 
-  images, 
-  href, 
-  badge 
+  name,
+  collection,
+  price,
+  images,
+  href,
+  badge,
 }: typeof products[0]) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -86,9 +121,9 @@ const ProductCardHome = ({
   const badgeLabels = { new: 'New', hit: 'Hit' };
 
   return (
-    <Link 
-      to={href} 
-      className="group block"
+    <Link
+      to={href}
+      className="group block flex-shrink-0 w-[200px] sm:w-[260px] lg:w-[300px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -103,7 +138,7 @@ const ProductCardHome = ({
             }`}
           />
         ))}
-        
+
         {badge && (
           <div className="absolute top-2 sm:top-4 left-2 sm:left-4 px-2 sm:px-3 py-1 sm:py-1.5 bg-white text-foreground text-[8px] sm:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.15em] font-medium rounded-full">
             {badgeLabels[badge]}
@@ -111,7 +146,11 @@ const ProductCardHome = ({
         )}
 
         {images.length > 1 && (
-          <div className={`absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1 sm:gap-1.5 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+          <div
+            className={`absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-1 sm:gap-1.5 transition-opacity duration-300 ${
+              isHovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             {images.map((_, index) => (
               <div
                 key={index}
@@ -122,9 +161,11 @@ const ProductCardHome = ({
             ))}
           </div>
         )}
-        
-        <button 
-          className={`absolute top-2 sm:top-4 right-2 sm:right-4 w-7 sm:w-9 h-7 sm:h-9 bg-white/90 rounded-full flex items-center justify-center transition-opacity duration-300 ${isHovered || isItemFavorite ? 'opacity-100' : 'opacity-0 sm:opacity-0'}`}
+
+        <button
+          className={`absolute top-2 sm:top-4 right-2 sm:right-4 w-7 sm:w-9 h-7 sm:h-9 bg-white/90 rounded-full flex items-center justify-center transition-opacity duration-300 ${
+            isHovered || isItemFavorite ? 'opacity-100' : 'opacity-0 sm:opacity-0'
+          }`}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -137,33 +178,40 @@ const ProductCardHome = ({
             });
           }}
         >
-          <Heart 
+          <Heart
             className={`w-3.5 sm:w-4 h-3.5 sm:h-4 transition-all duration-300 ${
               isItemFavorite ? 'fill-foreground stroke-foreground' : 'stroke-foreground'
-            }`} 
-            strokeWidth={1.5} 
+            }`}
+            strokeWidth={1.5}
           />
         </button>
       </div>
-      
+
       <div className="space-y-1">
         <p className="text-[8px] sm:text-[10px] text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.2em]">
           {collection}
         </p>
-        <h4 className="text-sm sm:text-base font-normal tracking-tight line-clamp-2">
-          {name}
-        </h4>
-        <p className="text-base sm:text-lg font-medium pt-0.5 sm:pt-1">
-          {formatPrice(price)}
-        </p>
+        <h4 className="text-sm sm:text-base font-normal tracking-tight line-clamp-2">{name}</h4>
+        <p className="text-base sm:text-lg font-medium pt-0.5 sm:pt-1">{formatPrice(price)}</p>
       </div>
     </Link>
   );
 };
 
 export const BestsellersSection = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    const scrollAmount = window.innerWidth > 768 ? 320 : 220;
+    scrollRef.current.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
+
   return (
-    <section className="py-16 sm:py-24 lg:py-40 bg-background">
+    <section className="py-16 sm:py-24 lg:py-40 bg-background overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-16">
         {/* Header */}
         <AnimatedSection className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-8 mb-10 sm:mb-16 lg:mb-20">
@@ -175,22 +223,49 @@ export const BestsellersSection = () => {
               Бестселлеры
             </h2>
           </div>
-          <Link 
-            to="/catalog"
-            className="inline-flex text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:opacity-60 transition-opacity duration-300 self-start sm:self-auto"
-          >
-            Весь каталог
-          </Link>
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex gap-2">
+              <button
+                onClick={() => scroll('left')}
+                className="w-10 sm:w-12 h-10 sm:h-12 rounded-full border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
+              >
+                <ChevronLeft className="w-4 sm:w-5 h-4 sm:h-5" strokeWidth={1} />
+              </button>
+              <button
+                onClick={() => scroll('right')}
+                className="w-10 sm:w-12 h-10 sm:h-12 rounded-full border border-border flex items-center justify-center hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
+              >
+                <ChevronRight className="w-4 sm:w-5 h-4 sm:h-5" strokeWidth={1} />
+              </button>
+            </div>
+            <Link
+              to="/catalog"
+              className="hidden sm:inline-flex text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-medium pb-2 border-b border-foreground hover:opacity-60 transition-opacity duration-300"
+            >
+              Весь каталог
+            </Link>
+          </div>
         </AnimatedSection>
+      </div>
 
-        {/* Products Grid */}
-        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-6 lg:gap-x-8 gap-y-8 sm:gap-y-12 lg:gap-y-16">
-          {products.map((product) => (
-            <StaggerItem key={product.id}>
-              <ProductCardHome {...product} />
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+      {/* Scrollable Products */}
+      <div
+        ref={scrollRef}
+        className="flex gap-3 sm:gap-6 lg:gap-8 overflow-x-auto no-scrollbar px-4 sm:px-6 lg:px-16"
+      >
+        {products.map((product) => (
+          <ProductCardHome key={product.id} {...product} />
+        ))}
+      </div>
+
+      {/* Mobile link */}
+      <div className="sm:hidden px-4 mt-8">
+        <Link
+          to="/catalog"
+          className="inline-flex text-[10px] uppercase tracking-[0.15em] font-medium pb-2 border-b border-foreground hover:opacity-60 transition-opacity duration-300"
+        >
+          Весь каталог
+        </Link>
       </div>
     </section>
   );

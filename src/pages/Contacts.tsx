@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Clock, Mail, ChevronDown, MessageCircle } from "lucide-react";
+import { MapPin, Phone, Clock, Mail, ChevronDown, MessageCircle, Play } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+
+import heroLiving from "@/assets/hero-living-room.jpg";
+import heroBedroom from "@/assets/hero-bedroom.jpg";
+import heroDining from "@/assets/hero-dining.jpg";
+import manufacturing from "@/assets/manufacturing.jpg";
 
 const cities = [
   {
@@ -16,6 +21,7 @@ const cities = [
         hours: "Пн-Вс: 10:00 - 21:00",
         metro: "м. Петроградская",
         isMain: true,
+        image: heroLiving,
       },
       {
         name: "Шоурум Московский",
@@ -23,6 +29,7 @@ const cities = [
         phone: "+7 (812) 309-52-89",
         hours: "Пн-Вс: 10:00 - 21:00",
         metro: "м. Московские ворота",
+        image: heroBedroom,
       },
     ],
   },
@@ -37,12 +44,14 @@ const cities = [
         hours: "Пн-Вс: 10:00 - 21:00",
         metro: "м. Кутузовская",
         isMain: true,
+        image: heroDining,
       },
       {
         name: "Шоурум МКАД",
         address: "МКАД 65 км, ТЦ Мебель Park",
         phone: "+7 (495) 150-52-89",
         hours: "Пн-Вс: 10:00 - 21:00",
+        image: manufacturing,
       },
     ],
   },
@@ -55,6 +64,7 @@ const cities = [
         address: "ул. Малышева, 51",
         phone: "+7 (343) 302-52-88",
         hours: "Пн-Сб: 10:00 - 20:00, Вс: 11:00 - 19:00",
+        image: heroLiving,
       },
     ],
   },
@@ -67,6 +77,7 @@ const cities = [
         address: "Красный пр., 65",
         phone: "+7 (383) 209-52-88",
         hours: "Пн-Сб: 10:00 - 20:00, Вс: 11:00 - 19:00",
+        image: heroBedroom,
       },
     ],
   },
@@ -79,6 +90,7 @@ const cities = [
         address: "ул. Петербургская, 52",
         phone: "+7 (843) 202-52-88",
         hours: "Пн-Сб: 10:00 - 20:00, Вс: 11:00 - 19:00",
+        image: heroDining,
       },
     ],
   },
@@ -91,6 +103,7 @@ const cities = [
         address: "ул. Красная, 154",
         phone: "+7 (861) 202-52-88",
         hours: "Пн-Сб: 10:00 - 20:00, Вс: 11:00 - 19:00",
+        image: manufacturing,
       },
     ],
   },
@@ -103,6 +116,7 @@ const cities = [
         address: "Большая Садовая ул., 73",
         phone: "+7 (863) 303-52-88",
         hours: "Пн-Сб: 10:00 - 20:00, Вс: 11:00 - 19:00",
+        image: heroLiving,
       },
     ],
   },
@@ -115,6 +129,7 @@ const cities = [
         address: "Большая Покровская ул., 35",
         phone: "+7 (831) 202-52-88",
         hours: "Пн-Сб: 10:00 - 20:00, Вс: 11:00 - 19:00",
+        image: heroBedroom,
       },
     ],
   },
@@ -135,7 +150,6 @@ const Contacts = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Form submission logic
     console.log("Form submitted");
   };
 
@@ -143,22 +157,31 @@ const Contacts = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero */}
-      <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
-        <div className="container-wide">
+      {/* Hero with Image */}
+      <section className="relative h-[60vh] min-h-[400px] flex items-end">
+        <div className="absolute inset-0">
+          <img
+            src={manufacturing}
+            alt="Шоурумы THE IDEA"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        </div>
+
+        <div className="relative container-wide pb-16 lg:pb-24 text-white">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-6">
+            <p className="text-[11px] uppercase tracking-[0.3em] text-white/70 mb-6">
               Контакты
             </p>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-tight mb-8">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-tight mb-6">
               Где нас найти
             </h1>
-            <p className="text-xl text-muted-foreground font-light">
+            <p className="text-xl text-white/80 font-light">
               {totalStores} шоурумов в {cities.length} городах России. 
               Приходите увидеть мебель вживую и получить консультацию.
             </p>
@@ -167,7 +190,7 @@ const Contacts = () => {
       </section>
 
       {/* Quick contacts */}
-      <section className="py-12 border-y border-border">
+      <section className="py-12 border-b border-border">
         <div className="container-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <a href="tel:88002225043" className="flex items-center gap-4 group">
@@ -201,7 +224,7 @@ const Contacts = () => {
         </div>
       </section>
 
-      {/* Map placeholder + Stores */}
+      {/* Map + Stores */}
       <section className="py-24 lg:py-32">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -257,7 +280,7 @@ const Contacts = () => {
 
               <div className="space-y-4">
                 {filteredCities.map((city) => (
-                  <div key={city.name} className="border border-border">
+                  <div key={city.name} className="border border-border overflow-hidden">
                     <button
                       onClick={() => setExpandedCity(expandedCity === city.name ? null : city.name)}
                       className="w-full p-6 flex items-center justify-between text-left"
@@ -285,36 +308,51 @@ const Contacts = () => {
                         {city.stores.map((store, index) => (
                           <div
                             key={index}
-                            className={`p-6 ${index > 0 ? "border-t border-border/50" : ""}`}
+                            className={`${index > 0 ? "border-t border-border/50" : ""}`}
                           >
-                            <div className="flex items-start justify-between mb-4">
-                              <div>
-                                <h4 className="font-medium mb-1">{store.name}</h4>
-                                {store.isMain && (
-                                  <span className="text-[10px] uppercase tracking-[0.15em] px-2 py-1 bg-foreground text-background">
+                            {/* Store Image */}
+                            <div className="relative aspect-[16/9] overflow-hidden group cursor-pointer">
+                              <img
+                                src={store.image}
+                                alt={store.name}
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
+                                  <Play className="w-6 h-6 text-foreground ml-1" fill="currentColor" />
+                                </div>
+                              </div>
+                              {store.isMain && (
+                                <div className="absolute top-4 left-4">
+                                  <span className="px-3 py-1.5 text-[10px] uppercase tracking-[0.15em] bg-foreground text-background">
                                     Флагман
                                   </span>
-                                )}
-                              </div>
+                                </div>
+                              )}
                             </div>
-                            <div className="space-y-2 text-sm">
-                              <p className="flex items-start gap-3">
-                                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
-                                <span>
-                                  {store.address}
-                                  {store.metro && <span className="text-muted-foreground"> ({store.metro})</span>}
-                                </span>
-                              </p>
-                              <p className="flex items-center gap-3">
-                                <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
-                                <a href={`tel:${store.phone.replace(/\D/g, '')}`} className="hover:underline">
-                                  {store.phone}
-                                </a>
-                              </p>
-                              <p className="flex items-center gap-3 text-muted-foreground">
-                                <Clock className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
-                                {store.hours}
-                              </p>
+
+                            {/* Store Info */}
+                            <div className="p-6">
+                              <h4 className="font-medium mb-4">{store.name}</h4>
+                              <div className="space-y-2 text-sm">
+                                <p className="flex items-start gap-3">
+                                  <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
+                                  <span>
+                                    {store.address}
+                                    {store.metro && <span className="text-muted-foreground"> ({store.metro})</span>}
+                                  </span>
+                                </p>
+                                <p className="flex items-center gap-3">
+                                  <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
+                                  <a href={`tel:${store.phone.replace(/\D/g, '')}`} className="hover:underline">
+                                    {store.phone}
+                                  </a>
+                                </p>
+                                <p className="flex items-center gap-3 text-muted-foreground">
+                                  <Clock className="w-4 h-4 flex-shrink-0" strokeWidth={1.5} />
+                                  {store.hours}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         ))}
@@ -416,40 +454,10 @@ const Contacts = () => {
                 </button>
                 <p className="text-xs text-muted-foreground text-center">
                   Нажимая кнопку, вы соглашаетесь с{" "}
-                  <a href="/privacy" className="underline">политикой конфиденциальности</a>
+                  <a href="#" className="underline">политикой конфиденциальности</a>
                 </p>
               </form>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Company info */}
-      <section className="py-16 border-t border-border">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                Юридическая информация
-              </p>
-              <p>ООО «Зе Айдиа»</p>
-              <p className="text-muted-foreground">ИНН 7841056789</p>
-              <p className="text-muted-foreground">ОГРН 1187847234567</p>
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                Юридический адрес
-              </p>
-              <p>197022, Санкт-Петербург,</p>
-              <p className="text-muted-foreground">Большой проспект П.С., 32</p>
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-3">
-                Производство
-              </p>
-              <p>Санкт-Петербург,</p>
-              <p className="text-muted-foreground">Промышленная ул., 19</p>
-            </div>
           </div>
         </div>
       </section>
