@@ -11,7 +11,7 @@ export const IntroSection = () => {
           <div>
             <AnimatedSection>
               <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-muted-foreground mb-6 sm:mb-10 font-light">
-                О бренде
+                О фабрике
               </p>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-extralight tracking-tight leading-[1.15] mb-6 sm:mb-10">
                 12 лет собственного дизайна в&nbsp;Санкт-Петербурге

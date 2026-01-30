@@ -20,7 +20,7 @@ const collectionsData: Record<string, {
   tagline: string;
   description: string;
   heroImage: string;
-  year: string;
+  keyFeature: string;
   philosophy: string;
   materials: string;
   features: string[];
@@ -40,7 +40,7 @@ const collectionsData: Record<string, {
     tagline: "Архитектурный минимализм",
     description: "Коллекция Case — это чистые линии и продуманная функциональность. Каждый предмет создан как архитектурный объект, где форма следует за функцией. Минимум деталей, максимум смысла.",
     heroImage: heroLiving,
-    year: "2019",
+    keyFeature: "Модульная система",
     philosophy: "Case родилась из идеи создать мебель, которая станет фоном для жизни, а не её главным героем. Мы убрали всё лишнее, оставив только суть — чистую форму, честные материалы и безупречную функциональность.",
     materials: "Массив дуба, натуральный шпон, итальянские ткани категории А, закалённое стекло",
     features: ["Модульная система", "Скрытые механизмы", "Эргономичные пропорции", "Натуральные материалы"],
@@ -59,7 +59,7 @@ const collectionsData: Record<string, {
     tagline: "Скандинавская история",
     description: "Вдохновлённая северной природой, коллекция Saga сочетает мягкие органические формы с натуральными материалами. Тепло дерева и уют текстиля создают атмосферу дома.",
     heroImage: productSofa,
-    year: "2020",
+    keyFeature: "Органические формы",
     philosophy: "Saga — это наша ода скандинавскому дизайну. Мы взяли лучшее из северной традиции: любовь к природным материалам, внимание к свету и стремление к уюту без излишеств.",
     materials: "Ясень, натуральная кожа, шерстяные ткани, латунная фурнитура",
     features: ["Органические формы", "Тёплая палитра", "Тактильные материалы", "Ручная отделка"],
@@ -76,7 +76,7 @@ const collectionsData: Record<string, {
     tagline: "Современная классика",
     description: "Bergen — это переосмысление классических форм в современном контексте. Элегантность без излишеств, качество в каждой детали, вневременной стиль.",
     heroImage: heroBedroom,
-    year: "2018",
+    keyFeature: "Вневременной дизайн",
     philosophy: "Создавая Bergen, мы задались вопросом: как сохранить благородство классики, убрав её тяжеловесность? Ответ — в пропорциях, материалах и внимании к деталям.",
     materials: "Массив бука, мрамор, бархат, матовая латунь",
     features: ["Классические пропорции", "Современные материалы", "Утончённые детали", "Вневременной дизайн"],
@@ -94,7 +94,7 @@ const collectionsData: Record<string, {
     tagline: "Геометрия пространства",
     description: "Коллекция Code играет с геометрическими формами и пропорциями. Каждый предмет — это уравнение идеального баланса между формой и функцией.",
     heroImage: heroDining,
-    year: "2021",
+    keyFeature: "Геометрический дизайн",
     philosophy: "Code — это наш эксперимент с геометрией. Мы исследуем, как простые формы могут создавать сложные впечатления, как ритм линий влияет на восприятие пространства.",
     materials: "Металл с порошковой окраской, закалённое стекло, МДФ с лаковым покрытием",
     features: ["Геометрический дизайн", "Контрастные материалы", "Игра с пропорциями", "Акцентные детали"],
@@ -111,7 +111,7 @@ const collectionsData: Record<string, {
     tagline: "Мягкая роскошь",
     description: "Savi создана для тех, кто ценит комфорт превыше всего. Глубокие посадки, премиальные ткани и безупречная эргономика для истинного отдыха.",
     heroImage: productArmchair,
-    year: "2022",
+    keyFeature: "Премиальный комфорт",
     philosophy: "Savi — это признание в любви к комфорту. Мы создали коллекцию, где можно по-настоящему расслабиться, не жертвуя эстетикой.",
     materials: "Пенополиуретан высокой плотности, итальянский велюр, пух-перо",
     features: ["Глубокая посадка", "Премиальный комфорт", "Мягкие формы", "Тактильные ткани"],
@@ -127,7 +127,7 @@ const collectionsData: Record<string, {
     tagline: "Каркасные решения",
     description: "Коллекция Frame раскрывает красоту конструкции. Открытые каркасы, честные материалы, индустриальная эстетика в премиальном исполнении.",
     heroImage: manufacturing,
-    year: "2023",
+    keyFeature: "Открытая конструкция",
     philosophy: "Frame — это честность конструкции. Мы показываем то, что обычно скрыто: каркас, соединения, материал в его первозданном виде.",
     materials: "Профильная сталь, массив ореха, натуральная кожа",
     features: ["Открытый каркас", "Индустриальная эстетика", "Честные материалы", "Контрастные текстуры"],
@@ -168,7 +168,7 @@ const CollectionPage = () => {
             transition={{ duration: 0.8 }}
           >
             <p className="text-[11px] uppercase tracking-[0.3em] text-white/70 mb-4">
-              Коллекция {collection.year}
+              {collection.keyFeature}
             </p>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extralight tracking-tight mb-4">
               {collection.name}
@@ -207,8 +207,8 @@ const CollectionPage = () => {
                 <p className="text-sm text-muted-foreground">Предметов в коллекции</p>
               </div>
               <div>
-                <p className="text-4xl font-extralight mb-2">{collection.year}</p>
-                <p className="text-sm text-muted-foreground">Год создания</p>
+                <p className="text-sm text-muted-foreground mb-2">Ключевая особенность</p>
+                <p className="text-lg font-light">{collection.keyFeature}</p>
               </div>
             </motion.div>
           </div>
@@ -309,89 +309,34 @@ const CollectionPage = () => {
               Каждая деталь имеет значение
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Мы верим, что красота — в гармонии формы и функции. 
-              Каждый предмет коллекции {collection.name} спроектирован так, 
-              чтобы быть не только красивым, но и максимально удобным в повседневной жизни.
+              Создавая коллекцию {collection.name}, мы придерживались нескольких 
+              ключевых принципов, которые определяют характер каждого предмета.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <div className="w-20 h-20 rounded-full border border-border flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-extralight">01</span>
-              </div>
-              <h3 className="text-xl font-medium mb-3">Пропорции</h3>
-              <p className="text-muted-foreground">
-                Выверенные соотношения размеров создают визуальную гармонию 
-                и комфорт в использовании
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center"
-            >
-              <div className="w-20 h-20 rounded-full border border-border flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-extralight">02</span>
-              </div>
-              <h3 className="text-xl font-medium mb-3">Материалы</h3>
-              <p className="text-muted-foreground">
-                Только проверенные поставщики и материалы, которые 
-                со временем становятся только лучше
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center"
-            >
-              <div className="w-20 h-20 rounded-full border border-border flex items-center justify-center mx-auto mb-6">
-                <span className="text-2xl font-extralight">03</span>
-              </div>
-              <h3 className="text-xl font-medium mb-3">Функция</h3>
-              <p className="text-muted-foreground">
-                Продуманная эргономика и скрытые механизмы 
-                для максимального удобства
-              </p>
-            </motion.div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {collection.features.map((feature, index) => (
+              <motion.div
+                key={feature}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="text-center"
+              >
+                <p className="text-5xl font-extralight text-muted-foreground/30 mb-4">
+                  0{index + 1}
+                </p>
+                <p className="text-sm font-medium">{feature}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Quote / Statement */}
-      <section className="py-24 lg:py-32 bg-foreground text-background">
+      {/* Products Grid */}
+      <section className="py-24 lg:py-32 bg-muted/30">
         <div className="container-wide">
-          <motion.blockquote
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <p className="text-2xl lg:text-4xl font-extralight leading-relaxed mb-8">
-              «{collection.name} — это наша интерпретация современного стиля. 
-              Мы создали коллекцию, которая будет актуальна и через 10, и через 20 лет.»
-            </p>
-            <footer className="text-background/60">
-              <p className="font-medium text-background">Команда дизайнеров THE IDEA</p>
-            </footer>
-          </motion.blockquote>
-        </div>
-      </section>
-
-      {/* Products Catalog */}
-      <section className="py-20 lg:py-32 bg-muted/30">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -401,66 +346,76 @@ const CollectionPage = () => {
           >
             <div>
               <p className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground mb-4">
-                Каталог
+                Предметы коллекции
               </p>
               <h2 className="text-3xl lg:text-4xl font-extralight tracking-tight">
-                Предметы коллекции {collection.name}
+                {collection.name}
               </h2>
             </div>
             <Link
-              to="/catalog"
-              className="hidden lg:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] hover:gap-4 transition-all"
+              to={`/catalog?collection=${id}`}
+              className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] hover:gap-4 transition-all group"
             >
-              Весь каталог
-              <ArrowRight className="w-4 h-4" />
+              Все товары
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-            {collection.products.map((product) => (
-              <ProductCard key={product.id} {...product} />
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 lg:gap-x-8 lg:gap-y-16">
+            {collection.products.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <ProductCard {...product} />
+              </motion.div>
             ))}
           </div>
 
-          <Link
-            to="/catalog"
-            className="lg:hidden flex items-center justify-center gap-2 mt-12 text-[11px] uppercase tracking-[0.2em]"
-          >
-            Весь каталог
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="md:hidden mt-12 text-center">
+            <Link
+              to={`/catalog?collection=${id}`}
+              className="inline-flex items-center gap-2 px-8 py-4 border border-foreground text-[11px] uppercase tracking-[0.2em] hover:bg-foreground hover:text-background transition-colors"
+            >
+              Все товары коллекции
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
       <section className="py-24 lg:py-32 bg-foreground text-background">
-        <div className="container-wide text-center">
+        <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto"
+            className="text-center max-w-2xl mx-auto"
           >
             <h2 className="text-3xl lg:text-4xl font-extralight tracking-tight mb-6">
-              Понравилась коллекция?
+              Хотите увидеть коллекцию вживую?
             </h2>
             <p className="text-background/60 mb-10">
-              Закажите консультацию с нашим дизайнером, чтобы подобрать 
-              идеальную комбинацию предметов для вашего интерьера.
+              Посетите наш шоурум, чтобы оценить качество материалов 
+              и примерить мебель к своему интерьеру.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contacts"
                 className="px-8 py-4 rounded-full bg-background text-foreground text-[11px] uppercase tracking-[0.2em] hover:bg-background/90 transition-colors"
               >
-                Записаться на консультацию
+                Найти шоурум
               </Link>
               <Link
-                to="/collections"
+                to="/catalog"
                 className="px-8 py-4 rounded-full border border-background/30 text-[11px] uppercase tracking-[0.2em] hover:bg-background/10 transition-colors"
               >
-                Другие коллекции
+                Смотреть каталог
               </Link>
             </div>
           </motion.div>
