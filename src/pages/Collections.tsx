@@ -1,22 +1,47 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import CollectionCard from "@/components/catalog/CollectionCard";
-import { collectionsFullData } from "@/data/catalogData";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
+import CollectionCard from '@/components/catalog/CollectionCard';
+import { collectionsData, CollectionType } from '@/data/collectionsData';
+
+type FilterType = 'all' | CollectionType;
+
+const filterOptions: { id: FilterType; name: string }[] = [
+  { id: 'all', name: 'Все коллекции' },
+  { id: 'corpus', name: 'Корпусная мебель' },
+  { id: 'soft', name: 'Мягкая мебель' },
+  { id: 'tables', name: 'Столы' },
+];
 
 const Collections = () => {
-  // Group collections by type
-  const corpusCollections = collectionsFullData.filter(c => c.type === 'corpus');
-  const softCollections = collectionsFullData.filter(c => c.type === 'soft');
-  const tablesCollections = collectionsFullData.filter(c => c.type === 'tables');
+  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+
+  // Filter collections based on active filter
+  const filteredCollections = activeFilter === 'all'
+    ? collectionsData
+    : collectionsData.filter(c => c.type === activeFilter);
+
+  // Transform data for CollectionCard component
+  const transformedCollections = filteredCollections.map(c => ({
+    id: c.id,
+    name: c.name,
+    tagline: c.tagline,
+    description: c.heroDescription,
+    images: c.galleryImages,
+    itemsCount: c.categories.reduce((sum, cat) => sum + cat.products.length, 0),
+    year: '',
+    type: c.type,
+    features: c.advantages.slice(0, 2).map(a => a.title),
+  }));
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 lg:pt-40 lg:pb-24">
+      <section className="pt-32 pb-8 lg:pt-40 lg:pb-12">
         <div className="container-wide">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -38,105 +63,70 @@ const Collections = () => {
         </div>
       </section>
 
-      {/* Корпусная мебель */}
-      <section className="pb-24">
+      {/* Filter Tabs */}
+      <section className="py-8 border-b border-border sticky top-20 bg-background/95 backdrop-blur-sm z-40">
         <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <h2 className="text-2xl lg:text-3xl font-extralight tracking-tight mb-2">
-              Корпусная мебель
-            </h2>
-            <p className="text-muted-foreground">
-              Системы хранения, комоды, тумбы и стеллажи
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-20">
-            {corpusCollections.map((collection, index) => (
-              <motion.div
-                key={collection.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+          <div className="flex flex-wrap gap-2 lg:gap-4">
+            {filterOptions.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => setActiveFilter(option.id)}
+                className={`px-4 lg:px-6 py-2.5 rounded-full text-[11px] uppercase tracking-[0.15em] transition-all duration-300 ${
+                  activeFilter === option.id
+                    ? 'bg-foreground text-background'
+                    : 'bg-muted hover:bg-muted/80 text-foreground'
+                }`}
               >
-                <CollectionCard {...collection} />
-              </motion.div>
+                {option.name}
+                <span className="ml-2 text-[10px] opacity-60">
+                  {option.id === 'all' 
+                    ? collectionsData.length
+                    : collectionsData.filter(c => c.type === option.id).length
+                  }
+                </span>
+              </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Мягкая мебель */}
-      <section className="py-24 bg-muted/30">
+      {/* Collections Grid */}
+      <section className="py-16 lg:py-24">
         <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <h2 className="text-2xl lg:text-3xl font-extralight tracking-tight mb-2">
-              Мягкая мебель
-            </h2>
-            <p className="text-muted-foreground">
-              Диваны, кровати, кресла и пуфы
-            </p>
-          </motion.div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFilter}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-20"
+            >
+              {transformedCollections.map((collection, index) => (
+                <motion.div
+                  key={collection.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <CollectionCard {...collection} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-20">
-            {softCollections.map((collection, index) => (
-              <motion.div
-                key={collection.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <CollectionCard {...collection} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Столы */}
-      <section className="py-24">
-        <div className="container-wide">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <h2 className="text-2xl lg:text-3xl font-extralight tracking-tight mb-2">
-              Столы
-            </h2>
-            <p className="text-muted-foreground">
-              Обеденные, журнальные, рабочие и консольные столы
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-20">
-            {tablesCollections.map((collection, index) => (
-              <motion.div
-                key={collection.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <CollectionCard {...collection} />
-              </motion.div>
-            ))}
-          </div>
+          {/* Empty State */}
+          {filteredCollections.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-24"
+            >
+              <p className="text-muted-foreground text-lg">
+                В этой категории пока нет коллекций
+              </p>
+            </motion.div>
+          )}
         </div>
       </section>
 
