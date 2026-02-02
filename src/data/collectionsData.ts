@@ -13,11 +13,19 @@ import manufacturing from '@/assets/manufacturing.jpg';
 // Types
 export type CollectionType = 'corpus' | 'soft' | 'tables';
 
+export interface CategoryFeature {
+  title: string;
+  description: string;
+}
+
 export interface CollectionCategory {
   id: string;
   name: string;
   description: string;
+  longDescription?: string;
   image: string;
+  galleryImages?: string[];
+  features?: CategoryFeature[];
   products: CollectionProduct[];
 }
 
@@ -83,7 +91,15 @@ export const collectionsData: FullCollectionData[] = [
         id: 'storage',
         name: 'Системы хранения',
         description: 'Комоды, тумбы и пеналы в едином стиле',
+        longDescription: 'Классические формы с современными пропорциями. Каждый предмет — самостоятельное произведение, которое легко комбинируется с другими элементами коллекции.',
         image: heroLiving,
+        galleryImages: [heroBedroom, manufacturing, heroDining],
+        features: [
+          { title: 'Ножки «капля»', description: 'Фирменная точёная деталь' },
+          { title: 'Soft-close', description: 'Плавное закрывание всех ящиков' },
+          { title: 'Шпон дуба', description: 'Натуральный рисунок древесины' },
+          { title: 'Принты FACTURA', description: 'Уникальные дизайнерские декоры' },
+        ],
         products: [
           { id: 'bergen-chest-6', name: 'Комод 6 ящиков', price: 89900, image: productArmchair },
           { id: 'bergen-chest-4', name: 'Комод 4 ящика', price: 69900, image: productArmchair },
@@ -95,7 +111,15 @@ export const collectionsData: FullCollectionData[] = [
         id: 'tables',
         name: 'Обеденные столы',
         description: 'Раздвижные и стационарные модели для столовой',
+        longDescription: 'Столы Bergen созданы для семейных обедов и дружеских встреч. Раздвижные механизмы позволяют трансформировать пространство под любое количество гостей.',
         image: heroDining,
+        galleryImages: [heroLiving, heroBedroom],
+        features: [
+          { title: 'Механизм раздвижения', description: 'Простое увеличение на 40-60 см' },
+          { title: 'Столешница 40 мм', description: 'Массив дуба высшего сорта' },
+          { title: 'До 10 персон', description: 'В раздвинутом состоянии' },
+          { title: 'Устойчивая база', description: 'Надёжная конструкция подстолья' },
+        ],
         products: [
           { id: 'bergen-table-180', name: 'Стол обеденный 180', price: 129900, image: productChair },
           { id: 'bergen-table-160', name: 'Стол обеденный 160', price: 109900, image: productChair },
@@ -152,7 +176,15 @@ export const collectionsData: FullCollectionData[] = [
         id: 'soft',
         name: 'Мягкая мебель',
         description: 'Диваны и кресла в архитектурном стиле',
+        longDescription: 'Мягкая мебель Case — это геометрия комфорта. Чёткие линии подлокотников контрастируют с мягкостью посадки. Латексный наполнитель обеспечивает долговечность формы.',
         image: productSofa,
+        galleryImages: [heroLiving, manufacturing, heroBedroom],
+        features: [
+          { title: 'Латексная пена', description: 'Не деформируется 10+ лет' },
+          { title: 'Берёзовый каркас', description: 'Прочность и экологичность' },
+          { title: '5 категорий ткани', description: 'От Enigma до Aquarelle' },
+          { title: 'Съёмные чехлы', description: 'Простой уход и замена' },
+        ],
         products: [
           { id: 'case-sofa-3', name: 'Диван трёхместный', price: 189000, image: productSofa, badge: 'hit' },
           { id: 'case-sofa-2', name: 'Диван двухместный', price: 149000, image: productSofa },
@@ -164,7 +196,15 @@ export const collectionsData: FullCollectionData[] = [
         id: 'storage',
         name: 'Системы хранения',
         description: 'Комоды и тумбы без лишних деталей',
+        longDescription: 'Модульные системы хранения Case объединяют архитектурную строгость с практичностью. Фасады без ручек с системой push-to-open создают монолитный облик.',
         image: heroLiving,
+        galleryImages: [heroDining, manufacturing],
+        features: [
+          { title: 'Push-to-open', description: 'Открывание нажатием' },
+          { title: 'Скрытые петли', description: 'Чистый минималистичный вид' },
+          { title: 'Фанера ФК', description: 'Берёзовая фанера высшего сорта' },
+          { title: 'Hettich Quadro', description: 'Направляющие с полным выдвижением' },
+        ],
         products: [
           { id: 'case-chest', name: 'Комод широкий', price: 98000, image: productArmchair },
           { id: 'case-nightstand', name: 'Прикроватная тумба', price: 38000, image: productArmchair },
@@ -176,7 +216,14 @@ export const collectionsData: FullCollectionData[] = [
         id: 'tables',
         name: 'Столы',
         description: 'Рабочие и консольные столы',
+        longDescription: 'Рабочие столы Case спроектированы для концентрации. Лаконичный дизайн убирает визуальный шум, встроенный кабель-менеджмент поддерживает порядок.',
         image: heroDining,
+        galleryImages: [heroLiving],
+        features: [
+          { title: 'Кабель-менеджмент', description: 'Скрытая разводка проводов' },
+          { title: 'Столешница 30 мм', description: 'Берёзовая фанера или массив' },
+          { title: 'Регулировка высоты', description: 'Опционально для рабочих моделей' },
+        ],
         products: [
           { id: 'case-desk', name: 'Рабочий стол', price: 89000, image: productChair },
           { id: 'case-console-table', name: 'Консольный стол', price: 67000, image: productChair },
@@ -186,7 +233,14 @@ export const collectionsData: FullCollectionData[] = [
         id: 'benches',
         name: 'Скамьи',
         description: 'Функциональный акцент интерьера',
+        longDescription: 'Скамьи Case — универсальный элемент для прихожей, спальни или гостиной. Минималистичная форма позволяет интегрировать их в любой интерьер.',
         image: manufacturing,
+        galleryImages: [heroLiving, heroBedroom],
+        features: [
+          { title: 'Массив бука', description: 'Ножки из твёрдой породы' },
+          { title: 'Войлочная подкладка', description: 'Защита пола от царапин' },
+          { title: 'Два размера', description: '120 и 160 см в длину' },
+        ],
         products: [
           { id: 'case-bench-120', name: 'Скамья 120 см', price: 54000, image: productArmchair },
           { id: 'case-bench-160', name: 'Скамья 160 см', price: 68000, image: productArmchair },
