@@ -150,7 +150,10 @@ const Contacts = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted");
+    // Only log in development
+    if (import.meta.env.DEV) {
+      console.log("Form submitted");
+    }
   };
 
   return (
