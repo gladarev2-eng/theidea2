@@ -97,6 +97,8 @@ const ProductInfo = ({
 
   const handleQuestionSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Form data ready for backend submission
+    // Backend integration would go here
     toast.success("Ваш вопрос отправлен!");
     setFormName("");
     setFormPhone("");

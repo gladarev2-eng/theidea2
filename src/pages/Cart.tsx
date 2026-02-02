@@ -44,14 +44,8 @@ const Cart = () => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    // In production, this would send data to backend/email
-    if (import.meta.env.DEV) {
-      console.log('Order submitted:', {
-        customer: formData,
-        items,
-        totalPrice,
-      });
-    }
+    // Order data ready for backend submission
+    // Backend integration would go here
 
     setIsSubmitting(false);
     setIsSubmitted(true);

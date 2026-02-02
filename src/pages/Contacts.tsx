@@ -150,10 +150,8 @@ const Contacts = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Only log in development
-    if (import.meta.env.DEV) {
-      console.log("Form submitted");
-    }
+    // Form data ready for backend submission
+    // Backend integration would go here
   };
 
   return (

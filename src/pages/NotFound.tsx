@@ -1,16 +1,8 @@
-import { useLocation, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Home, ArrowLeft } from 'lucide-react';
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    // Only log in development to avoid exposing user navigation patterns
-    if (import.meta.env.DEV) {
-      console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-    }
-  }, [location.pathname]);
+  // 404 page - no sensitive logging needed
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
