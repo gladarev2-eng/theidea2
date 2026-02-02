@@ -47,7 +47,10 @@ const UniversalCollectionPage = () => {
           id={category.id}
           name={category.name}
           description={category.description}
+          longDescription={category.longDescription}
           image={category.image}
+          galleryImages={category.galleryImages}
+          features={category.features}
           products={category.products}
           collectionId={collection.id}
           reversed={index % 2 !== 0}
