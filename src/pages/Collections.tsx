@@ -30,9 +30,9 @@ const Collections = () => {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight tracking-tight mb-8">
               Миры, которые мы создаём
             </h1>
-            <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-xl">
-              Каждая коллекция — это целостная история со своим характером, 
-              философией и настроением. Найдите ту, что резонирует с вами.
+            <p className="text-lg md:text-xl text-muted-foreground font-light leading-relaxed max-w-xl">
+              Каждая коллекция — целостная история со своим характером 
+              и философией. Найдите ту, что резонирует с вами.
             </p>
           </motion.div>
         </div>
