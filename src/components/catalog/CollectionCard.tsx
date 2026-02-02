@@ -97,14 +97,14 @@ const CollectionCard = ({
 
       {/* Content */}
       <div className="space-y-4">
-        {/* Key feature instead of year */}
-        <div className="flex items-center gap-4">
+        {/* Key feature and count */}
+        <div className="flex items-center gap-4 flex-wrap">
           {features.length > 0 && (
             <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
               {features[0]}
             </span>
           )}
-          <span className="w-6 h-px bg-border" />
+          <span className="w-6 h-px bg-border hidden sm:block" />
           <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
             {itemsCount} предметов
           </span>
