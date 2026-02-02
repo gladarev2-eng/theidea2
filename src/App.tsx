@@ -9,9 +9,7 @@ import Index from "./pages/Index";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
 import Collections from "./pages/Collections";
-import CollectionPage from "./pages/CollectionPage";
-import CaseCollectionPage from "./pages/CaseCollectionPage";
-import BergenCollectionPage from "./pages/BergenCollectionPage";
+import UniversalCollectionPage from "./pages/UniversalCollectionPage";
 import About from "./pages/About";
 import Designers from "./pages/Designers";
 import Buyers from "./pages/Buyers";
@@ -35,9 +33,7 @@ const App = () => (
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/product/:id" element={<Product />} />
               <Route path="/collections" element={<Collections />} />
-              <Route path="/collections/case" element={<CaseCollectionPage />} />
-              <Route path="/collections/bergen" element={<BergenCollectionPage />} />
-              <Route path="/collections/:id" element={<CollectionPage />} />
+              <Route path="/collections/:id" element={<UniversalCollectionPage />} />
               <Route path="/about" element={<About />} />
               <Route path="/designers" element={<Designers />} />
               <Route path="/buyers" element={<Buyers />} />
