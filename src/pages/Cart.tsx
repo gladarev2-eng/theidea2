@@ -45,11 +45,13 @@ const Cart = () => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // In production, this would send data to backend/email
-    console.log('Order submitted:', {
-      customer: formData,
-      items,
-      totalPrice,
-    });
+    if (import.meta.env.DEV) {
+      console.log('Order submitted:', {
+        customer: formData,
+        items,
+        totalPrice,
+      });
+    }
 
     setIsSubmitting(false);
     setIsSubmitted(true);
